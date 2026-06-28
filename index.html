@@ -578,7 +578,9 @@ function applyLang(l){
   cur.textContent=(LANGS.find(x=>x[0]===l)||["","English"])[1];
   menu.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.l===l));
   renderRoadmap();
-}/* carousels */
+}
+
+/* carousels */
 function buildCarousels(){
   document.querySelectorAll('.carousel').forEach(c=>{
     const keys=c.dataset.imgs.split(',');
@@ -651,11 +653,9 @@ function tick(){cx.clearRect(0,0,W,H);for(const p of parts){p.y-=p.s;p.t+=.02;p.
   cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fillStyle=`rgba(255,${120+Math.floor(60*fl)},40,${p.a*fl})`;
   cx.shadowBlur=8;cx.shadowColor='rgba(255,106,0,.8)';cx.fill();}requestAnimationFrame(tick);}
 rsz();addEventListener('resize',rsz);if(!reduce)tick();
-  <img src="logo.png" alt="Logo de Mi Empresa" width="150">
 
 /* init */
 renderTicker();buildCarousels();applyLang('en');
 </script>
 </body>
 </html>
-
