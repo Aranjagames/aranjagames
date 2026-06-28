@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ARANJA GAMES — Independent horror &amp; adventure studio</title>
+<meta name="description" content="Aranja Games is a Spanish independent studio founded by Enzo Colomer in 2020. Making it real: Lost Camp, Obscuria, Nocturne Island and Jump to Survive." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --void:#070708; --void-2:#0c0c0f; --surface:#101015; --surface-2:#16161d;
+  --line:#23232b; --line-2:#2f2f39;
+  --ember:#ff6a00; --ember-hot:#ff8a24; --ember-glow:#ffae54;
+  --ash:#f3f1ec; --ash-dim:#9a958c; --ash-dimmer:#67635c;
+  --maxw:1240px; --ease:cubic-bezier(.16,1,.3,1); --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ash);font-family:"Inter",system-ui,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--ember);color:#000}
+.mono{font-family:"JetBrains Mono",monospace}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;position:relative;z-index:2}
+
+#stage{position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--void);opacity:0;transition:opacity .9s var(--ease),background-color .9s var(--ease)}
+#stage.on{opacity:1}
+#stageImg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .9s var(--ease);filter:saturate(.85)}
+#veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 50% 0%, transparent 50%, rgba(0,0,0,.55) 100%)}
+#progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;background:linear-gradient(90deg,var(--ember),var(--ember-glow));box-shadow:0 0 12px var(--ember)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 28px;transition:background .45s var(--ease),padding .45s var(--ease),border-color .45s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(7,7,8,.78);backdrop-filter:blur(16px);border-color:var(--line);padding:11px 28px}
+.brand{display:flex;align-items:center;gap:12px;font-family:"Anton";font-size:21px;letter-spacing:.05em}
+.brand img{width:34px;height:34px;filter:drop-shadow(0 0 10px rgba(255,106,0,.45))}
+.nav-mid{display:flex;gap:30px;align-items:center}
+.nav-mid a{font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ash-dim);transition:color .25s;position:relative}
+.nav-mid a:hover{color:var(--ash)}
+.nav-mid a::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--ember);transition:width .3s var(--ease)}
+.nav-mid a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:16px}
+/* language dropdown */
+.langdd{position:relative;font-family:"JetBrains Mono";font-size:12.5px}
+.langbtn{display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--line-2);color:var(--ash);cursor:pointer;padding:8px 12px;border-radius:8px;font-family:inherit;font-size:12.5px;letter-spacing:.04em;transition:.25s}
+.langbtn:hover{border-color:var(--ember);color:var(--ember)}
+.langbtn .caret{transition:transform .3s}
+.langdd.open .caret{transform:rotate(180deg)}
+.langmenu{position:absolute;top:calc(100% + 8px);right:0;min-width:150px;background:rgba(12,12,15,.96);backdrop-filter:blur(14px);border:1px solid var(--line-2);border-radius:10px;padding:6px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:.25s var(--ease);box-shadow:0 24px 60px -20px #000}
+.langdd.open .langmenu{opacity:1;visibility:visible;transform:none}
+.langmenu button{display:flex;width:100%;align-items:center;gap:10px;background:none;border:none;color:var(--ash-dim);cursor:pointer;padding:9px 12px;border-radius:6px;font-family:inherit;font-size:12.5px;text-align:left;transition:.2s}
+.langmenu button:hover{background:rgba(255,255,255,.05);color:var(--ash)}
+.langmenu button.active{color:var(--ember)}
+.langmenu button .tick{margin-left:auto;opacity:0}
+.langmenu button.active .tick{opacity:1}
+.nav-cta{padding:9px 18px;border:1px solid var(--ember);border-radius:8px;color:var(--ember)!important;font-family:"JetBrains Mono";font-size:12px;letter-spacing:.1em;transition:.3s;white-space:nowrap}
+.nav-cta:hover{background:var(--ember);color:#000!important;box-shadow:0 0 24px rgba(255,106,0,.5)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:51}
+.burger span{width:26px;height:2px;background:var(--ash);transition:.3s}
+
+/* HERO */
+#hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;inset:-8% -2%;z-index:0;background-size:cover;background-position:center;opacity:.42;transform:scale(1.18);will-change:transform}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,7,8,.55) 0%, rgba(7,7,8,.35) 35%, rgba(7,7,8,.8) 80%, var(--void) 100%)}
+#embers{position:absolute;inset:0;z-index:1}
+#torch{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle 340px at var(--mx,50%) var(--my,42%), rgba(255,140,40,.12), rgba(255,106,0,.04) 46%, transparent 70%);transition:background .1s linear}
+.hero-inner{position:relative;z-index:2;padding:120px 28px 80px;max-width:900px}
+.hero-logo{width:clamp(96px,14vw,150px);margin:0 auto 28px;filter:drop-shadow(0 14px 40px rgba(255,106,0,.4));animation:floaty 6s ease-in-out infinite,fadeUp 1s var(--ease) .1s both}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.eyebrow{font-family:"JetBrains Mono";font-size:12.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--ember);margin-bottom:22px;animation:fadeUp .9s var(--ease) .25s both}
+.eyebrow::before,.eyebrow::after{content:"";display:inline-block;width:30px;height:1px;background:var(--ember);vertical-align:middle;margin:0 14px;opacity:.6}
+.hero-title{font-family:"Anton";font-weight:400;line-height:.84;letter-spacing:.01em;text-transform:uppercase;font-size:clamp(58px,13vw,168px);margin-bottom:14px}
+.hero-title .l1{display:block;color:transparent;-webkit-text-stroke:1.4px var(--ash)}
+.hero-title .l2{display:block;color:var(--ember);text-shadow:0 0 50px rgba(255,106,0,.5)}
+.hero-sub{font-family:"JetBrains Mono";font-size:clamp(14px,2.4vw,20px);letter-spacing:.36em;text-transform:lowercase;color:var(--ash);margin:18px auto 40px;animation:fadeUp .9s var(--ease) .5s both}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .9s var(--ease) .65s both}
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:8px;font-family:"JetBrains Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:.3s var(--ease);border:1px solid transparent;overflow:hidden}
+.btn-primary{background:var(--ember);color:#000;font-weight:700}
+.btn-primary::after{content:"";position:absolute;top:0;left:-130%;width:55%;height:100%;background:linear-gradient(110deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);animation:shimmer 5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-130%}14%{left:140%}100%{left:140%}}
+.btn-primary:hover{background:var(--ember-hot);box-shadow:0 0 30px rgba(255,106,0,.55);transform:translateY(-2px)}
+.btn-ghost{border-color:var(--line-2);color:var(--ash)}
+.btn-ghost:hover{border-color:var(--ember);color:var(--ember);transform:translateY(-2px)}
+.btn span{position:relative;z-index:1}
+.btn .arr{transition:transform .3s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+.scrollcue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;font-family:"JetBrains Mono";font-size:10px;letter-spacing:.3em;color:var(--ash-dimmer);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scrollcue::after{content:"";width:1px;height:42px;background:linear-gradient(var(--ember),transparent);animation:cue 2.4s infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* TICKER */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(12,12,15,.6);backdrop-filter:blur(6px);overflow:hidden;position:relative;z-index:2}
+.ticker-mask{display:flex;width:max-content;animation:marquee 26s linear infinite}
+.ticker-seq{display:flex;flex:none;padding:15px 0;font-family:"Anton";font-size:18px;letter-spacing:.08em;text-transform:uppercase}
+.ticker-seq span{margin:0 22px;color:var(--ash-dimmer);white-space:nowrap}
+.ticker-seq span b{color:var(--ember);font-weight:400}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.ticker:hover .ticker-mask{animation-play-state:paused}
+
+/* SECTIONS */
+section.block{position:relative;z-index:2;padding:130px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:70px;flex-wrap:wrap}
+.sec-kicker{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--ember);margin-bottom:16px}
+.sec-title{font-family:"Anton";font-size:clamp(38px,6.5vw,78px);line-height:.95;text-transform:uppercase;letter-spacing:.01em}
+.sec-note{max-width:340px;color:var(--ash-dim);font-size:14.5px}
+.reveal{opacity:0;transform:translateY(38px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* GAMES */
+#juegos{padding-top:130px;padding-bottom:40px}
+.game{display:grid;grid-template-columns:1fr 1.05fr;gap:60px;align-items:center;min-height:88vh;padding:70px 0;border-top:1px solid var(--line)}
+.game.flip .game-media{order:-1}
+.game-meta-idx{font-family:"JetBrains Mono";font-size:13px;color:var(--ember);letter-spacing:.22em;margin-bottom:18px;text-transform:uppercase}
+.game-title{font-family:"Anton";font-size:clamp(40px,5.6vw,72px);line-height:.9;text-transform:uppercase;margin-bottom:10px}
+.badge{display:inline-block;font-family:"JetBrains Mono";font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:6px 13px;border-radius:6px;margin-bottom:22px}
+.badge.soon{background:rgba(255,106,0,.14);color:var(--ember-glow);border:1px solid rgba(255,106,0,.4)}
+.badge.free{background:rgba(80,200,120,.12);color:#6fdc97;border:1px solid rgba(80,200,120,.35)}
+.badge.paid{background:rgba(255,255,255,.06);color:var(--ash-dim);border:1px solid var(--line-2)}
+.game-desc{color:var(--ash-dim);font-size:16px;margin-bottom:20px;max-width:500px}
+.dlc-note{font-family:"JetBrains Mono";font-size:12px;color:var(--ash-dimmer);margin:-6px 0 20px;max-width:480px}
+.dlc-note b{color:var(--ember);font-weight:400}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px}
+.tag{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.06em;color:var(--ash-dim);border:1px solid var(--line-2);padding:5px 11px;border-radius:6px;text-transform:uppercase}
+.game-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+/* carousel */
+.carousel{position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;border:1px solid var(--line-2);box-shadow:0 40px 80px -34px #000;background:var(--void-2)}
+.carousel .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.1s var(--ease);background-size:cover;background-position:center}
+.carousel .slide.active{opacity:1;animation:kenburns 9s ease-out forwards}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.12)}}
+.carousel::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 90px rgba(0,0,0,.5);border-radius:var(--r);z-index:3}
+.cdots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:4;transition:opacity .4s}
+.cdots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);transition:.3s;cursor:pointer}
+.cdots i.active{background:var(--ember);width:22px;border-radius:5px}
+
+/* ROADMAP */
+.roadmap{position:relative;max-width:880px;margin:0 auto;padding-left:8px}
+.roadmap::before{content:"";position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--ember),var(--line) 80%)}
+.rm-year{position:relative;padding:34px 0 6px 56px;font-family:"Anton";font-size:40px;color:#fff;opacity:.16;letter-spacing:.04em}
+.rm-item{position:relative;padding:16px 0 16px 56px;transition:.3s var(--ease)}
+.rm-item::before{content:"";position:absolute;left:7px;top:24px;width:16px;height:16px;border-radius:50%;background:var(--void);border:2px solid var(--ember);transition:.3s}
+.rm-item:hover::before{box-shadow:0 0 16px var(--ember);transform:scale(1.15)}
+.rm-item.up::before{border-style:dashed;border-color:var(--ember-glow);animation:pulsedot 2.4s infinite}
+@keyframes pulsedot{0%,100%{box-shadow:0 0 0 0 rgba(255,174,84,.5)}50%{box-shadow:0 0 0 7px rgba(255,174,84,0)}}
+.rm-item.mile::before{background:var(--ember)}
+.rm-date{font-family:"JetBrains Mono";font-size:12px;color:var(--ember);letter-spacing:.1em;margin-bottom:5px}
+.rm-item h3{font-size:20px;font-weight:700;margin-bottom:4px}
+.rm-item p{color:var(--ash-dim);font-size:14.5px;max-width:580px}
+.rm-pill{display:inline-block;margin-left:10px;font-family:"JetBrains Mono";font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(255,106,0,.4);color:var(--ember-glow);padding:2px 8px;border-radius:20px;vertical-align:middle}
+
+/* STUDIO */
+.studio-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:64px;align-items:start}
+.studio-grid p{color:var(--ash-dim);font-size:16.5px;margin-bottom:20px}
+.studio-grid p b{color:var(--ash);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.stat{background:var(--surface);padding:30px 20px;text-align:center}
+.stat .n{font-family:"Anton";font-size:44px;color:var(--ember);line-height:1}
+.stat .l{font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash-dim);margin-top:8px}
+
+/* CONTACT */
+#contacto{padding:140px 0 70px;border-top:1px solid var(--line);position:relative;z-index:2;background:radial-gradient(60% 100% at 50% 0%, rgba(255,106,0,.07), transparent 70%)}
+.contact-logo{width:74px;margin:0 auto 26px;filter:drop-shadow(0 0 18px rgba(255,106,0,.4));animation:floaty 6s ease-in-out infinite}
+.contact-big{font-family:"Anton";font-size:clamp(48px,10vw,128px);line-height:.9;text-transform:lowercase;text-align:center;margin-bottom:34px;letter-spacing:.01em}
+.contact-big .accent{color:var(--ember);text-shadow:0 0 40px rgba(255,106,0,.5)}
+.founder-card{display:flex;align-items:center;gap:20px;justify-content:center;margin:54px auto 10px;width:fit-content;border:1px solid var(--line-2);border-radius:var(--r);padding:18px 26px 18px 18px;background:linear-gradient(160deg,var(--surface),var(--void-2))}
+.founder-card img{width:72px;height:72px;border-radius:12px;object-fit:cover;filter:saturate(1.05)}
+.founder-card .role{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ember);margin-bottom:5px}
+.founder-card h3{font-family:"Anton";font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+.socials{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:46px 0 72px}
+.social{display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid var(--line-2);border-radius:8px;font-family:"JetBrains Mono";font-size:12.5px;letter-spacing:.06em;transition:.3s var(--ease)}
+.social:hover{border-color:var(--ember);color:var(--ember);transform:translateY(-3px);box-shadow:0 0 24px rgba(255,106,0,.25)}
+.foot-row{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:30px;color:var(--ash-dimmer);font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.1em}
+
+@media (max-width:960px){
+  .nav-mid{position:fixed;inset:0;background:rgba(7,7,8,.97);backdrop-filter:blur(8px);flex-direction:column;justify-content:center;gap:34px;transform:translateX(100%);transition:transform .4s var(--ease)}
+  .nav-mid.open{transform:none}
+  .nav-mid a{font-size:18px}
+  .burger{display:flex}
+  .nav-right .nav-cta{display:none}
+  .game,.game.flip .game-media{grid-template-columns:1fr;order:0}
+  .game{min-height:auto}
+  .game-media{order:-1!important;margin-bottom:8px}
+  .studio-grid{grid-template-columns:1fr;gap:42px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.001ms!important}
+  .reveal{opacity:1;transform:none}.hero-bg{transform:scale(1.1)}
+}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.hero-logo,.eyebrow,.hero-sub,.hero-actions{opacity:1!important}</style></noscript>
+</head>
+<body>
+<div id="stage"><div id="stageImg"></div></div>
+<div id="veil"></div>
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="brand"><img data-img="logo" alt="Aranja Games logo">ARANJA&nbsp;GAMES</a>
+  <div class="nav-mid" id="navmid">
+    <a href="#juegos" data-i18n="nav.games">Games</a>
+    <a href="#roadmap" data-i18n="nav.roadmap">Roadmap</a>
+    <a href="#estudio" data-i18n="nav.studio">Studio</a>
+    <a href="#contacto" data-i18n="nav.contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <div class="langdd" id="langdd">
+      <button class="langbtn" id="langbtn" aria-haspopup="true" aria-expanded="false">🌐 <span id="langcur">English</span> <span class="caret">▾</span></button>
+      <div class="langmenu" id="langmenu"></div>
+    </div>
+    <a class="nav-cta" href="https://store.steampowered.com/developer/ARANJA/" target="_blank" rel="noopener">▶ STEAM</a>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="hero">
+  <div class="hero-bg" data-img="hero" data-parallax="0.10" data-pscale="1.18"></div>
+  <canvas id="embers"></canvas>
+  <div id="torch"></div>
+  <div class="hero-inner" data-parallax="0.06">
+    <img class="hero-logo" data-img="logo" alt="Aranja Games">
+    <div class="eyebrow" data-i18n="hero.eyebrow">Independent studio · Horror &amp; Adventure</div>
+    <h1 class="hero-title"><span class="l1">ARANJA</span><span class="l2">GAMES</span></h1>
+    <p class="hero-sub">making it real</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#juegos"><span data-i18n="hero.cta1">Explore the games</span> <span class="arr">→</span></a>
+      <a class="btn btn-ghost" href="https://store.steampowered.com/developer/ARANJA/" target="_blank" rel="noopener" data-i18n="hero.cta2">Follow on Steam</a>
+    </div>
+  </div>
+  <div class="scrollcue"><span data-i18n="hero.scroll">Scroll</span></div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker"><div class="ticker-mask" id="ticker"></div></div>
+
+<!-- GAMES -->
+<section id="juegos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="sec-kicker" data-i18n="games.kicker">// Our games</div><h2 class="sec-title" data-i18n="games.title">The Games</h2></div>
+      <p class="sec-note" data-i18n="games.note">Four worlds. One obsession: dense atmosphere, exploration and real scares.</p>
+    </div>
+
+    <article class="game reveal" data-theme="lostcamp">
+      <div class="game-body">
+        <div class="game-meta-idx" data-i18n="g1.idx">Adventure</div>
+        <h3 class="game-title">Lost Camp</h3>
+        <span class="badge soon" data-i18n="g1.badge">Upcoming · 2026</span>
+        <p class="game-desc" data-i18n="g1.desc"></p>
+        <div class="tags"><span class="tag" data-i18n="t.horror">Horror</span><span class="tag" data-i18n="t.survival">Survival</span><span class="tag" data-i18n="t.mystery">Mystery</span><span class="tag" data-i18n="t.atmos">Atmospheric</span></div>
+        <div class="game-actions">
+          <a class="btn btn-primary" href="https://store.steampowered.com/app/4476390/Lost_Camp/" target="_blank" rel="noopener"><span data-i18n="g1.act1">Wishlist</span> <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="https://store.steampowered.com/app/4476390/Lost_Camp/" target="_blank" rel="noopener" data-i18n="act.view">View on Steam</a>
+        </div>
+      </div>
+      <div class="game-media"><div class="carousel" data-imgs="lc1,lc2" data-game="lostcamp"></div></div>
+    </article>
+
+    <article class="game flip reveal" data-theme="obscuria">
+      <div class="game-body">
+        <div class="game-meta-idx" data-i18n="g2.idx">Horror / Exploration</div>
+        <h3 class="game-title">Obscuria</h3>
+        <span class="badge free" data-i18n="g2.badge">Free · Feb 16, 2024</span>
+        <p class="game-desc" data-i18n="g2.desc"></p>
+        <p class="dlc-note" data-i18n="g2.dlc"></p>
+        <div class="tags"><span class="tag" data-i18n="t.horror">Horror</span><span class="tag" data-i18n="t.exploration">Exploration</span><span class="tag" data-i18n="t.scares">Scares</span><span class="tag" data-i18n="t.tension">Tension</span></div>
+        <div class="game-actions">
+          <a class="btn btn-primary" href="https://store.steampowered.com/app/2756780/OBSCURIA/" target="_blank" rel="noopener"><span data-i18n="act.playfree">Play free</span> <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="https://store.steampowered.com/app/2756780/OBSCURIA/" target="_blank" rel="noopener" data-i18n="act.view">View on Steam</a>
+        </div>
+      </div>
+      <div class="game-media"><div class="carousel" data-imgs="ob1,ob2" data-game="obscuria"></div></div>
+    </article>
+
+    <article class="game reveal" data-theme="nocturne">
+      <div class="game-body">
+        <div class="game-meta-idx" data-i18n="g3.idx">Obscuria 2 · Action horror</div>
+        <h3 class="game-title">Nocturne Island</h3>
+        <span class="badge paid" data-i18n="g3.badge">Paid · Oct 28, 2024</span>
+        <p class="game-desc" data-i18n="g3.desc"></p>
+        <div class="tags"><span class="tag" data-i18n="t.horror">Horror</span><span class="tag" data-i18n="t.adventure">Adventure</span><span class="tag" data-i18n="t.combat">Combat</span><span class="tag" data-i18n="t.exploration">Exploration</span></div>
+        <div class="game-actions">
+          <a class="btn btn-primary" href="https://store.steampowered.com/app/3102660/Nocturne_Island_Obscuria/" target="_blank" rel="noopener"><span data-i18n="act.buy">Buy on Steam</span> <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="https://store.steampowered.com/app/3102660/Nocturne_Island_Obscuria/" target="_blank" rel="noopener" data-i18n="act.viewpage">View page</a>
+        </div>
+      </div>
+      <div class="game-media"><div class="carousel" data-imgs="ni1,ni2" data-game="nocturne"></div></div>
+    </article>
+
+    <article class="game flip reveal" data-theme="jump">
+      <div class="game-body">
+        <div class="game-meta-idx" data-i18n="g4.idx">Sandbox multiplayer</div>
+        <h3 class="game-title">Jump to Survive 2</h3>
+        <span class="badge free" data-i18n="g4.badge">Free · Jul 3, 2023</span>
+        <p class="game-desc" data-i18n="g4.desc"></p>
+        <div class="tags"><span class="tag" data-i18n="t.sandbox">Sandbox</span><span class="tag" data-i18n="t.multiplayer">Multiplayer</span><span class="tag" data-i18n="t.driving">Driving</span><span class="tag" data-i18n="t.creative">Creative</span></div>
+        <div class="game-actions">
+          <a class="btn btn-primary" href="https://store.steampowered.com/app/2393550/JUMP_TO_SURVIVE_2/" target="_blank" rel="noopener"><span data-i18n="act.playfree">Play free</span> <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="https://store.steampowered.com/app/2393550/JUMP_TO_SURVIVE_2/" target="_blank" rel="noopener" data-i18n="act.view">View on Steam</a>
+        </div>
+      </div>
+      <div class="game-media"><div class="carousel" data-imgs="jt1,jt2" data-game="jump"></div></div>
+    </article>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="block" id="roadmap">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="sec-kicker" data-i18n="rm.kicker">// Studio timeline</div><h2 class="sec-title" data-i18n="rm.title">Roadmap</h2></div>
+      <p class="sec-note" data-i18n="rm.note">Every release and what's still coming, year by year.</p>
+    </div>
+    <div class="roadmap reveal" id="roadmapList"></div>
+  </div>
+</section>
+
+<!-- STUDIO -->
+<section class="block" id="estudio">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><div class="sec-kicker" data-i18n="studio.kicker">// Who we are</div><h2 class="sec-title" data-i18n="studio.title">The Studio</h2></div></div>
+    <div class="studio-grid reveal">
+      <div data-i18n="studio.bio"></div>
+      <div class="stats" id="stats">
+        <div class="stat"><div class="n" data-count="4" data-pad="2">04</div><div class="l" data-i18n="stat.games">Games published</div></div>
+        <div class="stat"><div class="n" data-count="2020">2020</div><div class="l" data-i18n="stat.founded">Founded</div></div>
+        <div class="stat"><div class="n">∞</div><div class="l" data-i18n="stat.more">More to come</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center">
+      <img class="contact-logo" data-img="logo" alt="Aranja Games">
+      <div class="sec-kicker" style="text-align:center" data-i18n="contact.kicker">// Let's talk</div>
+      <h2 class="contact-big">making<br>it <span class="accent">real</span></h2>
+      <a class="btn btn-primary" href="mailto:aranjagames@gmail.com" style="margin:0 auto"><span>aranjagames@gmail.com</span> <span class="arr">→</span></a>
+      <div class="founder-card">
+        <img data-img="enzo" alt="Enzo Colomer">
+        <div><div class="role" data-i18n="studio.founderRole">Founder · 2020</div><h3>Enzo Colomer</h3></div>
+      </div>
+    </div>
+    <div class="socials reveal">
+      <a class="social" href="https://www.instagram.com/aranjagamesofficial" target="_blank" rel="noopener">◎ Instagram</a>
+      <a class="social" href="https://store.steampowered.com/developer/ARANJA/" target="_blank" rel="noopener">▶ Steam</a>
+      <a class="social" href="https://www.youtube.com/@ARANJAGAMES" target="_blank" rel="noopener">▷ YouTube</a>
+      <a class="social" href="https://www.tiktok.com/@aranja_games" target="_blank" rel="noopener">♪ TikTok</a>
+    </div>
+    <footer><div class="foot-row"><span>© 2026 ARANJA GAMES</span><span>EST 2020</span></div></footer>
+  </div>
+</section>
+
+<script>
+const IMG={logo:"assets/logo.png",hero:"assets/hero.jpg",lc1:"assets/lc1.jpg",lc2:"assets/lc2.jpg",ob1:"assets/ob1.jpg",ob2:"assets/ob2.jpg",ni1:"assets/ni1.jpg",ni2:"assets/ni2.jpg",jt1:"assets/jt1.jpg",jt2:"assets/jt2.jpg",enzo:"assets/enzo.jpg"};
+document.querySelectorAll('[data-img]').forEach(el=>{const k=el.dataset.img;if(el.tagName==='IMG')el.src=IMG[k];else el.style.backgroundImage=`url(${IMG[k]})`;});
+
+/* per-game theme: background colour + faint background image */
+const THEME={
+  lostcamp:{c:"#170f1c",img:"lc2"},
+  obscuria:{c:"#08131f",img:"ob2"},
+  nocturne:{c:"#1a1206",img:"ni2"},
+  jump:{c:"#15110a",img:"jt1"}
+};
+
+const LANGS=[["en","English"],["es","Español"],["pl","Polski"],["it","Italiano"],["de","Deutsch"],["zh","中文"]];
+
+const I18N={
+ en:{
+  "nav.games":"Games","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contact",
+  "hero.eyebrow":"Independent studio · Horror &amp; Adventure","hero.cta1":"Explore the games","hero.cta2":"Follow on Steam","hero.scroll":"Scroll",
+  "games.kicker":"// Our games","games.title":"The Games","games.note":"Four worlds. One obsession: dense atmosphere, exploration and real scares.",
+  "g1.idx":"Adventure","g1.badge":"Upcoming · 2026","g1.act1":"Wishlist",
+  "g1.desc":"After your mother's death you become the warden of a secluded campsite deep in the mountains. As winter buries the trails in snow, the silence starts to feel like it's hiding something that was never meant to be disturbed.",
+  "g2.idx":"Horror / Exploration","g2.badge":"Free · Feb 16, 2024",
+  "g2.desc":"The world's largest cruise ship sinks and is overrun by spirits. As an agent, you board the \"Nocturne\" with your flashlight to find Captain Blackhood — alive or dead — and uncover the curse dragging the ship down.",
+  "g2.dlc":"+ free DLC: <b>Obscuria: The Tragedy</b> — play as Captain Blackhood.",
+  "g3.idx":"Obscuria 2 · Action horror","g3.badge":"Paid · Oct 28, 2024",
+  "g3.desc":"A routine police patrol turns into a nightmare when a shipwreck strands you on Nocturne Island. Explore forests, abandoned buildings and hidden tunnels, solve puzzles and fight back to uncover the island's twisted history.",
+  "g4.idx":"Sandbox multiplayer","g4.badge":"Free · Jul 3, 2023",
+  "g4.desc":"Create worlds, explore the map and build whatever you imagine: roleplay, parkour, matches, races and more. Drive without limits, jump into classic mode and play it all with friends. Only your imagination is the limit.",
+  "act.view":"View on Steam","act.viewpage":"View page","act.playfree":"Play free","act.buy":"Buy on Steam",
+  "t.horror":"Horror","t.survival":"Survival","t.mystery":"Mystery","t.atmos":"Atmospheric","t.exploration":"Exploration","t.scares":"Scares","t.tension":"Tension","t.adventure":"Adventure","t.combat":"Combat","t.sandbox":"Sandbox","t.multiplayer":"Multiplayer","t.driving":"Driving","t.creative":"Creative",
+  "rm.kicker":"// Studio timeline","rm.title":"Roadmap","rm.note":"Every release and what's still coming, year by year.","rm.upcoming":"Upcoming",
+  "studio.kicker":"// Who we are","studio.title":"The Studio",
+  "studio.bio":"<p><b>Aranja Games</b> is a Spanish studio created and founded by <b>Enzo Colomer in 2020</b>. Our main goal with Aranja is to differentiate ourselves from other games and companies — we want to offer unique, quality experiences for players.</p><p>We always think about the player's experience and the player first, before anything else. We believe that work and perseverance pay off.</p>",
+  "studio.founderRole":"Founder · 2020","stat.games":"Games published","stat.founded":"Founded","stat.more":"More to come",
+  "contact.kicker":"// Let's talk","trailer":"Trailer"
+ },
+ es:{
+  "nav.games":"Juegos","nav.roadmap":"Roadmap","nav.studio":"Estudio","nav.contact":"Contacto",
+  "hero.eyebrow":"Estudio independiente · Terror y Aventura","hero.cta1":"Ver los juegos","hero.cta2":"Seguir en Steam","hero.scroll":"Explora",
+  "games.kicker":"// Nuestros juegos","games.title":"Los juegos","games.note":"Cuatro mundos. Una obsesión: atmósfera densa, exploración y sustos de verdad.",
+  "g1.idx":"Aventura","g1.badge":"Próximamente · 2026","g1.act1":"Añadir a deseados",
+  "g1.desc":"Tras la muerte de tu madre te conviertes en el guarda de un campamento aislado en plena montaña. Cuando el invierno cubre de nieve los senderos, el silencio empieza a parecer que esconde algo que nunca debió ser despertado.",
+  "g2.idx":"Terror / Exploración","g2.badge":"Gratis · 16 feb 2024",
+  "g2.desc":"El mayor crucero del mundo naufraga y queda tomado por espíritus. Como agente, entras al \"Nocturne\" con tu linterna para encontrar al Capitán Blackhood —vivo o muerto— y destapar la maldición que arrastra el barco.",
+  "g2.dlc":"+ DLC gratis: <b>Obscuria: The Tragedy</b> — juega como el Capitán Blackhood.",
+  "g3.idx":"Obscuria 2 · Terror de acción","g3.badge":"De pago · 28 oct 2024",
+  "g3.desc":"Una patrulla policial rutinaria se convierte en pesadilla cuando un naufragio te deja atrapado en la isla Nocturne. Explora bosques, edificios abandonados y túneles ocultos, resuelve puzzles y defiéndete para descubrir la retorcida historia de la isla.",
+  "g4.idx":"Sandbox multijugador","g4.badge":"Gratis · 3 jul 2023",
+  "g4.desc":"Crea mundos, explora el mapa y construye lo que imagines: rol, parkour, partidas, carreras y mucho más. Conduce sin límites, vuelve al modo clásico y juégalo todo con amigos. Solo tu imaginación es el límite.",
+  "act.view":"Ver en Steam","act.viewpage":"Ver ficha","act.playfree":"Jugar gratis","act.buy":"Comprar en Steam",
+  "t.horror":"Terror","t.survival":"Supervivencia","t.mystery":"Misterio","t.atmos":"Atmosférico","t.exploration":"Exploración","t.scares":"Sustos","t.tension":"Tensión","t.adventure":"Aventura","t.combat":"Combate","t.sandbox":"Sandbox","t.multiplayer":"Multijugador","t.driving":"Conducción","t.creative":"Creativo",
+  "rm.kicker":"// Línea de tiempo","rm.title":"Roadmap","rm.note":"Cada lanzamiento y lo que aún está por llegar, año a año.","rm.upcoming":"Próximo",
+  "studio.kicker":"// Quiénes somos","studio.title":"El estudio",
+  "studio.bio":"<p><b>Aranja Games</b> es un estudio español creado y fundado por <b>Enzo Colomer en 2020</b>. Nuestro objetivo principal con Aranja es diferenciarnos de otros juegos y compañías: queremos ofrecer experiencias únicas y de calidad para los jugadores.</p><p>Pensamos siempre primero en la experiencia del jugador y en el jugador, antes que en nada. Creemos que el trabajo y la perseverancia dan sus frutos.</p>",
+  "studio.founderRole":"Fundador · 2020","stat.games":"Juegos publicados","stat.founded":"Fundado","stat.more":"Por venir",
+  "contact.kicker":"// Hablemos","trailer":"Tráiler"
+ },
+ pl:{
+  "nav.games":"Gry","nav.roadmap":"Roadmapa","nav.studio":"Studio","nav.contact":"Kontakt",
+  "hero.eyebrow":"Niezależne studio · Horror i Przygoda","hero.cta1":"Zobacz gry","hero.cta2":"Obserwuj na Steam","hero.scroll":"Przewiń",
+  "games.kicker":"// Nasze gry","games.title":"Gry","games.note":"Cztery światy. Jedna obsesja: gęsta atmosfera, eksploracja i prawdziwy strach.",
+  "g1.idx":"Przygoda","g1.badge":"Wkrótce · 2026","g1.act1":"Lista życzeń",
+  "g1.desc":"Po śmierci matki zostajesz dozorcą odludnego obozowiska wysoko w górach. Gdy zima zasypuje szlaki śniegiem, cisza zaczyna skrywać coś, czego nigdy nie należało budzić.",
+  "g2.idx":"Horror / Eksploracja","g2.badge":"Za darmo · 16 lut 2024",
+  "g2.desc":"Największy statek wycieczkowy na świecie tonie i zostaje opanowany przez duchy. Jako agent wkraczasz na „Nocturne” z latarką, by odnaleźć kapitana Blackhooda — żywego lub martwego — i odkryć klątwę ciągnącą statek na dno.",
+  "g2.dlc":"+ darmowe DLC: <b>Obscuria: The Tragedy</b> — wciel się w kapitana Blackhooda.",
+  "g3.idx":"Obscuria 2 · Horror akcji","g3.badge":"Płatne · 28 paź 2024",
+  "g3.desc":"Rutynowy patrol policyjny zamienia się w koszmar, gdy katastrofa statku zostawia cię na wyspie Nocturne. Przemierzaj lasy, opuszczone budynki i ukryte tunele, rozwiązuj zagadki i walcz, by odkryć mroczną historię wyspy.",
+  "g4.idx":"Piaskownica multiplayer","g4.badge":"Za darmo · 3 lip 2023",
+  "g4.desc":"Twórz światy, eksploruj mapę i buduj, co tylko sobie wyobrazisz: roleplay, parkour, mecze, wyścigi i więcej. Jeźdź bez ograniczeń, wskakuj do trybu klasycznego i graj we wszystko ze znajomymi. Tylko wyobraźnia jest granicą.",
+  "act.view":"Zobacz na Steam","act.viewpage":"Zobacz stronę","act.playfree":"Graj za darmo","act.buy":"Kup na Steam",
+  "t.horror":"Horror","t.survival":"Survival","t.mystery":"Tajemnica","t.atmos":"Klimatyczna","t.exploration":"Eksploracja","t.scares":"Strachy","t.tension":"Napięcie","t.adventure":"Przygoda","t.combat":"Walka","t.sandbox":"Piaskownica","t.multiplayer":"Multiplayer","t.driving":"Jazda","t.creative":"Kreatywna",
+  "rm.kicker":"// Oś czasu studia","rm.title":"Roadmapa","rm.note":"Każda premiera i to, co dopiero nadejdzie — rok po roku.","rm.upcoming":"Wkrótce",
+  "studio.kicker":"// Kim jesteśmy","studio.title":"Studio",
+  "studio.bio":"<p><b>Aranja Games</b> to hiszpańskie studio założone przez <b>Enzo Colomera w 2020 roku</b>. Naszym głównym celem jest wyróżnienie się na tle innych gier i firm — chcemy oferować graczom wyjątkowe doświadczenia wysokiej jakości.</p><p>Zawsze stawiamy doświadczenie gracza i samego gracza na pierwszym miejscu, ponad wszystko inne. Wierzymy, że praca i wytrwałość się opłacają.</p>",
+  "studio.founderRole":"Założyciel · 2020","stat.games":"Wydane gry","stat.founded":"Założono","stat.more":"Więcej wkrótce",
+  "contact.kicker":"// Porozmawiajmy","trailer":"Zwiastun"
+ },
+ it:{
+  "nav.games":"Giochi","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contatti",
+  "hero.eyebrow":"Studio indipendente · Horror e Avventura","hero.cta1":"Esplora i giochi","hero.cta2":"Segui su Steam","hero.scroll":"Scorri",
+  "games.kicker":"// I nostri giochi","games.title":"I giochi","games.note":"Quattro mondi. Un'ossessione: atmosfera densa, esplorazione e veri spaventi.",
+  "g1.idx":"Avventura","g1.badge":"In arrivo · 2026","g1.act1":"Lista dei desideri",
+  "g1.desc":"Dopo la morte di tua madre diventi il custode di un campeggio isolato tra le montagne. Mentre l'inverno seppellisce i sentieri sotto la neve, il silenzio sembra nascondere qualcosa che non avrebbe mai dovuto essere disturbato.",
+  "g2.idx":"Horror / Esplorazione","g2.badge":"Gratis · 16 feb 2024",
+  "g2.desc":"La più grande nave da crociera del mondo affonda ed è invasa dagli spiriti. Come agente, sali a bordo del \"Nocturne\" con la tua torcia per trovare il Capitano Blackhood — vivo o morto — e svelare la maledizione che trascina la nave a fondo.",
+  "g2.dlc":"+ DLC gratuito: <b>Obscuria: The Tragedy</b> — gioca nei panni del Capitano Blackhood.",
+  "g3.idx":"Obscuria 2 · Horror d'azione","g3.badge":"A pagamento · 28 ott 2024",
+  "g3.desc":"Una pattuglia di routine si trasforma in un incubo quando un naufragio ti lascia bloccato sull'isola di Nocturne. Esplora foreste, edifici abbandonati e tunnel nascosti, risolvi enigmi e combatti per svelare la contorta storia dell'isola.",
+  "g4.idx":"Sandbox multigiocatore","g4.badge":"Gratis · 3 lug 2023",
+  "g4.desc":"Crea mondi, esplora la mappa e costruisci tutto ciò che immagini: roleplay, parkour, partite, gare e altro. Guida senza limiti, salta nella modalità classica e gioca a tutto con gli amici. Solo la tua immaginazione è il limite.",
+  "act.view":"Vedi su Steam","act.viewpage":"Vedi pagina","act.playfree":"Gioca gratis","act.buy":"Acquista su Steam",
+  "t.horror":"Horror","t.survival":"Sopravvivenza","t.mystery":"Mistero","t.atmos":"Atmosferico","t.exploration":"Esplorazione","t.scares":"Spaventi","t.tension":"Tensione","t.adventure":"Avventura","t.combat":"Combattimento","t.sandbox":"Sandbox","t.multiplayer":"Multigiocatore","t.driving":"Guida","t.creative":"Creativo",
+  "rm.kicker":"// Cronologia dello studio","rm.title":"Roadmap","rm.note":"Ogni uscita e ciò che deve ancora arrivare, anno dopo anno.","rm.upcoming":"In arrivo",
+  "studio.kicker":"// Chi siamo","studio.title":"Lo studio",
+  "studio.bio":"<p><b>Aranja Games</b> è uno studio spagnolo creato e fondato da <b>Enzo Colomer nel 2020</b>. Il nostro obiettivo principale è distinguerci dagli altri giochi e aziende: vogliamo offrire ai giocatori esperienze uniche e di qualità.</p><p>Pensiamo sempre prima all'esperienza del giocatore e al giocatore stesso, prima di ogni altra cosa. Crediamo che il lavoro e la perseveranza ripaghino.</p>",
+  "studio.founderRole":"Fondatore · 2020","stat.games":"Giochi pubblicati","stat.founded":"Fondato","stat.more":"Altro in arrivo",
+  "contact.kicker":"// Parliamone","trailer":"Trailer"
+ },
+ de:{
+  "nav.games":"Spiele","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Kontakt",
+  "hero.eyebrow":"Unabhängiges Studio · Horror & Abenteuer","hero.cta1":"Spiele entdecken","hero.cta2":"Auf Steam folgen","hero.scroll":"Scrollen",
+  "games.kicker":"// Unsere Spiele","games.title":"Die Spiele","games.note":"Vier Welten. Eine Obsession: dichte Atmosphäre, Erkundung und echter Schrecken.",
+  "g1.idx":"Abenteuer","g1.badge":"Demnächst · 2026","g1.act1":"Wunschliste",
+  "g1.desc":"Nach dem Tod deiner Mutter wirst du zum Wächter eines abgelegenen Campingplatzes tief in den Bergen. Während der Winter die Pfade unter Schnee begräbt, scheint die Stille etwas zu verbergen, das niemals geweckt werden sollte.",
+  "g2.idx":"Horror / Erkundung","g2.badge":"Kostenlos · 16. Feb. 2024",
+  "g2.desc":"Das größte Kreuzfahrtschiff der Welt sinkt und wird von Geistern überrannt. Als Agent betrittst du die „Nocturne“ mit deiner Taschenlampe, um Kapitän Blackhood zu finden — lebendig oder tot — und den Fluch zu lüften, der das Schiff in die Tiefe zieht.",
+  "g2.dlc":"+ kostenloses DLC: <b>Obscuria: The Tragedy</b> — spiele als Kapitän Blackhood.",
+  "g3.idx":"Obscuria 2 · Action-Horror","g3.badge":"Kostenpflichtig · 28. Okt. 2024",
+  "g3.desc":"Eine routinemäßige Polizeistreife wird zum Albtraum, als dich ein Schiffbruch auf Nocturne Island stranden lässt. Erkunde Wälder, verlassene Gebäude und versteckte Tunnel, löse Rätsel und wehre dich, um die verdrehte Geschichte der Insel aufzudecken.",
+  "g4.idx":"Sandbox-Mehrspieler","g4.badge":"Kostenlos · 3. Juli 2023",
+  "g4.desc":"Erschaffe Welten, erkunde die Karte und baue, was du dir vorstellst: Rollenspiel, Parkour, Matches, Rennen und mehr. Fahre ohne Grenzen, springe in den klassischen Modus und spiele alles mit Freunden. Nur deine Fantasie ist die Grenze.",
+  "act.view":"Auf Steam ansehen","act.viewpage":"Seite ansehen","act.playfree":"Kostenlos spielen","act.buy":"Auf Steam kaufen",
+  "t.horror":"Horror","t.survival":"Survival","t.mystery":"Mystery","t.atmos":"Atmosphärisch","t.exploration":"Erkundung","t.scares":"Schrecken","t.tension":"Spannung","t.adventure":"Abenteuer","t.combat":"Kampf","t.sandbox":"Sandbox","t.multiplayer":"Mehrspieler","t.driving":"Fahren","t.creative":"Kreativ",
+  "rm.kicker":"// Studio-Zeitleiste","rm.title":"Roadmap","rm.note":"Jede Veröffentlichung und was noch kommt — Jahr für Jahr.","rm.upcoming":"Demnächst",
+  "studio.kicker":"// Wer wir sind","studio.title":"Das Studio",
+  "studio.bio":"<p><b>Aranja Games</b> ist ein spanisches Studio, gegründet von <b>Enzo Colomer im Jahr 2020</b>. Unser Hauptziel ist es, uns von anderen Spielen und Unternehmen abzuheben — wir möchten den Spielern einzigartige, hochwertige Erlebnisse bieten.</p><p>Wir denken immer zuerst an das Erlebnis des Spielers und an den Spieler selbst, vor allem anderen. Wir glauben, dass sich Arbeit und Ausdauer auszahlen.</p>",
+  "studio.founderRole":"Gründer · 2020","stat.games":"Veröffentlichte Spiele","stat.founded":"Gegründet","stat.more":"Mehr folgt",
+  "contact.kicker":"// Sprich uns an","trailer":"Trailer"
+ },
+ zh:{
+  "nav.games":"游戏","nav.roadmap":"路线图","nav.studio":"工作室","nav.contact":"联系",
+  "hero.eyebrow":"独立工作室 · 恐怖与冒险","hero.cta1":"探索游戏","hero.cta2":"在 Steam 关注","hero.scroll":"向下滚动",
+  "games.kicker":"// 我们的游戏","games.title":"游戏作品","games.note":"四个世界，一种执念：浓厚的氛围、探索与真正的惊吓。",
+  "g1.idx":"冒险","g1.badge":"即将推出 · 2026","g1.act1":"加入愿望单",
+  "g1.desc":"母亲去世后，你成为深山中一处偏僻营地的看守人。当寒冬将小径埋入积雪，寂静仿佛藏着某种本不该被惊扰的东西。",
+  "g2.idx":"恐怖 / 探索","g2.badge":"免费 · 2024年2月16日",
+  "g2.desc":"世界上最大的邮轮沉没，被幽灵占据。作为特工，你手持手电筒登上「Nocturne」号，寻找失踪的布莱克胡德船长——无论生死——并揭开拖垮这艘船的诅咒。",
+  "g2.dlc":"+ 免费 DLC：<b>Obscuria: The Tragedy</b>——扮演布莱克胡德船长。",
+  "g3.idx":"Obscuria 2 · 动作恐怖","g3.badge":"付费 · 2024年10月28日",
+  "g3.desc":"一次例行巡逻变成噩梦——一场海难让你被困在 Nocturne 岛。探索森林、废弃建筑和隐秘地道，解开谜题并奋力反击，揭开这座岛屿扭曲的历史。",
+  "g4.idx":"沙盒多人","g4.badge":"免费 · 2023年7月3日",
+  "g4.desc":"创造世界、探索地图，构建你想象的一切：角色扮演、跑酷、对战、竞速等等。无限制驾驶，跳入经典模式，和朋友一起畅玩。唯一的限制是你的想象力。",
+  "act.view":"在 Steam 查看","act.viewpage":"查看页面","act.playfree":"免费游玩","act.buy":"在 Steam 购买",
+  "t.horror":"恐怖","t.survival":"生存","t.mystery":"悬疑","t.atmos":"氛围","t.exploration":"探索","t.scares":"惊吓","t.tension":"紧张","t.adventure":"冒险","t.combat":"战斗","t.sandbox":"沙盒","t.multiplayer":"多人","t.driving":"驾驶","t.creative":"创造",
+  "rm.kicker":"// 工作室时间线","rm.title":"路线图","rm.note":"每一次发布以及即将到来的内容，逐年呈现。","rm.upcoming":"即将",
+  "studio.kicker":"// 关于我们","studio.title":"工作室",
+  "studio.bio":"<p><b>Aranja Games</b> 是一家西班牙工作室，由 <b>Enzo Colomer 于 2020 年</b>创立。我们的核心目标是与其他游戏和公司有所不同——为玩家带来独特而优质的体验。</p><p>我们始终把玩家的体验和玩家本身放在第一位，高于一切。我们相信努力与坚持终有回报。</p>",
+  "studio.founderRole":"创始人 · 2020","stat.games":"已发行游戏","stat.founded":"成立","stat.more":"更多即将到来",
+  "contact.kicker":"// 联系我们","trailer":"预告片"
+ }
+};
+
+const ROADMAP=[
+ {year:2026,items:[{date:"2026",status:"up",
+   en:{t:"Lost Camp",d:"After your mother's death you take the only job left — warden of a lonely mountain campsite. As winter falls, its buried secrets begin to surface. Wishlist it on Steam."},
+   es:{t:"Lost Camp",d:"Tras la muerte de tu madre aceptas el único trabajo que queda: guarda de un campamento solitario en la montaña. Cuando llega el invierno, sus secretos enterrados empiezan a aflorar. Añádelo a deseados en Steam."},
+   pl:{t:"Lost Camp",d:"Po śmierci matki przyjmujesz jedyną dostępną pracę — dozorcy samotnego górskiego obozowiska. Gdy nadchodzi zima, jego pogrzebane sekrety zaczynają wychodzić na jaw. Dodaj do listy życzeń na Steam."},
+   it:{t:"Lost Camp",d:"Dopo la morte di tua madre accetti l'unico lavoro rimasto: custode di un campeggio solitario in montagna. Quando arriva l'inverno, i suoi segreti sepolti riaffiorano. Aggiungilo alla lista dei desideri su Steam."},
+   de:{t:"Lost Camp",d:"Nach dem Tod deiner Mutter nimmst du den einzigen verbliebenen Job an — Wächter eines einsamen Bergcampingplatzes. Wenn der Winter kommt, treten seine vergrabenen Geheimnisse zutage. Setze es auf deine Steam-Wunschliste."},
+   zh:{t:"Lost Camp",d:"母亲去世后，你接受了唯一的工作——一座偏僻山间营地的看守人。寒冬降临，被掩埋的秘密开始浮现。在 Steam 加入愿望单。"}}]},
+ {year:2025,items:[{date:"Feb 2025",status:"rel",
+   en:{t:"Obscuria: The Tragedy",d:"Free DLC: play as Captain Blackhood against “The Penitence”."},
+   es:{t:"Obscuria: The Tragedy",d:"DLC gratuito: juega como el Capitán Blackhood frente a “The Penitence”."},
+   pl:{t:"Obscuria: The Tragedy",d:"Darmowe DLC: wciel się w kapitana Blackhooda przeciw „The Penitence”."},
+   it:{t:"Obscuria: The Tragedy",d:"DLC gratuito: gioca nei panni del Capitano Blackhood contro “The Penitence”."},
+   de:{t:"Obscuria: The Tragedy",d:"Kostenloses DLC: spiele als Kapitän Blackhood gegen „The Penitence“."},
+   zh:{t:"Obscuria: The Tragedy",d:"免费 DLC：扮演布莱克胡德船长对抗「The Penitence」。"}}]},
+ {year:2024,items:[
+   {date:"Oct 2024",status:"rel",
+    en:{t:"Nocturne Island Obscuria",d:"The Obscuria sequel — action horror on an abandoned island."},
+    es:{t:"Nocturne Island Obscuria",d:"La secuela de Obscuria — terror de acción en una isla abandonada."},
+    pl:{t:"Nocturne Island Obscuria",d:"Kontynuacja Obscurii — horror akcji na opuszczonej wyspie."},
+    it:{t:"Nocturne Island Obscuria",d:"Il seguito di Obscuria — horror d'azione su un'isola abbandonata."},
+    de:{t:"Nocturne Island Obscuria",d:"Die Fortsetzung von Obscuria — Action-Horror auf einer verlassenen Insel."},
+    zh:{t:"Nocturne Island Obscuria",d:"Obscuria 续作——废弃岛屿上的动作恐怖。"}},
+   {date:"Feb 2024",status:"rel",
+    en:{t:"Obscuria",d:"Free horror aboard the cursed cruise ship “Nocturne”."},
+    es:{t:"Obscuria",d:"Terror gratuito a bordo del crucero maldito “Nocturne”."},
+    pl:{t:"Obscuria",d:"Darmowy horror na pokładzie przeklętego statku „Nocturne”."},
+    it:{t:"Obscuria",d:"Horror gratuito a bordo della nave maledetta “Nocturne”."},
+    de:{t:"Obscuria",d:"Kostenloser Horror an Bord des verfluchten Kreuzfahrtschiffs „Nocturne“."},
+    zh:{t:"Obscuria",d:"免费恐怖体验，登上被诅咒的邮轮「Nocturne」。"}}]},
+ {year:2023,items:[{date:"Jul 2023",status:"rel",
+   en:{t:"Jump to Survive 2",d:"The sandbox universe launches on Steam."},
+   es:{t:"Jump to Survive 2",d:"El universo sandbox se lanza en Steam."},
+   pl:{t:"Jump to Survive 2",d:"Piaskownicowy wszechświat debiutuje na Steam."},
+   it:{t:"Jump to Survive 2",d:"L'universo sandbox arriva su Steam."},
+   de:{t:"Jump to Survive 2",d:"Das Sandbox-Universum erscheint auf Steam."},
+   zh:{t:"Jump to Survive 2",d:"沙盒宇宙登陆 Steam。"}}]},
+ {year:2020,items:[{date:"2020",status:"mile",
+   en:{t:"Aranja Games is founded",d:"Enzo Colomer starts the studio. Making it real."},
+   es:{t:"Nace Aranja Games",d:"Enzo Colomer funda el estudio. Making it real."},
+   pl:{t:"Powstaje Aranja Games",d:"Enzo Colomer zakłada studio. Making it real."},
+   it:{t:"Nasce Aranja Games",d:"Enzo Colomer fonda lo studio. Making it real."},
+   de:{t:"Aranja Games wird gegründet",d:"Enzo Colomer gründet das Studio. Making it real."},
+   zh:{t:"Aranja Games 成立",d:"Enzo Colomer 创立工作室。Making it real。"}}]}
+];
+
+let LANG="en";
+
+/* language dropdown */
+const dd=document.getElementById('langdd'),menu=document.getElementById('langmenu'),cur=document.getElementById('langcur');
+menu.innerHTML=LANGS.map(([c,n])=>`<button data-l="${c}">${n}<span class="tick">✓</span></button>`).join('');
+document.getElementById('langbtn').addEventListener('click',e=>{e.stopPropagation();dd.classList.toggle('open');});
+menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{applyLang(b.dataset.l);dd.classList.remove('open');}));
+document.addEventListener('click',e=>{if(!dd.contains(e.target))dd.classList.remove('open');});
+
+function renderRoadmap(){
+  document.getElementById('roadmapList').innerHTML=ROADMAP.map(y=>{
+    const items=y.items.map(it=>{
+      const cls=it.status==="up"?"up":it.status==="mile"?"mile":"";
+      const pill=it.status==="up"?`<span class="rm-pill">${I18N[LANG]["rm.upcoming"]}</span>`:"";
+      return `<div class="rm-item ${cls}"><div class="rm-date">${it.date}</div><h3>${it[LANG].t}${pill}</h3><p>${it[LANG].d}</p></div>`;
+    }).join("");
+    return `<div class="rm-year">${y.year}</div>${items}`;
+  }).join("");
+}
+function renderTicker(){
+  const names=["LOST CAMP","OBSCURIA","NOCTURNE ISLAND","JUMP TO SURVIVE"];
+  const seq=names.map(n=>`<span>${n}</span><span><b>·</b></span>`).join("").repeat(2);
+  document.getElementById('ticker').innerHTML=`<div class="ticker-seq">${seq}</div><div class="ticker-seq">${seq}</div>`;
+}
+function applyLang(l){
+  LANG=l;document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(I18N[l][k]!=null)el.innerHTML=I18N[l][k];});
+  cur.textContent=(LANGS.find(x=>x[0]===l)||["","English"])[1];
+  menu.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.l===l));
+  renderRoadmap();
+}
+
+/* carousels */
+function buildCarousels(){
+  document.querySelectorAll('.carousel').forEach(c=>{
+    const keys=c.dataset.imgs.split(',');
+    c.innerHTML=keys.map((k,i)=>`<div class="slide${i===0?' active':''}" style="background-image:url(${IMG[k]})"></div>`).join('')
+      +`<div class="cdots">${keys.map((_,i)=>`<i class="${i===0?'active':''}" data-i="${i}"></i>`).join('')}</div>`;
+    let idx=0;const slides=c.querySelectorAll('.slide'),dots=c.querySelectorAll('.cdots i');
+    const go=i=>{slides.forEach((s,j)=>s.classList.toggle('active',j===i));dots.forEach((d,j)=>d.classList.toggle('active',j===i));idx=i;};
+    dots.forEach(d=>d.addEventListener('click',e=>{e.stopPropagation();go(+d.dataset.i);reset();}));
+    let timer=setInterval(()=>go((idx+1)%slides.length),4500);
+    function reset(){clearInterval(timer);timer=setInterval(()=>go((idx+1)%slides.length),4500);}
+  });
+}
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+/* nav + progress + menu */
+const nav=document.getElementById('nav'),prog=document.getElementById('progress');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40);
+  const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
+const burger=document.getElementById('burger'),mid=document.getElementById('navmid');
+burger.addEventListener('click',()=>mid.classList.toggle('open'));
+mid.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mid.classList.remove('open')));
+
+/* reveal */
+const revealAll=()=>document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));setTimeout(revealAll,4500);
+}else revealAll();
+
+/* count-up stats */
+function countUp(el){const target=+el.dataset.count,pad=+(el.dataset.pad||0);let s=null;
+  const step=t=>{if(!s)s=t;const p=Math.min((t-s)/1100,1);const v=Math.floor(p*target);
+    el.textContent=pad?String(v).padStart(pad,'0'):v;if(p<1)requestAnimationFrame(step);};
+  requestAnimationFrame(step);}
+const statsEl=document.getElementById('stats');
+if(statsEl){new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){
+  statsEl.querySelectorAll('[data-count]').forEach(countUp);o.disconnect();}}),{threshold:.4}).observe(statsEl);}
+
+/* theme-shifting stage */
+const stage=document.getElementById('stage'),stageImg=document.getElementById('stageImg');
+const gamesSection=document.getElementById('juegos');let curTheme=null;
+function setTheme(t){if(t===curTheme)return;curTheme=t;const th=THEME[t];if(!th)return;
+  stage.style.backgroundColor=th.c;stageImg.style.opacity=0;
+  setTimeout(()=>{stageImg.style.backgroundImage=`url(${IMG[th.img]})`;stageImg.style.opacity=.12;},220);}
+const themeIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setTheme(e.target.dataset.theme);}),{rootMargin:"-45% 0px -45% 0px"});
+document.querySelectorAll('.game').forEach(g=>themeIO.observe(g));
+new IntersectionObserver(es=>es.forEach(e=>stage.classList.toggle('on',e.isIntersecting)),{threshold:.02}).observe(gamesSection);
+
+const fine=matchMedia('(pointer:fine)').matches;
+if(fine){const hero=document.getElementById('hero'),torch=document.getElementById('torch');
+  hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();
+    torch.style.setProperty('--mx',(e.clientX-r.left)+'px');torch.style.setProperty('--my',(e.clientY-r.top)+'px');});}
+
+/* parallax */
+const plx=[...document.querySelectorAll('[data-parallax]')];
+if(!reduce&&plx.length){let ticking=false;
+  const upd=()=>{const vh=innerHeight;plx.forEach(el=>{const r=el.getBoundingClientRect();
+    const center=r.top+r.height/2-vh/2;const sp=parseFloat(el.dataset.parallax)||.1;
+    el.style.setProperty('--py',(-center*sp)+'px');
+    const sc=el.dataset.pscale?` scale(${el.dataset.pscale})`:'';
+    el.style.transform=`translateY(var(--py,0))${sc}`;});ticking=false;};
+  addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(upd);ticking=true;}},{passive:true});upd();}
+
+/* embers */
+const cv=document.getElementById('embers'),cx=cv.getContext('2d'),heroEl=document.getElementById('hero');
+let W,H,parts;
+function seed(rand){return{x:Math.random()*W,y:rand?Math.random()*H:H+10,r:Math.random()*1.8+.4,s:Math.random()*.5+.18,d:Math.random()*.6-.3,a:Math.random()*.5+.25,t:Math.random()*6.28};}
+function rsz(){W=cv.width=heroEl.offsetWidth;H=cv.height=heroEl.offsetHeight;parts=Array.from({length:reduce?0:Math.min(70,Math.floor(W/24))},()=>seed(true));}
+function tick(){cx.clearRect(0,0,W,H);for(const p of parts){p.y-=p.s;p.t+=.02;p.x+=Math.sin(p.t)*.3+p.d*.2;
+  if(p.y<-10)Object.assign(p,seed(false));const fl=.6+Math.sin(p.t*3)*.4;
+  cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fillStyle=`rgba(255,${120+Math.floor(60*fl)},40,${p.a*fl})`;
+  cx.shadowBlur=8;cx.shadowColor='rgba(255,106,0,.8)';cx.fill();}requestAnimationFrame(tick);}
+rsz();addEventListener('resize',rsz);if(!reduce)tick();
+
+/* init */
+renderTicker();buildCarousels();applyLang('en');
+</script>
+</body>
+</html>
