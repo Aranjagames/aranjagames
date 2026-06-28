@@ -578,9 +578,7 @@ function applyLang(l){
   cur.textContent=(LANGS.find(x=>x[0]===l)||["","English"])[1];
   menu.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.l===l));
   renderRoadmap();
-}
-<link rel="icon" type="image/png" href="assets/logo.png">
-/* carousels */
+}/* carousels */
 function buildCarousels(){
   document.querySelectorAll('.carousel').forEach(c=>{
     const keys=c.dataset.imgs.split(',');
