@@ -165,6 +165,43 @@ section.block{position:relative;z-index:2;padding:130px 0}
 .rm-item p{color:var(--ash-dim);font-size:14.5px;max-width:580px}
 .rm-pill{display:inline-block;margin-left:10px;font-family:"JetBrains Mono";font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(255,106,0,.4);color:var(--ember-glow);padding:2px 8px;border-radius:20px;vertical-align:middle}
 
+/* NEWS */
+.news-wrap{display:flex;align-items:stretch;gap:18px}
+.news-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;min-width:0}
+.news-card{display:flex;flex-direction:column;background:linear-gradient(160deg,var(--surface),var(--void-2));border:1px solid var(--line-2);border-radius:var(--r);padding:26px 24px;transition:.3s var(--ease);cursor:pointer;min-height:240px}
+.news-card:hover{border-color:rgba(255,106,0,.45);transform:translateY(-4px);box-shadow:0 20px 50px -24px rgba(255,106,0,.25)}
+.news-card .news-date{font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.12em;color:var(--ember);text-transform:uppercase;margin-bottom:14px}
+.news-card h3{font-family:"Anton";font-size:22px;line-height:1.08;text-transform:uppercase;letter-spacing:.01em;margin-bottom:12px}
+.news-card p{color:var(--ash-dim);font-size:14px;line-height:1.55;flex:1;margin-bottom:18px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.news-read{display:inline-flex;align-items:center;gap:8px;font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);align-self:flex-start;transition:.25s}
+.news-card:hover .news-read{color:var(--ember)}
+.news-read .arr{transition:transform .3s var(--ease)}
+.news-card:hover .news-read .arr{transform:translateX(4px)}
+.news-card.hidden-news{display:none}
+.news-more{flex-shrink:0;width:54px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);color:var(--ash);font-size:20px;cursor:pointer;transition:.3s var(--ease);display:flex;align-items:center;justify-content:center}
+.news-more:hover{border-color:var(--ember);color:var(--ember);background:rgba(255,106,0,.06)}
+.news-more.spin .arr{display:inline-block;transform:rotate(180deg)}
+.news-more[disabled]{opacity:.3;cursor:not-allowed;pointer-events:none}
+
+.news-modal{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility .3s}
+.news-modal.open{opacity:1;visibility:visible}
+.news-modal-backdrop{position:absolute;inset:0;background:rgba(5,5,6,.78);backdrop-filter:blur(6px)}
+.news-modal-card{position:relative;z-index:1;max-width:640px;width:100%;max-height:80vh;overflow-y:auto;background:linear-gradient(160deg,var(--surface),var(--void-2));border:1px solid var(--line-2);border-radius:var(--r);padding:40px 38px;transform:translateY(20px) scale(.97);transition:.35s var(--ease);box-shadow:0 50px 100px -40px #000}
+.news-modal.open .news-modal-card{transform:none}
+.news-modal-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:8px;border:1px solid var(--line-2);background:none;color:var(--ash-dim);font-size:14px;cursor:pointer;transition:.25s}
+.news-modal-close:hover{border-color:var(--ember);color:var(--ember)}
+.news-modal-date{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.14em;color:var(--ember);text-transform:uppercase;margin-bottom:14px}
+.news-modal-title{font-family:"Anton";font-size:clamp(26px,4vw,38px);line-height:1.05;text-transform:uppercase;margin-bottom:20px;padding-right:30px}
+.news-modal-body{color:var(--ash-dim);font-size:15.5px;line-height:1.75;white-space:pre-line}
+
+@media (max-width:960px){
+  .news-wrap{flex-direction:column}
+  .news-grid{grid-template-columns:1fr}
+  .news-more{width:100%;height:44px}
+  .news-more .arr{display:inline-block;transform:rotate(90deg)}
+  .news-more.spin .arr{transform:rotate(-90deg)}
+}
+
 /* STUDIO */
 .studio-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:64px;align-items:start}
 .studio-grid p{color:var(--ash-dim);font-size:16.5px;margin-bottom:20px}
@@ -274,10 +311,11 @@ section.block{position:relative;z-index:2;padding:130px 0}
           <span class="countdown" id="cd-lostcamp" data-target="2026-10-28T19:00:00" aria-live="polite"></span>
         </div>
         <p class="game-desc" data-i18n="g1.desc"></p>
-        <div class="tags"><span class="tag" data-i18n="t.Horror">Adventure</span><span class="tag" data-i18n="t.survival">Survival</span><span class="tag" data-i18n="t.mystery">Mystery</span><span class="tag" data-i18n="t.atmos">Atmospheric</span></div>
+        <div class="tags"><span class="tag" data-i18n="t.adventure">Adventure</span><span class="tag" data-i18n="t.survival">Survival</span><span class="tag" data-i18n="t.mystery">Mystery</span><span class="tag" data-i18n="t.atmos">Atmospheric</span></div>
         <div class="game-actions">
           <a class="btn btn-primary" href="https://store.steampowered.com/app/4476390/Lost_Camp/" target="_blank" rel="noopener"><span data-i18n="g1.act1">Wishlist</span> <span class="arr">→</span></a>
           <a class="btn btn-ghost" href="https://store.steampowered.com/app/4476390/Lost_Camp/" target="_blank" rel="noopener" data-i18n="act.view">View on Steam</a>
+          <a class="btn btn-ghost" href="https://www.youtube.com/watch?v=nmVjw0dNfXw" target="_blank" rel="noopener">▷ <span data-i18n="trailer">Trailer</span></a>
         </div>
       </div>
       <div class="game-media"><div class="carousel" data-imgs="lc1,lc2,lc3" data-game="lostcamp"></div></div>
@@ -294,6 +332,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
         <div class="game-actions">
           <a class="btn btn-primary" href="https://store.steampowered.com/app/2756780/OBSCURIA/" target="_blank" rel="noopener"><span data-i18n="act.playfree">Play free</span> <span class="arr">→</span></a>
           <a class="btn btn-ghost" href="https://store.steampowered.com/app/2756780/OBSCURIA/" target="_blank" rel="noopener" data-i18n="act.view">View on Steam</a>
+          <a class="btn btn-ghost" href="https://youtu.be/M7ZfkXodze8?si=vOTY0dfpHwevla2a" target="_blank" rel="noopener">▷ <span data-i18n="trailer">Trailer</span></a>
         </div>
       </div>
       <div class="game-media"><div class="carousel" data-imgs="ob1,ob2,ob3" data-game="obscuria"></div></div>
@@ -305,10 +344,11 @@ section.block{position:relative;z-index:2;padding:130px 0}
         <h3 class="game-title">Nocturne Island</h3>
         <span class="badge paid" data-i18n="g3.badge">Paid · Oct 28, 2024</span>
         <p class="game-desc" data-i18n="g3.desc"></p>
-        <div class="tags"><span class="tag" data-i18n="t.horror">Horror</span><span class="tag" data-i18n="t.horror">Adventure</span><span class="tag" data-i18n="t.combat">Combat</span><span class="tag" data-i18n="t.exploration">Exploration</span></div>
+        <div class="tags"><span class="tag" data-i18n="t.horror">Horror</span><span class="tag" data-i18n="t.adventure">Adventure</span><span class="tag" data-i18n="t.combat">Combat</span><span class="tag" data-i18n="t.exploration">Exploration</span></div>
         <div class="game-actions">
           <a class="btn btn-primary" href="https://store.steampowered.com/app/3102660/Nocturne_Island_Obscuria/" target="_blank" rel="noopener"><span data-i18n="act.buy">Buy on Steam</span> <span class="arr">→</span></a>
           <a class="btn btn-ghost" href="https://store.steampowered.com/app/3102660/Nocturne_Island_Obscuria/" target="_blank" rel="noopener" data-i18n="act.viewpage">View page</a>
+          <a class="btn btn-ghost" href="https://youtu.be/lZnnWu47mEk?si=D_58YWMO-FXQpCB8" target="_blank" rel="noopener">▷ <span data-i18n="trailer">Trailer</span></a>
         </div>
       </div>
       <div class="game-media"><div class="carousel" data-imgs="ni1,ni2,ni3" data-game="nocturne"></div></div>
@@ -324,6 +364,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
         <div class="game-actions">
           <a class="btn btn-primary" href="https://store.steampowered.com/app/2393550/JUMP_TO_SURVIVE_2/" target="_blank" rel="noopener"><span data-i18n="act.playfree">Play free</span> <span class="arr">→</span></a>
           <a class="btn btn-ghost" href="https://store.steampowered.com/app/2393550/JUMP_TO_SURVIVE_2/" target="_blank" rel="noopener" data-i18n="act.view">View on Steam</a>
+          <a class="btn btn-ghost" href="https://youtu.be/L-kjbj2XzLI?si=2LSS2fBPZrX75_GZ" target="_blank" rel="noopener">▷ <span data-i18n="trailer">Trailer</span></a>
         </div>
       </div>
       <div class="game-media"><div class="carousel" data-imgs="jt1,jt2,jt3" data-game="jump"></div></div>
@@ -341,6 +382,33 @@ section.block{position:relative;z-index:2;padding:130px 0}
     <div class="roadmap reveal" id="roadmapList"></div>
   </div>
 </section>
+
+<!-- NEWS -->
+<section class="block" id="noticias">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="sec-kicker" data-i18n="news.kicker">// Latest updates</div><h2 class="sec-title" data-i18n="news.title">News</h2></div>
+      <p class="sec-note" data-i18n="news.note">Announcements and updates from the studio.</p>
+    </div>
+    <div class="news-wrap reveal">
+      <div class="news-grid" id="newsGrid"></div>
+      <button class="news-more" id="newsMoreBtn" aria-label="More news">
+        <span class="arr">→</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS MODAL -->
+<div class="news-modal" id="newsModal" aria-hidden="true">
+  <div class="news-modal-backdrop" id="newsModalBackdrop"></div>
+  <div class="news-modal-card" role="dialog" aria-modal="true">
+    <button class="news-modal-close" id="newsModalClose" aria-label="Close">✕</button>
+    <div class="news-modal-date" id="newsModalDate"></div>
+    <h3 class="news-modal-title" id="newsModalTitle"></h3>
+    <p class="news-modal-body" id="newsModalBody"></p>
+  </div>
+</div>
 
 <!-- STUDIO -->
 <section class="block" id="estudio">
@@ -414,7 +482,8 @@ const I18N={
   "studio.kicker":"// Who we are","studio.title":"The Studio",
   "studio.bio":"<p><b>Aranja Games</b> is a Spanish studio created and founded by <b>Enzo Colomer in 2020</b>. Our main goal with Aranja is to differentiate ourselves from other games and companies — we want to offer unique, quality experiences for players.</p><p>We always think about the player's experience and the player first, before anything else. We believe that work and perseverance pay off.</p>",
   "studio.founderRole":"Founder · 2020","stat.games":"Games published","stat.founded":"Founded","stat.more":"More to come",
-  "contact.kicker":"// Let's talk","trailer":"Trailer"
+  "contact.kicker":"// Let's talk","trailer":"Trailer",
+  "news.kicker":"// Latest updates","news.title":"News","news.note":"Announcements and updates from the studio.","news.readmore":"Read article"
  },
  es:{
   "nav.games":"Juegos","nav.roadmap":"Roadmap","nav.studio":"Estudio","nav.contact":"Contacto",
@@ -435,7 +504,8 @@ const I18N={
   "studio.kicker":"// Quiénes somos","studio.title":"El estudio",
   "studio.bio":"<p><b>Aranja Games</b> es un estudio español creado y fundado por <b>Enzo Colomer en 2020</b>. Nuestro objetivo principal con Aranja es diferenciarnos de otros juegos y compañías: queremos ofrecer experiencias únicas y de calidad para los jugadores.</p><p>Pensamos siempre primero en la experiencia del jugador y en el jugador, antes que en nada. Creemos que el trabajo y la perseverancia dan sus frutos.</p>",
   "studio.founderRole":"Fundador · 2020","stat.games":"Juegos publicados","stat.founded":"Fundado","stat.more":"Por venir",
-  "contact.kicker":"// Hablemos","trailer":"Tráiler"
+  "contact.kicker":"// Hablemos","trailer":"Tráiler",
+  "news.kicker":"// Últimas novedades","news.title":"Noticias","news.note":"Anuncios y novedades del estudio.","news.readmore":"Leer noticia"
  },
  ca:{
   "nav.games":"Jocs","nav.roadmap":"Roadmap","nav.studio":"Estudi","nav.contact":"Contacte",
@@ -456,7 +526,8 @@ const I18N={
   "studio.kicker":"// Qui som","studio.title":"L'estudi",
   "studio.bio":"<p><b>Aranja Games</b> és un estudi espanyol creat i fundat per <b>Enzo Colomer el 2020</b>. El nostre objectiu principal amb Aranja és diferenciar-nos d'altres jocs i companyies — volem oferir experiències úniques i de qualitat per als jugadors.</p><p>Pensem sempre primer en l'experiència del jugador i en el jugador, abans que en qualsevol altra cosa. Creiem que el treball i la perseverança donen fruits.</p>",
   "studio.founderRole":"Fundador · 2020","stat.games":"Jocs publicats","stat.founded":"Fundat","stat.more":"Per venir",
-  "contact.kicker":"// Parlem","trailer":"Tràiler"
+  "contact.kicker":"// Parlem","trailer":"Tràiler",
+  "news.kicker":"// Últimes novetats","news.title":"Notícies","news.note":"Anuncis i novetats de l'estudi.","news.readmore":"Llegir notícia"
  },
  fr:{
   "nav.games":"Jeux","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contact",
@@ -472,12 +543,13 @@ const I18N={
   "g4.idx":"Sandbox multijoueur","g4.badge":"Gratuit · 3 juil. 2023",
   "g4.desc":"Créez des mondes, explorez la carte et construisez tout ce que vous imaginez : jeu de rôle, parkour, matchs, courses et plus encore. Roulez sans limites, replongez dans le mode classique et jouez à tout avec vos amis. Seule votre imagination est la limite.",
   "act.view":"Voir sur Steam","act.viewpage":"Voir la page","act.playfree":"Jouer gratuitement","act.buy":"Acheter sur Steam",
-  "t.horror":"Aventure","t.survival":"Survie","t.mystery":"Mystère","t.atmos":"Atmosphérique","t.exploration":"Exploration","t.scares":"Frayeurs","t.tension":"Tension","t.adventure":"Aventure","t.combat":"Combat","t.sandbox":"Sandbox","t.multiplayer":"Multijoueur","t.driving":"Conduite","t.creative":"Créatif",
+  "t.horror":"Horreur","t.survival":"Survie","t.mystery":"Mystère","t.atmos":"Atmosphérique","t.exploration":"Exploration","t.scares":"Frayeurs","t.tension":"Tension","t.adventure":"Aventure","t.combat":"Combat","t.sandbox":"Sandbox","t.multiplayer":"Multijoueur","t.driving":"Conduite","t.creative":"Créatif",
   "rm.kicker":"// Chronologie du studio","rm.title":"Roadmap","rm.note":"Chaque sortie et ce qui reste à venir, année après année.","rm.upcoming":"À venir",
   "studio.kicker":"// Qui sommes-nous","studio.title":"Le studio",
   "studio.bio":"<p><b>Aranja Games</b> est un studio espagnol créé et fondé par <b>Enzo Colomer en 2020</b>. Notre objectif principal avec Aranja est de nous différencier des autres jeux et entreprises — nous voulons offrir aux joueurs des expériences uniques et de qualité.</p><p>Nous pensons toujours d'abord à l'expérience du joueur et au joueur lui-même, avant tout le reste. Nous croyons que le travail et la persévérance finissent par payer.</p>",
   "studio.founderRole":"Fondateur · 2020","stat.games":"Jeux publiés","stat.founded":"Fondé","stat.more":"À venir",
-  "contact.kicker":"// Discutons","trailer":"Bande-annonce"
+  "contact.kicker":"// Discutons","trailer":"Bande-annonce",
+  "news.kicker":"// Dernières actualités","news.title":"Actualités","news.note":"Annonces et actualités du studio.","news.readmore":"Lire l'article"
  },
  pl:{
   "nav.games":"Gry","nav.roadmap":"Roadmapa","nav.studio":"Studio","nav.contact":"Kontakt",
@@ -498,7 +570,8 @@ const I18N={
   "studio.kicker":"// Kim jesteśmy","studio.title":"Studio",
   "studio.bio":"<p><b>Aranja Games</b> to hiszpańskie studio założone przez <b>Enzo Colomera w 2020 roku</b>. Naszym głównym celem jest wyróżnienie się na tle innych gier i firm — chcemy oferować graczom wyjątkowe doświadczenia wysokiej jakości.</p><p>Zawsze stawiamy doświadczenie gracza i samego gracza na pierwszym miejscu, ponad wszystko inne. Wierzymy, że praca i wytrwałość się opłacają.</p>",
   "studio.founderRole":"Założyciel · 2020","stat.games":"Wydane gry","stat.founded":"Założono","stat.more":"Więcej wkrótce",
-  "contact.kicker":"// Porozmawiajmy","trailer":"Zwiastun"
+  "contact.kicker":"// Porozmawiajmy","trailer":"Zwiastun",
+  "news.kicker":"// Najnowsze wiadomości","news.title":"Aktualności","news.note":"Ogłoszenia i nowości ze studia.","news.readmore":"Czytaj dalej"
  },
  it:{
   "nav.games":"Giochi","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contatti",
@@ -519,7 +592,8 @@ const I18N={
   "studio.kicker":"// Chi siamo","studio.title":"Lo studio",
   "studio.bio":"<p><b>Aranja Games</b> è uno studio spagnolo creato e fondato da <b>Enzo Colomer nel 2020</b>. Il nostro obiettivo principale è distinguerci dagli altri giochi e aziende: vogliamo offrire ai giocatori esperienze uniche e di qualità.</p><p>Pensiamo sempre prima all'esperienza del giocatore e al giocatore stesso, prima di ogni altra cosa. Crediamo che il lavoro e la perseveranza ripaghino.</p>",
   "studio.founderRole":"Fondatore · 2020","stat.games":"Giochi pubblicati","stat.founded":"Fondato","stat.more":"Altro in arrivo",
-  "contact.kicker":"// Parliamone","trailer":"Trailer"
+  "contact.kicker":"// Parliamone","trailer":"Trailer",
+  "news.kicker":"// Ultime novità","news.title":"Notizie","news.note":"Annunci e novità dallo studio.","news.readmore":"Leggi la notizia"
  },
  de:{
   "nav.games":"Spiele","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Kontakt",
@@ -540,7 +614,8 @@ const I18N={
   "studio.kicker":"// Wer wir sind","studio.title":"Das Studio",
   "studio.bio":"<p><b>Aranja Games</b> ist ein spanisches Studio, gegründet von <b>Enzo Colomer im Jahr 2020</b>. Unser Hauptziel ist es, uns von anderen Spielen und Unternehmen abzuheben — wir möchten den Spielern einzigartige, hochwertige Erlebnisse bieten.</p><p>Wir denken immer zuerst an das Erlebnis des Spielers und an den Spieler selbst, vor allem anderen. Wir glauben, dass sich Arbeit und Ausdauer auszahlen.</p>",
   "studio.founderRole":"Gründer · 2020","stat.games":"Veröffentlichte Spiele","stat.founded":"Gegründet","stat.more":"Mehr folgt",
-  "contact.kicker":"// Sprich uns an","trailer":"Trailer"
+  "contact.kicker":"// Sprich uns an","trailer":"Trailer",
+  "news.kicker":"// Neueste Updates","news.title":"News","news.note":"Ankündigungen und Neuigkeiten aus dem Studio.","news.readmore":"Artikel lesen"
  },
  zh:{
   "nav.games":"游戏","nav.roadmap":"路线图","nav.studio":"工作室","nav.contact":"联系",
@@ -561,7 +636,8 @@ const I18N={
   "studio.kicker":"// 关于我们","studio.title":"工作室",
   "studio.bio":"<p><b>Aranja Games</b> 是一家西班牙工作室，由 <b>Enzo Colomer 于 2020 年</b>创立。我们的核心目标是与其他游戏和公司有所不同——为玩家带来独特而优质的体验。</p><p>我们始终把玩家的体验和玩家本身放在第一位，高于一切。我们相信努力与坚持终有回报。</p>",
   "studio.founderRole":"创始人 · 2020","stat.games":"已发行游戏","stat.founded":"成立","stat.more":"更多即将到来",
-  "contact.kicker":"// 联系我们","trailer":"预告片"
+  "contact.kicker":"// 联系我们","trailer":"预告片",
+  "news.kicker":"// 最新动态","news.title":"新闻","news.note":"工作室的公告与最新消息。","news.readmore":"阅读全文"
  }
 };
 
@@ -613,14 +689,92 @@ const ROADMAP=[
    de:{t:"Jump to Survive 2",d:"Das Sandbox-Universum erscheint auf Steam."},
    zh:{t:"Jump to Survive 2",d:"沙盒宇宙登陆 Steam。"}}]},
  {year:2020,items:[{date:"2020",status:"mile",
-   en:{t:"Aranja Games is founded",d:"Enzo Colomer starts the studio. Making it REAL."},
-   es:{t:"Nace Aranja Games",d:"Enzo Colomer funda el estudio. Making it REAL."},
-   ca:{t:"Neix Aranja Games",d:"Enzo Colomer fundà l'estudi. Making it REAL."},
-   fr:{t:"Naissance d'Aranja Games",d:"Enzo Colomer fonde le studio. Making it REAL."},
-   pl:{t:"Powstaje Aranja Games",d:"Enzo Colomer zakłada studio. Making it REAL."},
-   it:{t:"Nasce Aranja Games",d:"Enzo Colomer fonda lo studio. Making it REAL."},
-   de:{t:"Aranja Games wird gegründet",d:"Enzo Colomer gründet das Studio. Making it REAL."},
-   zh:{t:"Aranja Games 成立",d:"Enzo Colomer 创立工作室。Making it REAL。"}}]}
+   en:{t:"Aranja Games is founded",d:"Enzo Colomer starts the studio. Making it real."},
+   es:{t:"Nace Aranja Games",d:"Enzo Colomer funda el estudio. Making it real."},
+   ca:{t:"Neix Aranja Games",d:"Enzo Colomer fundà l'estudi. Making it real."},
+   fr:{t:"Naissance d'Aranja Games",d:"Enzo Colomer fonde le studio. Making it real."},
+   pl:{t:"Powstaje Aranja Games",d:"Enzo Colomer zakłada studio. Making it real."},
+   it:{t:"Nasce Aranja Games",d:"Enzo Colomer fonda lo studio. Making it real."},
+   de:{t:"Aranja Games wird gegründet",d:"Enzo Colomer gründet das Studio. Making it real."},
+   zh:{t:"Aranja Games 成立",d:"Enzo Colomer 创立工作室。Making it real。"}}]}
+];
+
+const NEWS=[
+ {id:"lostcamp-2026",date:"2026-06-15",
+  en:{t:"Lost Camp arrives in 2026",
+      s:"Our next project, with a planned release for late 2026, is generating huge buzz with players on social media. Big things are expected from this one.",
+      b:"Aranja Games' next project, Lost Camp, is scheduled for release in late 2026 and is already generating huge buzz among players on social media. Set in an isolated mountain campsite after the death of the protagonist's mother, the game blends survival, mystery and atmospheric horror, and early previews have sparked strong expectations within the community.\n\nThe team is currently polishing exploration mechanics, environmental storytelling and the winter setting that defines the experience. We'll be sharing more gameplay details, screenshots and a release window as development progresses. You can already add Lost Camp to your wishlist on Steam to be notified the moment it launches."},
+  es:{t:"Lost Camp sale en 2026",
+      s:"El siguiente proyecto de Aranja Games, con fecha de salida prevista para finales de 2026, está creando gran expectación entre los jugadores en redes sociales. Se esperan grandes cosas de este proyecto.",
+      b:"El siguiente proyecto de Aranja Games, Lost Camp, tiene su lanzamiento previsto para finales de 2026 y ya está generando gran expectación entre los jugadores en redes sociales. Ambientado en un campamento aislado en la montaña tras la muerte de la madre del protagonista, el juego combina supervivencia, misterio y terror atmosférico, y los primeros adelantos han despertado muchas ganas dentro de la comunidad.\n\nEl equipo está puliendo ahora mismo las mecánicas de exploración, la narrativa ambiental y el escenario invernal que define la experiencia. Iremos compartiendo más detalles de gameplay, capturas y una ventana de lanzamiento a medida que avance el desarrollo. Ya puedes añadir Lost Camp a tu lista de deseados en Steam para que te avisen en el momento exacto del lanzamiento."},
+  ca:{t:"Lost Camp arriba el 2026",
+      s:"El següent projecte d'Aranja Games, amb data de sortida prevista per a finals de 2026, està generant molta expectació entre els jugadors a les xarxes socials. S'esperen grans coses d'aquest projecte.",
+      b:"El següent projecte d'Aranja Games, Lost Camp, té previst el llançament per a finals de 2026 i ja està generant molta expectació entre els jugadors a les xarxes socials. Ambientat en un campament aïllat a la muntanya després de la mort de la mare del protagonista, el joc combina supervivència, misteri i terror atmosfèric, i els primers avenços han despertat moltes ganes dins la comunitat.\n\nL'equip està polint ara mateix les mecàniques d'exploració, la narrativa ambiental i l'escenari hivernal que defineix l'experiència. Anirem compartint més detalls de gameplay, captures i una finestra de llançament a mesura que avanci el desenvolupament. Ja pots afegir Lost Camp a la teva llista de desitjats a Steam perquè t'avisin en el moment exacte del llançament."},
+  fr:{t:"Lost Camp arrive en 2026",
+      s:"Le prochain projet d'Aranja Games, dont la sortie est prévue pour fin 2026, suscite déjà un grand engouement chez les joueurs sur les réseaux sociaux. On attend de grandes choses de ce projet.",
+      b:"Le prochain projet d'Aranja Games, Lost Camp, doit sortir fin 2026 et suscite déjà un grand engouement chez les joueurs sur les réseaux sociaux. Situé dans un camp isolé en montagne après la mort de la mère du protagoniste, le jeu mêle survie, mystère et horreur atmosphérique, et les premiers aperçus ont éveillé beaucoup d'attentes au sein de la communauté.\n\nL'équipe peaufine actuellement les mécaniques d'exploration, la narration environnementale et le décor hivernal qui définit l'expérience. Nous partagerons davantage de détails de gameplay, des captures d'écran et une fenêtre de sortie au fur et à mesure de l'avancement du développement. Vous pouvez déjà ajouter Lost Camp à votre liste de souhaits sur Steam pour être averti dès sa sortie."},
+  pl:{t:"Lost Camp wychodzi w 2026",
+      s:"Kolejny projekt Aranja Games, z planowaną premierą na koniec 2026 roku, wzbudza już ogromne zainteresowanie wśród graczy w mediach społecznościowych. Po tym projekcie oczekuje się wielkich rzeczy.",
+      b:"Kolejny projekt Aranja Games, Lost Camp, ma zadebiutować pod koniec 2026 roku i już teraz wzbudza ogromne zainteresowanie wśród graczy w mediach społecznościowych. Akcja gry rozgrywa się na odosobnionym górskim obozowisku po śmierci matki głównego bohatera, łącząc survival, mystery i atmosferyczny horror — pierwsze materiały wzbudziły duże oczekiwania w społeczności.\n\nZespół obecnie dopracowuje mechaniki eksploracji, narrację środowiskową oraz zimowy klimat, który definiuje to doświadczenie. Będziemy dzielić się kolejnymi szczegółami rozgrywki, zrzutami ekranu oraz oknem wydania w miarę postępu prac. Już teraz możesz dodać Lost Camp do listy życzeń na Steam, aby otrzymać powiadomienie w momencie premiery."},
+  it:{t:"Lost Camp arriva nel 2026",
+      s:"Il prossimo progetto di Aranja Games, con uscita prevista per la fine del 2026, sta già generando grande attesa tra i giocatori sui social media. Da questo progetto ci si aspettano grandi cose.",
+      b:"Il prossimo progetto di Aranja Games, Lost Camp, è previsto per la fine del 2026 e sta già generando grande attesa tra i giocatori sui social media. Ambientato in un campeggio isolato in montagna dopo la morte della madre del protagonista, il gioco unisce sopravvivenza, mistero e horror atmosferico, e le prime anteprime hanno suscitato grandi aspettative nella community.\n\nIl team sta attualmente perfezionando le meccaniche di esplorazione, la narrazione ambientale e l'ambientazione invernale che definisce l'esperienza. Condivideremo presto altri dettagli di gameplay, screenshot e una finestra di uscita con l'avanzare dello sviluppo. Puoi già aggiungere Lost Camp alla tua lista dei desideri su Steam per essere avvisato non appena uscirà."},
+  de:{t:"Lost Camp erscheint 2026",
+      s:"Das nächste Projekt von Aranja Games, dessen Veröffentlichung für Ende 2026 geplant ist, sorgt bereits für große Vorfreude bei Spielern in sozialen Netzwerken. Von diesem Projekt wird viel erwartet.",
+      b:"Das nächste Projekt von Aranja Games, Lost Camp, soll Ende 2026 erscheinen und sorgt bereits jetzt für große Vorfreude bei Spielern in sozialen Netzwerken. Die Handlung spielt auf einem abgelegenen Bergcampingplatz nach dem Tod der Mutter des Protagonisten und verbindet Survival, Mystery und atmosphärischen Horror — erste Einblicke haben in der Community große Erwartungen geweckt.\n\nDas Team feilt derzeit an den Erkundungsmechaniken, der Umgebungserzählung und der winterlichen Kulisse, die das Erlebnis prägt. Wir werden im Laufe der Entwicklung weitere Gameplay-Details, Screenshots und ein Veröffentlichungsfenster teilen. Du kannst Lost Camp schon jetzt auf Steam auf deine Wunschliste setzen, um sofort benachrichtigt zu werden."},
+  zh:{t:"《Lost Camp》将于2026年发布",
+      s:"Aranja Games 的下一部作品，预计于2026年底发布，已经在社交媒体上引发了玩家的极大期待。这个项目被寄予厚望。",
+      b:"Aranja Games 的下一部作品《Lost Camp》计划于2026年底发布，目前已在社交媒体上引发玩家的极大关注。故事发生在主角母亲去世后、他成为看守人的一座偏僻山间营地，游戏融合了生存、悬疑与氛围恐怖元素，早期预览已经在社区中激起了很高的期待。\n\n开发团队目前正在打磨探索机制、环境叙事，以及定义整体体验的冬季场景。随着开发推进，我们会分享更多玩法细节、截图以及发布窗口信息。现在就可以在 Steam 上将《Lost Camp》加入愿望单，以便在发布的第一时间收到通知。"}},
+ {id:"jump-anniversary",date:"2025-07-03",
+  en:{t:"Jump to Survive 2 keeps growing",
+      s:"Our free sandbox multiplayer game keeps welcoming new players, with the community building, racing and creating content every day since launch.",
+      b:"Jump to Survive 2, Aranja Games' free sandbox multiplayer title, continues to grow steadily since its release on Steam. Every day, players keep exploring the map, racing, building and creating their own experiences within the sandbox — from roleplay servers to custom parkour courses.\n\nWe want to thank everyone who's part of this community for keeping the game alive years after launch. We're still listening to feedback and considering small updates and quality-of-life improvements based on what the community asks for. Jump to Survive 2 remains free to play on Steam for anyone who wants to jump in."},
+  es:{t:"Jump to Survive 2 sigue creciendo",
+      s:"Nuestro juego sandbox multijugador gratuito sigue recibiendo nuevos jugadores, con la comunidad construyendo, corriendo y creando contenido cada día desde su lanzamiento.",
+      b:"Jump to Survive 2, el título sandbox multijugador gratuito de Aranja Games, sigue creciendo de forma constante desde su lanzamiento en Steam. Cada día, los jugadores siguen explorando el mapa, corriendo, construyendo y creando sus propias experiencias dentro del sandbox, desde servidores de rol hasta circuitos de parkour personalizados.\n\nQueremos dar las gracias a toda la comunidad que mantiene el juego vivo años después de su lanzamiento. Seguimos atentos al feedback y valorando pequeñas actualizaciones y mejoras basadas en lo que la comunidad nos pide. Jump to Survive 2 sigue siendo gratuito en Steam para quien quiera unirse."},
+  ca:{t:"Jump to Survive 2 continua creixent",
+      s:"El nostre joc sandbox multijugador gratuït continua rebent nous jugadors, amb la comunitat construint, corrent i creant contingut cada dia des del seu llançament.",
+      b:"Jump to Survive 2, el títol sandbox multijugador gratuït d'Aranja Games, continua creixent de manera constant des del seu llançament a Steam. Cada dia, els jugadors segueixen explorant el mapa, corrent, construint i creant les seves pròpies experiències dins del sandbox, des de servidors de rol fins a circuits de parkour personalitzats.\n\nVolem donar les gràcies a tota la comunitat que manté el joc viu anys després del seu llançament. Continuem atents al feedback i valorant petites actualitzacions i millores basades en el que ens demana la comunitat. Jump to Survive 2 continua sent gratuït a Steam per a qui vulgui unir-s'hi."},
+  fr:{t:"Jump to Survive 2 continue de grandir",
+      s:"Notre jeu sandbox multijoueur gratuit continue d'accueillir de nouveaux joueurs, la communauté construisant, courant et créant du contenu chaque jour depuis sa sortie.",
+      b:"Jump to Survive 2, le titre sandbox multijoueur gratuit d'Aranja Games, continue de croître régulièrement depuis sa sortie sur Steam. Chaque jour, les joueurs explorent la carte, font des courses, construisent et créent leurs propres expériences dans ce bac à sable, des serveurs de rôle aux parcours de parkour personnalisés.\n\nNous tenons à remercier toute la communauté qui maintient le jeu vivant des années après sa sortie. Nous restons attentifs aux retours et envisageons de petites mises à jour et améliorations en fonction des demandes de la communauté. Jump to Survive 2 reste gratuit sur Steam pour quiconque souhaite s'y lancer."},
+  pl:{t:"Jump to Survive 2 wciąż się rozwija",
+      s:"Nasza darmowa sandboxowa gra wieloosobowa wciąż przyciąga nowych graczy, a społeczność buduje, ściga się i tworzy treści każdego dnia od premiery.",
+      b:"Jump to Survive 2, darmowa sandboxowa gra wieloosobowa Aranja Games, nieprzerwanie rozwija się od premiery na Steam. Każdego dnia gracze eksplorują mapę, biorą udział w wyścigach, budują i tworzą własne doświadczenia w piaskownicy — od serwerów roleplay po własne trasy parkourowe.\n\nChcemy podziękować całej społeczności, która utrzymuje grę przy życiu lata po premierze. Wciąż słuchamy opinii i rozważamy drobne aktualizacje oraz usprawnienia na podstawie tego, o co prosi społeczność. Jump to Survive 2 wciąż jest darmowy na Steam dla każdego, kto chce się przyłączyć."},
+  it:{t:"Jump to Survive 2 continua a crescere",
+      s:"Il nostro gioco sandbox multiplayer gratuito continua ad accogliere nuovi giocatori, con la community che costruisce, corre e crea contenuti ogni giorno dal lancio.",
+      b:"Jump to Survive 2, il titolo sandbox multiplayer gratuito di Aranja Games, continua a crescere costantemente dal suo lancio su Steam. Ogni giorno i giocatori continuano a esplorare la mappa, correre, costruire e creare le proprie esperienze all'interno del sandbox, dai server di roleplay ai percorsi di parkour personalizzati.\n\nVogliamo ringraziare tutta la community che mantiene vivo il gioco anni dopo il lancio. Continuiamo ad ascoltare il feedback e a valutare piccoli aggiornamenti e migliorie basati su ciò che la community ci chiede. Jump to Survive 2 resta gratuito su Steam per chiunque voglia unirsi."},
+  de:{t:"Jump to Survive 2 wächst weiter",
+      s:"Unser kostenloses Sandbox-Mehrspieler-Spiel gewinnt weiterhin neue Spieler, während die Community seit dem Release täglich baut, rast und Inhalte erschafft.",
+      b:"Jump to Survive 2, der kostenlose Sandbox-Mehrspielertitel von Aranja Games, wächst seit seiner Veröffentlichung auf Steam stetig weiter. Jeden Tag erkunden Spieler die Karte, liefern sich Rennen, bauen und erschaffen eigene Erlebnisse innerhalb der Sandbox — von Rollenspiel-Servern bis zu individuellen Parkour-Strecken.\n\nWir möchten uns bei der gesamten Community bedanken, die das Spiel Jahre nach dem Release am Leben hält. Wir hören weiterhin auf Feedback und prüfen kleine Updates und Verbesserungen basierend auf den Wünschen der Community. Jump to Survive 2 bleibt für alle, die einsteigen möchten, kostenlos auf Steam spielbar."},
+  zh:{t:"《Jump to Survive 2》持续成长",
+      s:"我们的免费沙盒多人游戏持续吸引新玩家，自发布以来，社区每天都在建造、竞速并创作内容。",
+      b:"Aranja Games 的免费沙盒多人游戏《Jump to Survive 2》自在 Steam 发布以来持续稳步增长。玩家每天都在探索地图、参加竞速、建造，并在沙盒中创造属于自己的体验——从角色扮演服务器到自制跑酷赛道，应有尽有。\n\n我们要感谢这个让游戏在发布多年后依然充满活力的社区。我们会持续关注玩家反馈，并根据社区的需求考虑小型更新和体验改进。《Jump to Survive 2》在 Steam 上依然完全免费，欢迎任何想加入的玩家。"}},
+ {id:"enzo-studio",date:"2024-01-10",
+  en:{t:"From one developer to a growing studio",
+      s:"Aranja Games started in 2020 as Enzo Colomer's solo project. Today it's a studio with four published games and a community that keeps growing.",
+      b:"When Enzo Colomer founded Aranja Games back in 2020, it started as a one-person project driven by a passion for horror and adventure games. Years later, the studio has grown into something much bigger: four published titles, an active community across Steam and social media, and a clear identity built around dense atmosphere, exploration and real scares.\n\nEnzo continues to be hands-on across every project — from game design and programming in Unreal Engine to managing the studio's web presence and community communication. That close, personal involvement is part of what makes Aranja Games' games feel distinct. As the studio looks toward Lost Camp and whatever comes after it, the goal remains the same as it was on day one: offering players unique, quality experiences, built with patience and perseverance."},
+  es:{t:"De un desarrollador a un estudio en crecimiento",
+      s:"Aranja Games empezó en 2020 como el proyecto en solitario de Enzo Colomer. Hoy es un estudio con cuatro juegos publicados y una comunidad que no para de crecer.",
+      b:"Cuando Enzo Colomer fundó Aranja Games en 2020, empezó como un proyecto en solitario impulsado por la pasión por los juegos de terror y aventura. Años después, el estudio se ha convertido en algo mucho más grande: cuatro títulos publicados, una comunidad activa en Steam y redes sociales, y una identidad clara construida alrededor de la atmósfera densa, la exploración y los sustos de verdad.\n\nEnzo sigue implicado de forma directa en cada proyecto, desde el diseño y la programación en Unreal Engine hasta la gestión de la web del estudio y la comunicación con la comunidad. Esa implicación cercana y personal es parte de lo que hace que los juegos de Aranja Games se sientan distintos. Con la vista puesta en Lost Camp y en lo que venga después, el objetivo sigue siendo el mismo que el primer día: ofrecer a los jugadores experiencias únicas y de calidad, construidas con paciencia y perseverancia."},
+  ca:{t:"D'un desenvolupador a un estudi en creixement",
+      s:"Aranja Games va començar el 2020 com el projecte en solitari d'Enzo Colomer. Avui és un estudi amb quatre jocs publicats i una comunitat que no para de créixer.",
+      b:"Quan Enzo Colomer va fundar Aranja Games el 2020, va començar com un projecte en solitari impulsat per la passió pels jocs de terror i aventura. Anys després, l'estudi s'ha convertit en una cosa molt més gran: quatre títols publicats, una comunitat activa a Steam i xarxes socials, i una identitat clara construïda al voltant de l'atmosfera densa, l'exploració i els sustos de veritat.\n\nEnzo continua implicat de manera directa en cada projecte, des del disseny i la programació en Unreal Engine fins a la gestió del web de l'estudi i la comunicació amb la comunitat. Aquesta implicació propera i personal és part del que fa que els jocs d'Aranja Games se sentin diferents. Amb la vista posada en Lost Camp i en el que vingui després, l'objectiu continua sent el mateix que el primer dia: oferir als jugadors experiències úniques i de qualitat, construïdes amb paciència i perseverança."},
+  fr:{t:"D'un développeur solo à un studio en pleine croissance",
+      s:"Aranja Games a commencé en 2020 comme le projet solo d'Enzo Colomer. Aujourd'hui, c'est un studio avec quatre jeux publiés et une communauté en constante croissance.",
+      b:"Lorsque Enzo Colomer a fondé Aranja Games en 2020, le studio n'était qu'un projet solo porté par une passion pour les jeux d'horreur et d'aventure. Des années plus tard, le studio est devenu bien plus grand : quatre titres publiés, une communauté active sur Steam et les réseaux sociaux, et une identité claire bâtie autour d'une atmosphère dense, de l'exploration et de vraies frayeurs.\n\nEnzo reste impliqué personnellement dans chaque projet, du game design et de la programmation sous Unreal Engine à la gestion du site du studio et à la communication avec la communauté. Cette implication proche et personnelle fait partie de ce qui rend les jeux d'Aranja Games si particuliers. En regardant vers Lost Camp et ce qui suivra, l'objectif reste le même qu'au premier jour : offrir aux joueurs des expériences uniques et de qualité, construites avec patience et persévérance."},
+  pl:{t:"Od jednego dewelopera do rozwijającego się studia",
+      s:"Aranja Games zaczęło w 2020 roku jako solowy projekt Enzo Colomera. Dziś to studio z czterema wydanymi grami i wciąż rosnącą społecznością.",
+      b:"Kiedy Enzo Colomer założył Aranja Games w 2020 roku, był to solowy projekt napędzany pasją do gier horror i przygodowych. Lata później studio rozrosło się w coś znacznie większego: cztery wydane tytuły, aktywną społeczność na Steam i w mediach społecznościowych oraz wyraźną tożsamość zbudowaną wokół gęstej atmosfery, eksploracji i prawdziwego strachu.\n\nEnzo wciąż jest bezpośrednio zaangażowany w każdy projekt — od projektowania gier i programowania w Unreal Engine, po zarządzanie stroną studia i komunikację ze społecznością. To bliskie, osobiste zaangażowanie jest częścią tego, co sprawia, że gry Aranja Games wyróżniają się na tle innych. Patrząc w stronę Lost Camp i tego, co przyjdzie potem, cel pozostaje taki sam jak pierwszego dnia: dawać graczom unikalne, wysokiej jakości doświadczenia, budowane z cierpliwością i wytrwałością."},
+  it:{t:"Da un solo sviluppatore a uno studio in crescita",
+      s:"Aranja Games è nato nel 2020 come progetto solitario di Enzo Colomer. Oggi è uno studio con quattro giochi pubblicati e una community in costante crescita.",
+      b:"Quando Enzo Colomer ha fondato Aranja Games nel 2020, tutto è iniziato come un progetto da solista guidato dalla passione per i giochi horror e d'avventura. Anni dopo, lo studio è diventato qualcosa di molto più grande: quattro titoli pubblicati, una community attiva su Steam e sui social media, e un'identità chiara costruita attorno a un'atmosfera densa, l'esplorazione e veri spaventi.\n\nEnzo continua a essere coinvolto direttamente in ogni progetto, dal game design e la programmazione in Unreal Engine alla gestione del sito web dello studio e alla comunicazione con la community. Questo coinvolgimento personale e diretto è parte di ciò che rende i giochi di Aranja Games così distintivi. Guardando a Lost Camp e a ciò che verrà dopo, l'obiettivo resta lo stesso del primo giorno: offrire ai giocatori esperienze uniche e di qualità, costruite con pazienza e perseveranza."},
+  de:{t:"Von einem Entwickler zu einem wachsenden Studio",
+      s:"Aranja Games begann 2020 als Solo-Projekt von Enzo Colomer. Heute ist es ein Studio mit vier veröffentlichten Spielen und einer stetig wachsenden Community.",
+      b:"Als Enzo Colomer 2020 Aranja Games gründete, war es ein Solo-Projekt, angetrieben von der Leidenschaft für Horror- und Abenteuerspiele. Jahre später ist aus dem Studio etwas viel Größeres geworden: vier veröffentlichte Titel, eine aktive Community auf Steam und in sozialen Netzwerken sowie eine klare Identität rund um dichte Atmosphäre, Erkundung und echten Schrecken.\n\nEnzo ist weiterhin bei jedem Projekt persönlich involviert — vom Game Design und der Programmierung in Unreal Engine bis zur Verwaltung der Studio-Website und der Kommunikation mit der Community. Genau dieses enge, persönliche Engagement macht die Spiele von Aranja Games so besonders. Mit Blick auf Lost Camp und alles, was danach kommt, bleibt das Ziel dasselbe wie am ersten Tag: den Spielern einzigartige, hochwertige Erlebnisse zu bieten, die mit Geduld und Ausdauer entstanden sind."},
+  zh:{t:"从一人开发到不断成长的工作室",
+      s:"Aranja Games 始于2020年，是 Enzo Colomer 的个人项目。如今，它已成为一家拥有四部已发行作品、社区持续壮大的工作室。",
+      b:"当 Enzo Colomer 于2020年创立 Aranja Games 时，这只是一个由对恐怖与冒险游戏的热爱驱动的个人项目。多年之后，这家工作室已发展成更大的存在：四部已发行的作品、在 Steam 与社交媒体上活跃的社区，以及围绕浓厚氛围、探索与真正惊吓所建立起的鲜明风格。\n\nEnzo 仍然亲自参与每一个项目——从游戏设计、Unreal Engine 编程，到管理工作室网站与社区沟通，事事亲力亲为。这种紧密、个人化的投入，正是 Aranja Games 的作品与众不同的原因之一。展望《Lost Camp》以及未来的作品，目标始终与第一天一样：以耐心与坚持，为玩家带来独特、优质的体验。"}}
 ];
 
 let LANG="en";
@@ -642,6 +796,44 @@ function renderRoadmap(){
     return `<div class="rm-year">${y.year}</div>${items}`;
   }).join("");
 }
+const LOCALE_MAP={en:"en-US",es:"es-ES",ca:"ca-ES",fr:"fr-FR",pl:"pl-PL",it:"it-IT",de:"de-DE",zh:"zh-CN"};
+function fmtNewsDate(iso){
+  const d=new Date(iso+"T00:00:00");
+  try{return d.toLocaleDateString(LOCALE_MAP[LANG]||"en-US",{day:"numeric",month:"long",year:"numeric"});}
+  catch(e){return iso;}
+}
+let newsExpanded=false;
+function renderNews(){
+  const grid=document.getElementById('newsGrid');
+  grid.innerHTML=NEWS.map((n,i)=>{
+    const hidden=i>=3&&!newsExpanded?" hidden-news":"";
+    return `<article class="news-card${hidden}" data-news-i="${i}">
+      <div class="news-date">${fmtNewsDate(n.date)}</div>
+      <h3>${n[LANG].t}</h3>
+      <p>${n[LANG].s}</p>
+      <span class="news-read">${I18N[LANG]["news.readmore"]} <span class="arr">→</span></span>
+    </article>`;
+  }).join("");
+  grid.querySelectorAll('.news-card').forEach(card=>card.addEventListener('click',()=>openNewsModal(+card.dataset.newsI)));
+  const moreBtn=document.getElementById('newsMoreBtn');
+  if(NEWS.length<=3){moreBtn.style.display='none';}
+  else{moreBtn.style.display='';moreBtn.classList.toggle('spin',newsExpanded);}
+}
+function toggleNews(){newsExpanded=!newsExpanded;renderNews();}
+function openNewsModal(i){
+  const n=NEWS[i];if(!n)return;
+  document.getElementById('newsModalDate').textContent=fmtNewsDate(n.date);
+  document.getElementById('newsModalTitle').textContent=n[LANG].t;
+  document.getElementById('newsModalBody').textContent=n[LANG].b;
+  document.getElementById('newsModal').classList.add('open');
+  document.getElementById('newsModal').setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeNewsModal(){
+  document.getElementById('newsModal').classList.remove('open');
+  document.getElementById('newsModal').setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
 function renderTicker(){
   const names=["LOST CAMP","OBSCURIA","NOCTURNE ISLAND","JUMP TO SURVIVE"];
   const seq=names.map(n=>`<span>${n}</span><span><b>·</b></span>`).join("").repeat(2);
@@ -655,14 +847,15 @@ function startCountdowns(){
     els.forEach(el=>{
       const target=new Date(el.dataset.target).getTime();
       let diff=target-now;
-      if(diff<=0){el.innerHTML='<b>0</b>d <b>0</b>h <b>0</b>m';return;}
+      if(diff<=0){el.innerHTML='<b>0</b>d <b>0</b>h <b>0</b>m <b>0</b>s';return;}
       const d=Math.floor(diff/86400000);diff-=d*86400000;
       const h=Math.floor(diff/3600000);diff-=h*3600000;
-      const m=Math.floor(diff/60000);
-      el.innerHTML=`<b>${d}</b>d<span class="cd-sep">·</span><b>${h}</b>h<span class="cd-sep">·</span><b>${m}</b>m`;
+      const m=Math.floor(diff/60000);diff-=m*60000;
+      const s=Math.floor(diff/1000);
+      el.innerHTML=`<b>${d}</b>d<span class="cd-sep">·</span><b>${h}</b>h<span class="cd-sep">·</span><b>${m}</b>m<span class="cd-sep">·</span><b>${s}</b>s`;
     });
   };
-  tick();setInterval(tick,30000);
+  tick();setInterval(tick,1000);
 }
 function applyLang(l){
   LANG=l;document.documentElement.lang=l;
@@ -670,6 +863,7 @@ function applyLang(l){
   cur.textContent=(LANGS.find(x=>x[0]===l)||["","English"])[1];
   menu.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.l===l));
   renderRoadmap();
+  renderNews();
 }
 
 /* carousels */
@@ -746,6 +940,10 @@ function tick(){cx.clearRect(0,0,W,H);for(const p of parts){p.y-=p.s;p.t+=.02;p.
 rsz();addEventListener('resize',rsz);if(!reduce)tick();
 
 /* init */
+document.getElementById('newsMoreBtn').addEventListener('click',toggleNews);
+document.getElementById('newsModalClose').addEventListener('click',closeNewsModal);
+document.getElementById('newsModalBackdrop').addEventListener('click',closeNewsModal);
+addEventListener('keydown',e=>{if(e.key==='Escape')closeNewsModal();});
 renderTicker();buildCarousels();applyLang('en');startCountdowns();
 </script>
 </body>
