@@ -133,6 +133,12 @@ section.block{position:relative;z-index:2;padding:130px 0}
 .countdown{display:inline-flex;align-items:center;gap:7px;font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.04em;color:var(--ash);background:rgba(255,255,255,.04);border:1px solid var(--line-2);padding:6px 12px;border-radius:6px;white-space:nowrap}
 .countdown b{color:var(--ember-glow);font-weight:600}
 .countdown .cd-sep{color:var(--ash-dimmer);margin:0 1px}
+.price-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;min-height:34px}
+.price-normal{font-family:"JetBrains Mono";font-size:18px;font-weight:700;color:var(--ash);background:rgba(255,255,255,.06);border:1px solid var(--line-2);padding:6px 14px;border-radius:6px}
+.price-sale-badge{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono";font-size:12px;font-weight:700;letter-spacing:.04em;color:#0a0a0a;background:linear-gradient(100deg,var(--ember-hot),var(--ember-glow));padding:6px 11px;border-radius:6px;text-transform:uppercase}
+.price-old{font-family:"JetBrains Mono";font-size:14px;color:var(--ash-dimmer);text-decoration:line-through}
+.price-final{font-family:"JetBrains Mono";font-size:19px;font-weight:700;color:var(--ember-glow)}
+.price-sale-label{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash-dim)}
 .game-desc{color:var(--ash-dim);font-size:16px;margin-bottom:20px;max-width:500px}
 .dlc-note{font-family:"JetBrains Mono";font-size:12px;color:var(--ash-dimmer);margin:-6px 0 20px;max-width:480px}
 .dlc-note b{color:var(--ember);font-weight:400}
@@ -342,7 +348,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
       <div class="game-body">
         <div class="game-meta-idx" data-i18n="g3.idx">Obscuria 2 · Action horror</div>
         <h3 class="game-title">Nocturne Island</h3>
-        <span class="badge paid" data-i18n="g3.badge">Paid · Oct 28, 2024</span>
+        <div class="price-row" id="price-nocturne"></div>
         <p class="game-desc" data-i18n="g3.desc"></p>
         <div class="tags"><span class="tag" data-i18n="t.horror">Horror</span><span class="tag" data-i18n="t.adventure">Adventure</span><span class="tag" data-i18n="t.combat">Combat</span><span class="tag" data-i18n="t.exploration">Exploration</span></div>
         <div class="game-actions">
@@ -483,7 +489,8 @@ const I18N={
   "studio.bio":"<p><b>Aranja Games</b> is a Spanish studio created and founded by <b>Enzo Colomer in 2020</b>. Our main goal with Aranja is to differentiate ourselves from other games and companies — we want to offer unique, quality experiences for players.</p><p>We always think about the player's experience and the player first, before anything else. We believe that work and perseverance pay off.</p>",
   "studio.founderRole":"Founder · 2020","stat.games":"Games published","stat.founded":"Founded","stat.more":"More to come",
   "contact.kicker":"// Let's talk","trailer":"Trailer",
-  "news.kicker":"// Latest updates","news.title":"News","news.note":"Announcements and updates from the studio.","news.readmore":"Read article"
+  "news.kicker":"// Latest updates","news.title":"News","news.note":"Announcements and updates from the studio.","news.readmore":"Read article",
+  "price.base":"4.99€","price.sale":"On sale","price.endsIn":"Sale ends in"
  },
  es:{
   "nav.games":"Juegos","nav.roadmap":"Roadmap","nav.studio":"Estudio","nav.contact":"Contacto",
@@ -505,7 +512,8 @@ const I18N={
   "studio.bio":"<p><b>Aranja Games</b> es un estudio español creado y fundado por <b>Enzo Colomer en 2020</b>. Nuestro objetivo principal con Aranja es diferenciarnos de otros juegos y compañías: queremos ofrecer experiencias únicas y de calidad para los jugadores.</p><p>Pensamos siempre primero en la experiencia del jugador y en el jugador, antes que en nada. Creemos que el trabajo y la perseverancia dan sus frutos.</p>",
   "studio.founderRole":"Fundador · 2020","stat.games":"Juegos publicados","stat.founded":"Fundado","stat.more":"Por venir",
   "contact.kicker":"// Hablemos","trailer":"Tráiler",
-  "news.kicker":"// Últimas novedades","news.title":"Noticias","news.note":"Anuncios y novedades del estudio.","news.readmore":"Leer noticia"
+  "news.kicker":"// Últimas novedades","news.title":"Noticias","news.note":"Anuncios y novedades del estudio.","news.readmore":"Leer noticia",
+  "price.base":"4.99€","price.sale":"Oferta","price.endsIn":"La oferta termina en"
  },
  ca:{
   "nav.games":"Jocs","nav.roadmap":"Roadmap","nav.studio":"Estudi","nav.contact":"Contacte",
@@ -527,7 +535,8 @@ const I18N={
   "studio.bio":"<p><b>Aranja Games</b> és un estudi espanyol creat i fundat per <b>Enzo Colomer el 2020</b>. El nostre objectiu principal amb Aranja és diferenciar-nos d'altres jocs i companyies — volem oferir experiències úniques i de qualitat per als jugadors.</p><p>Pensem sempre primer en l'experiència del jugador i en el jugador, abans que en qualsevol altra cosa. Creiem que el treball i la perseverança donen fruits.</p>",
   "studio.founderRole":"Fundador · 2020","stat.games":"Jocs publicats","stat.founded":"Fundat","stat.more":"Per venir",
   "contact.kicker":"// Parlem","trailer":"Tràiler",
-  "news.kicker":"// Últimes novetats","news.title":"Notícies","news.note":"Anuncis i novetats de l'estudi.","news.readmore":"Llegir notícia"
+  "news.kicker":"// Últimes novetats","news.title":"Notícies","news.note":"Anuncis i novetats de l'estudi.","news.readmore":"Llegir notícia",
+  "price.base":"4.99€","price.sale":"Oferta","price.endsIn":"L'oferta acaba en"
  },
  fr:{
   "nav.games":"Jeux","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contact",
@@ -549,7 +558,8 @@ const I18N={
   "studio.bio":"<p><b>Aranja Games</b> est un studio espagnol créé et fondé par <b>Enzo Colomer en 2020</b>. Notre objectif principal avec Aranja est de nous différencier des autres jeux et entreprises — nous voulons offrir aux joueurs des expériences uniques et de qualité.</p><p>Nous pensons toujours d'abord à l'expérience du joueur et au joueur lui-même, avant tout le reste. Nous croyons que le travail et la persévérance finissent par payer.</p>",
   "studio.founderRole":"Fondateur · 2020","stat.games":"Jeux publiés","stat.founded":"Fondé","stat.more":"À venir",
   "contact.kicker":"// Discutons","trailer":"Bande-annonce",
-  "news.kicker":"// Dernières actualités","news.title":"Actualités","news.note":"Annonces et actualités du studio.","news.readmore":"Lire l'article"
+  "news.kicker":"// Dernières actualités","news.title":"Actualités","news.note":"Annonces et actualités du studio.","news.readmore":"Lire l'article",
+  "price.base":"4.99€","price.sale":"Promo","price.endsIn":"Fin de la promo dans"
  },
  pl:{
   "nav.games":"Gry","nav.roadmap":"Roadmapa","nav.studio":"Studio","nav.contact":"Kontakt",
@@ -571,7 +581,8 @@ const I18N={
   "studio.bio":"<p><b>Aranja Games</b> to hiszpańskie studio założone przez <b>Enzo Colomera w 2020 roku</b>. Naszym głównym celem jest wyróżnienie się na tle innych gier i firm — chcemy oferować graczom wyjątkowe doświadczenia wysokiej jakości.</p><p>Zawsze stawiamy doświadczenie gracza i samego gracza na pierwszym miejscu, ponad wszystko inne. Wierzymy, że praca i wytrwałość się opłacają.</p>",
   "studio.founderRole":"Założyciel · 2020","stat.games":"Wydane gry","stat.founded":"Założono","stat.more":"Więcej wkrótce",
   "contact.kicker":"// Porozmawiajmy","trailer":"Zwiastun",
-  "news.kicker":"// Najnowsze wiadomości","news.title":"Aktualności","news.note":"Ogłoszenia i nowości ze studia.","news.readmore":"Czytaj dalej"
+  "news.kicker":"// Najnowsze wiadomości","news.title":"Aktualności","news.note":"Ogłoszenia i nowości ze studia.","news.readmore":"Czytaj dalej",
+  "price.base":"4.99€","price.sale":"Promocja","price.endsIn":"Promocja kończy się za"
  },
  it:{
   "nav.games":"Giochi","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contatti",
@@ -593,7 +604,8 @@ const I18N={
   "studio.bio":"<p><b>Aranja Games</b> è uno studio spagnolo creato e fondato da <b>Enzo Colomer nel 2020</b>. Il nostro obiettivo principale è distinguerci dagli altri giochi e aziende: vogliamo offrire ai giocatori esperienze uniche e di qualità.</p><p>Pensiamo sempre prima all'esperienza del giocatore e al giocatore stesso, prima di ogni altra cosa. Crediamo che il lavoro e la perseveranza ripaghino.</p>",
   "studio.founderRole":"Fondatore · 2020","stat.games":"Giochi pubblicati","stat.founded":"Fondato","stat.more":"Altro in arrivo",
   "contact.kicker":"// Parliamone","trailer":"Trailer",
-  "news.kicker":"// Ultime novità","news.title":"Notizie","news.note":"Annunci e novità dallo studio.","news.readmore":"Leggi la notizia"
+  "news.kicker":"// Ultime novità","news.title":"Notizie","news.note":"Annunci e novità dallo studio.","news.readmore":"Leggi la notizia",
+  "price.base":"4.99€","price.sale":"In offerta","price.endsIn":"L'offerta termina in"
  },
  de:{
   "nav.games":"Spiele","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Kontakt",
@@ -615,7 +627,8 @@ const I18N={
   "studio.bio":"<p><b>Aranja Games</b> ist ein spanisches Studio, gegründet von <b>Enzo Colomer im Jahr 2020</b>. Unser Hauptziel ist es, uns von anderen Spielen und Unternehmen abzuheben — wir möchten den Spielern einzigartige, hochwertige Erlebnisse bieten.</p><p>Wir denken immer zuerst an das Erlebnis des Spielers und an den Spieler selbst, vor allem anderen. Wir glauben, dass sich Arbeit und Ausdauer auszahlen.</p>",
   "studio.founderRole":"Gründer · 2020","stat.games":"Veröffentlichte Spiele","stat.founded":"Gegründet","stat.more":"Mehr folgt",
   "contact.kicker":"// Sprich uns an","trailer":"Trailer",
-  "news.kicker":"// Neueste Updates","news.title":"News","news.note":"Ankündigungen und Neuigkeiten aus dem Studio.","news.readmore":"Artikel lesen"
+  "news.kicker":"// Neueste Updates","news.title":"News","news.note":"Ankündigungen und Neuigkeiten aus dem Studio.","news.readmore":"Artikel lesen",
+  "price.base":"4.99€","price.sale":"Im Angebot","price.endsIn":"Angebot endet in"
  },
  zh:{
   "nav.games":"游戏","nav.roadmap":"路线图","nav.studio":"工作室","nav.contact":"联系",
@@ -637,7 +650,8 @@ const I18N={
   "studio.bio":"<p><b>Aranja Games</b> 是一家西班牙工作室，由 <b>Enzo Colomer 于 2020 年</b>创立。我们的核心目标是与其他游戏和公司有所不同——为玩家带来独特而优质的体验。</p><p>我们始终把玩家的体验和玩家本身放在第一位，高于一切。我们相信努力与坚持终有回报。</p>",
   "studio.founderRole":"创始人 · 2020","stat.games":"已发行游戏","stat.founded":"成立","stat.more":"更多即将到来",
   "contact.kicker":"// 联系我们","trailer":"预告片",
-  "news.kicker":"// 最新动态","news.title":"新闻","news.note":"工作室的公告与最新消息。","news.readmore":"阅读全文"
+  "news.kicker":"// 最新动态","news.title":"新闻","news.note":"工作室的公告与最新消息。","news.readmore":"阅读全文",
+  "price.base":"4.99€","price.sale":"特惠","price.endsIn":"优惠剩余"
  }
 };
 
@@ -725,31 +739,31 @@ const NEWS=[
   zh:{t:"《Lost Camp》将于2026年发布",
       s:"Aranja Games 的下一部作品，预计于2026年底发布，已经在社交媒体上引发了玩家的极大期待。这个项目被寄予厚望。",
       b:"Aranja Games 的下一部作品《Lost Camp》计划于2026年底发布，目前已在社交媒体上引发玩家的极大关注。故事发生在主角母亲去世后、他成为看守人的一座偏僻山间营地，游戏融合了生存、悬疑与氛围恐怖元素，早期预览已经在社区中激起了很高的期待。\n\n开发团队目前正在打磨探索机制、环境叙事，以及定义整体体验的冬季场景。随着开发推进，我们会分享更多玩法细节、截图以及发布窗口信息。现在就可以在 Steam 上将《Lost Camp》加入愿望单，以便在发布的第一时间收到通知。"}},
- {id:"jump-anniversary",date:"2025-07-03",
-  en:{t:"Jump to Survive 2 keeps growing",
-      s:"Our free sandbox multiplayer game keeps welcoming new players, with the community building, racing and creating content every day since launch.",
-      b:"Jump to Survive 2, Aranja Games' free sandbox multiplayer title, continues to grow steadily since its release on Steam. Every day, players keep exploring the map, racing, building and creating their own experiences within the sandbox — from roleplay servers to custom parkour courses.\n\nWe want to thank everyone who's part of this community for keeping the game alive years after launch. We're still listening to feedback and considering small updates and quality-of-life improvements based on what the community asks for. Jump to Survive 2 remains free to play on Steam for anyone who wants to jump in."},
-  es:{t:"Jump to Survive 2 sigue creciendo",
-      s:"Nuestro juego sandbox multijugador gratuito sigue recibiendo nuevos jugadores, con la comunidad construyendo, corriendo y creando contenido cada día desde su lanzamiento.",
-      b:"Jump to Survive 2, el título sandbox multijugador gratuito de Aranja Games, sigue creciendo de forma constante desde su lanzamiento en Steam. Cada día, los jugadores siguen explorando el mapa, corriendo, construyendo y creando sus propias experiencias dentro del sandbox, desde servidores de rol hasta circuitos de parkour personalizados.\n\nQueremos dar las gracias a toda la comunidad que mantiene el juego vivo años después de su lanzamiento. Seguimos atentos al feedback y valorando pequeñas actualizaciones y mejoras basadas en lo que la comunidad nos pide. Jump to Survive 2 sigue siendo gratuito en Steam para quien quiera unirse."},
-  ca:{t:"Jump to Survive 2 continua creixent",
-      s:"El nostre joc sandbox multijugador gratuït continua rebent nous jugadors, amb la comunitat construint, corrent i creant contingut cada dia des del seu llançament.",
-      b:"Jump to Survive 2, el títol sandbox multijugador gratuït d'Aranja Games, continua creixent de manera constant des del seu llançament a Steam. Cada dia, els jugadors segueixen explorant el mapa, corrent, construint i creant les seves pròpies experiències dins del sandbox, des de servidors de rol fins a circuits de parkour personalitzats.\n\nVolem donar les gràcies a tota la comunitat que manté el joc viu anys després del seu llançament. Continuem atents al feedback i valorant petites actualitzacions i millores basades en el que ens demana la comunitat. Jump to Survive 2 continua sent gratuït a Steam per a qui vulgui unir-s'hi."},
-  fr:{t:"Jump to Survive 2 continue de grandir",
-      s:"Notre jeu sandbox multijoueur gratuit continue d'accueillir de nouveaux joueurs, la communauté construisant, courant et créant du contenu chaque jour depuis sa sortie.",
-      b:"Jump to Survive 2, le titre sandbox multijoueur gratuit d'Aranja Games, continue de croître régulièrement depuis sa sortie sur Steam. Chaque jour, les joueurs explorent la carte, font des courses, construisent et créent leurs propres expériences dans ce bac à sable, des serveurs de rôle aux parcours de parkour personnalisés.\n\nNous tenons à remercier toute la communauté qui maintient le jeu vivant des années après sa sortie. Nous restons attentifs aux retours et envisageons de petites mises à jour et améliorations en fonction des demandes de la communauté. Jump to Survive 2 reste gratuit sur Steam pour quiconque souhaite s'y lancer."},
-  pl:{t:"Jump to Survive 2 wciąż się rozwija",
-      s:"Nasza darmowa sandboxowa gra wieloosobowa wciąż przyciąga nowych graczy, a społeczność buduje, ściga się i tworzy treści każdego dnia od premiery.",
-      b:"Jump to Survive 2, darmowa sandboxowa gra wieloosobowa Aranja Games, nieprzerwanie rozwija się od premiery na Steam. Każdego dnia gracze eksplorują mapę, biorą udział w wyścigach, budują i tworzą własne doświadczenia w piaskownicy — od serwerów roleplay po własne trasy parkourowe.\n\nChcemy podziękować całej społeczności, która utrzymuje grę przy życiu lata po premierze. Wciąż słuchamy opinii i rozważamy drobne aktualizacje oraz usprawnienia na podstawie tego, o co prosi społeczność. Jump to Survive 2 wciąż jest darmowy na Steam dla każdego, kto chce się przyłączyć."},
-  it:{t:"Jump to Survive 2 continua a crescere",
-      s:"Il nostro gioco sandbox multiplayer gratuito continua ad accogliere nuovi giocatori, con la community che costruisce, corre e crea contenuti ogni giorno dal lancio.",
-      b:"Jump to Survive 2, il titolo sandbox multiplayer gratuito di Aranja Games, continua a crescere costantemente dal suo lancio su Steam. Ogni giorno i giocatori continuano a esplorare la mappa, correre, costruire e creare le proprie esperienze all'interno del sandbox, dai server di roleplay ai percorsi di parkour personalizzati.\n\nVogliamo ringraziare tutta la community che mantiene vivo il gioco anni dopo il lancio. Continuiamo ad ascoltare il feedback e a valutare piccoli aggiornamenti e migliorie basati su ciò che la community ci chiede. Jump to Survive 2 resta gratuito su Steam per chiunque voglia unirsi."},
-  de:{t:"Jump to Survive 2 wächst weiter",
-      s:"Unser kostenloses Sandbox-Mehrspieler-Spiel gewinnt weiterhin neue Spieler, während die Community seit dem Release täglich baut, rast und Inhalte erschafft.",
-      b:"Jump to Survive 2, der kostenlose Sandbox-Mehrspielertitel von Aranja Games, wächst seit seiner Veröffentlichung auf Steam stetig weiter. Jeden Tag erkunden Spieler die Karte, liefern sich Rennen, bauen und erschaffen eigene Erlebnisse innerhalb der Sandbox — von Rollenspiel-Servern bis zu individuellen Parkour-Strecken.\n\nWir möchten uns bei der gesamten Community bedanken, die das Spiel Jahre nach dem Release am Leben hält. Wir hören weiterhin auf Feedback und prüfen kleine Updates und Verbesserungen basierend auf den Wünschen der Community. Jump to Survive 2 bleibt für alle, die einsteigen möchten, kostenlos auf Steam spielbar."},
-  zh:{t:"《Jump to Survive 2》持续成长",
-      s:"我们的免费沙盒多人游戏持续吸引新玩家，自发布以来，社区每天都在建造、竞速并创作内容。",
-      b:"Aranja Games 的免费沙盒多人游戏《Jump to Survive 2》自在 Steam 发布以来持续稳步增长。玩家每天都在探索地图、参加竞速、建造，并在沙盒中创造属于自己的体验——从角色扮演服务器到自制跑酷赛道，应有尽有。\n\n我们要感谢这个让游戏在发布多年后依然充满活力的社区。我们会持续关注玩家反馈，并根据社区的需求考虑小型更新和体验改进。《Jump to Survive 2》在 Steam 上依然完全免费，欢迎任何想加入的玩家。"}},
+ {id:"obscuria-update",date:"2025-02-16",
+  en:{t:"Obscuria keeps haunting new players",
+      s:"Our free horror title aboard the cursed cruise ship Nocturne keeps reaching new players, with the free DLC Obscuria: The Tragedy adding even more to explore.",
+      b:"Obscuria, Aranja Games' free horror title set aboard the cursed cruise ship Nocturne, continues to find new players long after its original release. Tasked with finding Captain Blackhood — alive or dead — players keep sharing their scares and theories about the curse dragging the ship down.\n\nThe free DLC, Obscuria: The Tragedy, lets players step into the boots of Captain Blackhood himself, facing 'The Penitence' from a whole new perspective. Together, the base game and its DLC have become the entry point many players use to discover Aranja Games for the first time, before later exploring Nocturne Island, the direct sequel. Obscuria remains completely free on Steam for anyone who wants to dare to board the Nocturne."},
+  es:{t:"Obscuria sigue atrapando a nuevos jugadores",
+      s:"Nuestro título de terror gratuito a bordo del crucero maldito Nocturne sigue llegando a nuevos jugadores, con el DLC gratuito Obscuria: The Tragedy añadiendo aún más para explorar.",
+      b:"Obscuria, el título de terror gratuito de Aranja Games ambientado a bordo del crucero maldito Nocturne, sigue encontrando nuevos jugadores mucho tiempo después de su lanzamiento original. Con la misión de encontrar al Capitán Blackhood —vivo o muerto—, los jugadores siguen compartiendo sus sustos y teorías sobre la maldición que arrastra el barco hacia el fondo.\n\nEl DLC gratuito, Obscuria: The Tragedy, permite ponerse en la piel del propio Capitán Blackhood, enfrentándose a \"The Penitence\" desde una perspectiva totalmente nueva. Juntos, el juego base y su DLC se han convertido en la puerta de entrada que muchos jugadores usan para descubrir Aranja Games por primera vez, antes de explorar más adelante Nocturne Island, su secuela directa. Obscuria sigue siendo completamente gratuito en Steam para quien se atreva a subir a bordo del Nocturne."},
+  ca:{t:"Obscuria continua atrapant nous jugadors",
+      s:"El nostre títol de terror gratuït a bord del creuer maleït Nocturne continua arribant a nous jugadors, amb el DLC gratuït Obscuria: The Tragedy afegint encara més per explorar.",
+      b:"Obscuria, el títol de terror gratuït d'Aranja Games ambientat a bord del creuer maleït Nocturne, continua trobant nous jugadors molt després del seu llançament original. Amb la missió de trobar el Capità Blackhood —viu o mort—, els jugadors continuen compartint els seus sustos i teories sobre la maledicció que enfonsa el vaixell.\n\nEl DLC gratuït, Obscuria: The Tragedy, permet posar-se a la pell del mateix Capità Blackhood, enfrontant-se a \"The Penitence\" des d'una perspectiva totalment nova. Junts, el joc base i el seu DLC s'han convertit en la porta d'entrada que molts jugadors fan servir per descobrir Aranja Games per primera vegada, abans d'explorar més endavant Nocturne Island, la seva seqüela directa. Obscuria continua sent completament gratuït a Steam per a qui s'atreveixi a pujar a bord del Nocturne."},
+  fr:{t:"Obscuria continue de hanter de nouveaux joueurs",
+      s:"Notre titre d'horreur gratuit à bord du paquebot maudit Nocturne continue d'atteindre de nouveaux joueurs, avec le DLC gratuit Obscuria: The Tragedy ajoutant encore plus à explorer.",
+      b:"Obscuria, le titre d'horreur gratuit d'Aranja Games se déroulant à bord du paquebot maudit Nocturne, continue de séduire de nouveaux joueurs longtemps après sa sortie initiale. Chargés de retrouver le Capitaine Blackhood — vivant ou mort —, les joueurs continuent de partager leurs frayeurs et leurs théories sur la malédiction qui entraîne le navire vers le fond.\n\nLe DLC gratuit, Obscuria: The Tragedy, permet d'incarner le Capitaine Blackhood lui-même, affrontant \"The Penitence\" sous un angle totalement nouveau. Ensemble, le jeu de base et son DLC sont devenus la porte d'entrée par laquelle de nombreux joueurs découvrent Aranja Games pour la première fois, avant d'explorer plus tard Nocturne Island, sa suite directe. Obscuria reste entièrement gratuit sur Steam pour quiconque ose monter à bord du Nocturne."},
+  pl:{t:"Obscuria wciąż nawiedza nowych graczy",
+      s:"Nasz darmowy horror na pokładzie przeklętego statku Nocturne wciąż przyciąga nowych graczy, a darmowe DLC Obscuria: The Tragedy dodaje jeszcze więcej do odkrycia.",
+      b:"Obscuria, darmowy horror Aranja Games rozgrywający się na pokładzie przeklętego statku Nocturne, wciąż zdobywa nowych graczy długo po swojej pierwotnej premierze. Mając za zadanie odnalezienie kapitana Blackhooda — żywego lub martwego — gracze nieustannie dzielą się swoimi strachami i teoriami na temat klątwy ciągnącej statek na dno.\n\nDarmowe DLC, Obscuria: The Tragedy, pozwala wcielić się w samego kapitana Blackhooda i stawić czoła „The Penitence” z zupełnie nowej perspektywy. Razem podstawowa gra i jej DLC stały się bramą, przez którą wielu graczy po raz pierwszy odkrywa Aranja Games, zanim później przejdą do Nocturne Island, jej bezpośredniej kontynuacji. Obscuria pozostaje całkowicie darmowa na Steam dla każdego, kto odważy się wejść na pokład Nocturne."},
+  it:{t:"Obscuria continua a spaventare nuovi giocatori",
+      s:"Il nostro titolo horror gratuito a bordo della nave maledetta Nocturne continua a raggiungere nuovi giocatori, con il DLC gratuito Obscuria: The Tragedy che aggiunge ancora più contenuti da esplorare.",
+      b:"Obscuria, il titolo horror gratuito di Aranja Games ambientato a bordo della nave maledetta Nocturne, continua a conquistare nuovi giocatori molto tempo dopo il suo lancio originale. Con il compito di trovare il Capitano Blackhood — vivo o morto — i giocatori continuano a condividere i loro spaventi e le loro teorie sulla maledizione che trascina la nave a fondo.\n\nIl DLC gratuito, Obscuria: The Tragedy, permette di calarsi nei panni dello stesso Capitano Blackhood, affrontando \"The Penitence\" da una prospettiva completamente nuova. Insieme, il gioco base e il suo DLC sono diventati la porta d'accesso che molti giocatori usano per scoprire Aranja Games per la prima volta, prima di esplorare in seguito Nocturne Island, il suo seguito diretto. Obscuria resta completamente gratuito su Steam per chiunque osi salire a bordo della Nocturne."},
+  de:{t:"Obscuria sucht weiterhin neue Spieler heim",
+      s:"Unser kostenloses Horror-Spiel an Bord des verfluchten Kreuzfahrtschiffs Nocturne erreicht weiterhin neue Spieler — mit dem kostenlosen DLC Obscuria: The Tragedy gibt es noch mehr zu entdecken.",
+      b:"Obscuria, der kostenlose Horror-Titel von Aranja Games an Bord des verfluchten Kreuzfahrtschiffs Nocturne, findet auch lange nach seiner ursprünglichen Veröffentlichung weiterhin neue Spieler. Mit der Aufgabe, Kapitän Blackhood zu finden — lebendig oder tot — teilen Spieler weiterhin ihre Schreckmomente und Theorien über den Fluch, der das Schiff in die Tiefe zieht.\n\nDas kostenlose DLC, Obscuria: The Tragedy, lässt Spieler in die Rolle von Kapitän Blackhood selbst schlüpfen und sich „The Penitence“ aus einer völlig neuen Perspektive stellen. Zusammen sind das Basisspiel und sein DLC zum Einstiegspunkt geworden, über den viele Spieler Aranja Games zum ersten Mal entdecken, bevor sie später Nocturne Island, die direkte Fortsetzung, erkunden. Obscuria bleibt auf Steam komplett kostenlos für alle, die es wagen, an Bord der Nocturne zu gehen."},
+  zh:{t:"《Obscuria》持续吸引新玩家",
+      s:"我们这款发生在被诅咒邮轮「Nocturne」上的免费恐怖游戏持续吸引新玩家，免费 DLC《Obscuria: The Tragedy》带来了更多可探索的内容。",
+      b:"Aranja Games 的免费恐怖游戏《Obscuria》发生在被诅咒的邮轮「Nocturne」上，即便在最初发布很久之后，依然持续吸引着新玩家。玩家的任务是找到失踪的布莱克胡德船长——无论生死——他们不断分享着自己的惊吓瞬间，以及关于拖垮这艘船的诅咒的各种猜想。\n\n免费 DLC《Obscuria: The Tragedy》让玩家能够扮演布莱克胡德船长本人，从全新的视角面对「The Penitence」。本体与这个 DLC 一起，已经成为许多玩家第一次了解 Aranja Games 的入口，之后他们才会进一步探索其直接续作《Nocturne Island》。《Obscuria》在 Steam 上依然完全免费，欢迎任何敢于登上「Nocturne」号的玩家。"}},
  {id:"enzo-studio",date:"2024-01-10",
   en:{t:"From one developer to a growing studio",
       s:"Aranja Games started in 2020 as Enzo Colomer's solo project. Today it's a studio with four published games and a community that keeps growing.",
@@ -839,6 +853,14 @@ function renderTicker(){
   const seq=names.map(n=>`<span>${n}</span><span><b>·</b></span>`).join("").repeat(2);
   document.getElementById('ticker').innerHTML=`<div class="ticker-seq">${seq}</div><div class="ticker-seq">${seq}</div>`;
 }
+function fmtCountdown(diff){
+  if(diff<=0)return'<b>0</b>d <b>0</b>h <b>0</b>m <b>0</b>s';
+  const d=Math.floor(diff/86400000);diff-=d*86400000;
+  const h=Math.floor(diff/3600000);diff-=h*3600000;
+  const m=Math.floor(diff/60000);diff-=m*60000;
+  const s=Math.floor(diff/1000);
+  return `<b>${d}</b>d<span class="cd-sep">·</span><b>${h}</b>h<span class="cd-sep">·</span><b>${m}</b>m<span class="cd-sep">·</span><b>${s}</b>s`;
+}
 function startCountdowns(){
   const els=[...document.querySelectorAll('.countdown[data-target]')];
   if(!els.length)return;
@@ -846,16 +868,50 @@ function startCountdowns(){
     const now=Date.now();
     els.forEach(el=>{
       const target=new Date(el.dataset.target).getTime();
-      let diff=target-now;
-      if(diff<=0){el.innerHTML='<b>0</b>d <b>0</b>h <b>0</b>m <b>0</b>s';return;}
-      const d=Math.floor(diff/86400000);diff-=d*86400000;
-      const h=Math.floor(diff/3600000);diff-=h*3600000;
-      const m=Math.floor(diff/60000);diff-=m*60000;
-      const s=Math.floor(diff/1000);
-      el.innerHTML=`<b>${d}</b>d<span class="cd-sep">·</span><b>${h}</b>h<span class="cd-sep">·</span><b>${m}</b>m<span class="cd-sep">·</span><b>${s}</b>s`;
+      el.innerHTML=fmtCountdown(target-now);
     });
   };
   tick();setInterval(tick,1000);
+}
+/* Spain offset: CEST (UTC+2) Apr-Oct, CET (UTC+1) the rest of the year */
+function esOffsetHours(month){return(month>=4&&month<=10)?2:1;}
+function esStartOfDay(y,m,d){
+  const off=esOffsetHours(m);
+  return new Date(Date.UTC(y,m-1,d,0,0,0)-off*3600000).getTime();
+}
+function esEndOfDay(y,m,d){
+  const off=esOffsetHours(m);
+  return new Date(Date.UTC(y,m-1,d,23,59,59)-off*3600000).getTime();
+}
+const SALES=[
+ {start:esStartOfDay(2026,6,25),end:esEndOfDay(2026,7,9),pct:88,price:"0.60€"},
+ {start:esStartOfDay(2026,7,25),end:esEndOfDay(2026,8,8),pct:88,price:"0.60€"},
+ {start:esStartOfDay(2026,9,7),end:esEndOfDay(2026,9,21),pct:84,price:"0.80€"},
+ {start:esStartOfDay(2026,10,1),end:esEndOfDay(2026,10,8),pct:84,price:"0.80€"},
+ {start:esStartOfDay(2026,10,21),end:esEndOfDay(2026,11,4),pct:84,price:"0.80€"},
+ {start:esStartOfDay(2026,12,4),end:esEndOfDay(2026,12,18),pct:88,price:"0.60€"}
+];
+function currentSale(now){return SALES.find(s=>now>=s.start&&now<s.end)||null;}
+function renderPrice(){
+  const el=document.getElementById('price-nocturne');
+  if(!el)return;
+  const sale=currentSale(Date.now());
+  if(sale){
+    el.innerHTML=`<span class="price-sale-badge">−${sale.pct}%</span><span class="price-old">${I18N[LANG]["price.base"]}</span><span class="price-final">${sale.price}</span>`+
+      `<span class="countdown" id="cd-nocturne-sale" data-target-ms="${sale.end}" aria-live="polite"></span>`+
+      `<span class="price-sale-label">${I18N[LANG]["price.endsIn"]}</span>`;
+  }else{
+    el.innerHTML=`<span class="price-normal">${I18N[LANG]["price.base"]}</span>`;
+  }
+}
+function startSaleCountdown(){
+  setInterval(()=>{
+    const el=document.getElementById('cd-nocturne-sale');
+    if(!el)return;
+    const target=+el.dataset.targetMs;
+    el.innerHTML=fmtCountdown(target-Date.now());
+  },1000);
+  setInterval(renderPrice,60000);
 }
 function applyLang(l){
   LANG=l;document.documentElement.lang=l;
@@ -864,6 +920,7 @@ function applyLang(l){
   menu.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.l===l));
   renderRoadmap();
   renderNews();
+  renderPrice();
 }
 
 /* carousels */
@@ -944,7 +1001,7 @@ document.getElementById('newsMoreBtn').addEventListener('click',toggleNews);
 document.getElementById('newsModalClose').addEventListener('click',closeNewsModal);
 document.getElementById('newsModalBackdrop').addEventListener('click',closeNewsModal);
 addEventListener('keydown',e=>{if(e.key==='Escape')closeNewsModal();});
-renderTicker();buildCarousels();applyLang('en');startCountdowns();
+renderTicker();buildCarousels();applyLang('en');startCountdowns();startSaleCountdown();
 </script>
 </body>
 </html>
