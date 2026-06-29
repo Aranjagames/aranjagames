@@ -80,6 +80,10 @@ nav.scrolled{background:rgba(7,7,8,.78);backdrop-filter:blur(16px);border-color:
 .hero-title .l1{display:block;color:transparent;-webkit-text-stroke:1.4px var(--ash)}
 .hero-title .l2{display:block;color:var(--ember);text-shadow:0 0 50px rgba(255,106,0,.5)}
 .hero-sub{font-family:"JetBrains Mono";font-size:clamp(14px,2.4vw,20px);letter-spacing:.36em;text-transform:lowercase;color:var(--ash);margin:18px auto 40px;animation:fadeUp .9s var(--ease) .5s both}
+.hero-sub .real{position:relative;display:inline-block;font-weight:700;background:linear-gradient(100deg,var(--ember-hot) 0%,var(--ember-glow) 18%,#fff 28%,var(--ember-glow) 38%,var(--ember-hot) 56%,var(--ember) 100%);background-size:260% 100%;background-position:0% 0%;-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;animation:realShimmer 3.2s linear infinite,realPulse 2.6s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(255,106,0,.55))}
+@keyframes realShimmer{0%{background-position:0% 0%}100%{background-position:-260% 0%}}
+@keyframes realPulse{0%,100%{filter:drop-shadow(0 0 8px rgba(255,106,0,.45))}50%{filter:drop-shadow(0 0 20px rgba(255,138,36,.85))}}
+@media (prefers-reduced-motion:reduce){.hero-sub .real{animation:none;background-position:0% 0%}}
 .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .9s var(--ease) .65s both}
 .btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:8px;font-family:"JetBrains Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:.3s var(--ease);border:1px solid transparent;overflow:hidden}
 .btn-primary{background:var(--ember);color:#000;font-weight:700}
@@ -242,7 +246,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
     <img class="hero-logo" data-img="logo" alt="Aranja Games">
     <div class="eyebrow" data-i18n="hero.eyebrow">Independent studio · Horror &amp; Adventure</div>
     <h1 class="hero-title"><span class="l1">ARANJA</span><span class="l2">GAMES</span></h1>
-    <p class="hero-sub">making it real</p>
+    <p class="hero-sub">making it <span class="real">real</span></p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="#juegos"><span data-i18n="hero.cta1">Explore the games</span> <span class="arr">→</span></a>
       <a class="btn btn-ghost" href="https://store.steampowered.com/developer/ARANJA/" target="_blank" rel="noopener" data-i18n="hero.cta2">Follow on Steam</a>
