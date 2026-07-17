@@ -124,6 +124,25 @@ section.block{position:relative;z-index:2;padding:130px 0}
 .game.flip .game-media{order:-1}
 .game-meta-idx{font-family:"JetBrains Mono";font-size:13px;color:var(--ember);letter-spacing:.22em;margin-bottom:18px;text-transform:uppercase}
 .game-title{font-family:"Anton";font-size:clamp(40px,5.6vw,72px);line-height:.9;text-transform:uppercase;margin-bottom:10px}
+
+/* FEATURED (Lost Camp — flagship upcoming release) */
+.game.featured{grid-template-columns:1fr 1.22fr;gap:70px;min-height:auto;padding:90px 0 20px;border-top-color:rgba(255,106,0,.35)}
+.flagship-kicker{display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono";font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--ember-glow);margin-bottom:20px}
+.flagship-kicker::before{content:"★";color:var(--ember)}
+.game.featured .game-title{font-size:clamp(52px,7.4vw,104px);text-shadow:0 0 60px rgba(255,106,0,.22)}
+.game.featured .game-desc{max-width:640px;font-size:16.5px}
+.game.featured .game-desc p{margin-bottom:16px}
+.game.featured .game-desc p:last-child{margin-bottom:0}
+.release-row{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+.release-date-big{font-family:"Anton";font-size:clamp(26px,3.4vw,46px);line-height:1;letter-spacing:.02em;color:var(--ember-glow);text-shadow:0 0 34px rgba(255,106,0,.4);white-space:nowrap}
+.game.featured .countdown{font-size:12.5px;padding:8px 14px}
+.lc-gallery{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:10px 0 70px}
+.lc-gallery-img{aspect-ratio:16/9;border-radius:var(--r);background-size:cover;background-position:center;border:1px solid var(--line-2);box-shadow:0 30px 70px -30px #000;transition:transform .5s var(--ease);filter:saturate(1.05)}
+.lc-gallery-img:hover{transform:translateY(-4px)}
+@media (max-width:960px){
+  .game.featured{grid-template-columns:1fr;gap:30px}
+  .lc-gallery{grid-template-columns:1fr}
+}
 .badge{display:inline-block;font-family:"JetBrains Mono";font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:6px 13px;border-radius:6px;margin-bottom:22px}
 .badge.soon{background:rgba(255,106,0,.14);color:var(--ember-glow);border:1px solid rgba(255,106,0,.4)}
 .badge.free{background:rgba(80,200,120,.12);color:#6fdc97;border:1px solid rgba(80,200,120,.35)}
@@ -279,7 +298,6 @@ section.block{position:relative;z-index:2;padding:130px 0}
 <header id="hero">
   <div class="hero-bg" data-parallax="0.10" data-pscale="1.18">
     <video autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg">
-      <source src="assets/hero-bg.webm" type="video/webm">
       <source src="assets/hero-bg.mp4" type="video/mp4">
     </video>
   </div>
@@ -308,13 +326,17 @@ section.block{position:relative;z-index:2;padding:130px 0}
       <p class="sec-note" data-i18n="games.note">Four worlds. One obsession: dense atmosphere, exploration and real scares.</p>
     </div>
 
-    <article class="game reveal" data-theme="lostcamp">
+    <article class="game featured reveal" data-theme="lostcamp">
       <div class="game-body">
+        <div class="flagship-kicker" data-i18n="g1.flagship">Our next release</div>
         <div class="game-meta-idx" data-i18n="g1.idx">Adventure</div>
         <h3 class="game-title">Lost Camp</h3>
         <div class="badge-row">
           <span class="badge soon" data-i18n="g1.badge">Upcoming · 2026</span>
-          <span class="countdown" id="cd-lostcamp" data-target="2026-10-28T19:00:00" aria-live="polite"></span>
+        </div>
+        <div class="release-row">
+          <div class="release-date-big" data-i18n="g1.releasedate">OCTOBER 30, 2026</div>
+          <span class="countdown" id="cd-lostcamp" data-target="2026-10-30T19:00:00" aria-live="polite"></span>
         </div>
         <p class="game-desc" data-i18n="g1.desc"></p>
         <div class="tags"><span class="tag" data-i18n="t.adventure">Adventure</span><span class="tag" data-i18n="t.survival">Survival</span><span class="tag" data-i18n="t.mystery">Mystery</span><span class="tag" data-i18n="t.atmos">Atmospheric</span></div>
@@ -324,7 +346,11 @@ section.block{position:relative;z-index:2;padding:130px 0}
           <a class="btn btn-ghost" href="https://www.youtube.com/watch?v=nmVjw0dNfXw" target="_blank" rel="noopener">▷ <span data-i18n="trailer">Trailer</span></a>
         </div>
       </div>
-      <div class="game-media"><div class="carousel" data-imgs="lc1,lc2,lc3" data-game="lostcamp"></div></div>
+      <div class="game-media"><div class="carousel" data-imgs="lc1,lc2,lc3,lc4,lc5" data-game="lostcamp"></div></div>
+      <div class="lc-gallery">
+        <div class="lc-gallery-img" style="background-image:url(assets/lc4.jpg)"></div>
+        <div class="lc-gallery-img" style="background-image:url(assets/lc5.jpg)"></div>
+      </div>
     </article>
 
     <article class="game flip reveal" data-theme="obscuria">
@@ -455,7 +481,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
 </section>
 
 <script>
-const IMG={logo:"assets/logo.png",hero:"assets/hero.jpg",lc1:"assets/lc1.jpg",lc2:"assets/lc2.jpg",lc3:"assets/lc3.jpg",ob1:"assets/ob1.jpg",ob2:"assets/ob2.jpg",ob3:"assets/ob3.jpg",ni1:"assets/ni1.jpg",ni2:"assets/ni2.jpg",ni3:"assets/ni3.jpg",jt1:"assets/jt1.jpg",jt2:"assets/jt2.jpg",jt3:"assets/jt3.jpg",enzo:"assets/enzo.jpg"};
+const IMG={logo:"assets/logo.png",hero:"assets/hero.jpg",lc1:"assets/lc1.jpg",lc2:"assets/lc2.jpg",lc3:"assets/lc3.jpg",lc4:"assets/lc4.jpg",lc5:"assets/lc5.jpg",ob1:"assets/ob1.jpg",ob2:"assets/ob2.jpg",ob3:"assets/ob3.jpg",ni1:"assets/ni1.jpg",ni2:"assets/ni2.jpg",ni3:"assets/ni3.jpg",jt1:"assets/jt1.jpg",jt2:"assets/jt2.jpg",jt3:"assets/jt3.jpg",enzo:"assets/enzo.jpg"};
 document.querySelectorAll('[data-img]').forEach(el=>{const k=el.dataset.img;if(el.tagName==='IMG')el.src=IMG[k];else el.style.backgroundImage=`url(${IMG[k]})`;});
 
 /* per-game theme: background colour + faint background image */
@@ -473,8 +499,8 @@ const I18N={
   "nav.games":"Games","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contact",
   "hero.eyebrow":"Independent studio · Horror &amp; Adventure","hero.cta1":"Explore the games","hero.cta2":"Follow on Steam","hero.scroll":"Scroll",
   "games.kicker":"// Our games","games.title":"The Games","games.note":"Four worlds. One obsession: dense atmosphere, exploration and real scares.",
-  "g1.idx":"Adventure","g1.badge":"Upcoming · 2026","g1.act1":"Wishlist",
-  "g1.desc":"After your mother's death you become the warden of a secluded campsite deep in the mountains. As winter buries the trails in snow, the silence starts to feel like it's hiding something that was never meant to be disturbed.",
+  "g1.idx":"Adventure","g1.badge":"Upcoming · 2026","g1.act1":"Wishlist","g1.flagship":"Our next release","g1.releasedate":"OCTOBER 30, 2026",
+  "g1.desc":"<p>After your mother's death, and with no other option, you're forced to take the only job available: becoming the new warden of a solitary campsite deep in the mountains. You arrive looking for a refuge — somewhere to find some peace and put your life back together — but the solitude of the peaks soon turns suffocating.</p><p>What begins as a routine of watching over the grounds and basic upkeep slowly turns into something unsettling. The silence of the forest isn't empty — it seems to be hiding truths nobody told you about. As you wander the trails and winter starts burying everything in snow, you'll discover the campsite holds buried secrets that were never meant to be disturbed.</p><p>In Lost Camp, the weather is dynamic and unpredictable: you can be working under a calm sun one moment and suddenly caught in torrential rain or a snowstorm that blankets everything. This system doesn't just reshape the landscape — it completely alters visibility and atmosphere, making the campsite feel alive, and at times, deeply hostile.</p>",
   "g2.idx":"Horror / Exploration","g2.badge":"Free · Feb 16, 2024",
   "g2.desc":"The world's largest cruise ship sinks and is overrun by spirits. As an agent, you board the \"Nocturne\" with your flashlight to find Captain Blackhood — alive or dead — and uncover the curse dragging the ship down.",
   "g2.dlc":"+ free DLC: <b>Obscuria: The Tragedy</b> — play as Captain Blackhood.",
@@ -496,8 +522,8 @@ const I18N={
   "nav.games":"Juegos","nav.roadmap":"Roadmap","nav.studio":"Estudio","nav.contact":"Contacto",
   "hero.eyebrow":"Estudio independiente · Terror y Aventura","hero.cta1":"Ver los juegos","hero.cta2":"Seguir en Steam","hero.scroll":"Explora",
   "games.kicker":"// Nuestros juegos","games.title":"Los juegos","games.note":"Cuatro mundos. Una obsesión: atmósfera densa, exploración y sustos de verdad.",
-  "g1.idx":"Aventura","g1.badge":"Próximamente · 2026","g1.act1":"Añadir a deseados",
-  "g1.desc":"Tras la muerte de tu madre te conviertes en el guarda de un campamento aislado en plena montaña. Cuando el invierno cubre de nieve los senderos, el silencio empieza a parecer que esconde algo que nunca debió ser despertado.",
+  "g1.idx":"Aventura","g1.badge":"Próximamente · 2026","g1.act1":"Añadir a deseados","g1.flagship":"Nuestro próximo lanzamiento","g1.releasedate":"30 DE OCTUBRE DE 2026",
+  "g1.desc":"<p>Tras la muerte de tu madre y sin otra opción, te ves obligado a aceptar el único trabajo disponible: convertirte en el nuevo guarda de un camping solitario en lo profundo de las montañas. Llegas al lugar buscando un refugio donde encontrar algo de paz y ordenar tu vida, pero la soledad de las cumbres pronto se vuelve asfixiante.</p><p>Lo que empieza como una rutina de vigilancia y mantenimiento se transforma en una experiencia inquietante. El silencio del bosque no es vacío, sino que parece esconder verdades que nadie te contó. A medida que recorres los senderos y el invierno comienza a cubrirlo todo con nieve, descubrirás que el camping guarda secretos enterrados que nunca debieron ser perturbados.</p><p>En Lost Camp, el clima es dinámico e imprevisible: puedes estar trabajando bajo un sol tranquilo y, de golpe, verte atrapado por una lluvia torrencial o una nevada que lo cubre todo. Este sistema no solo cambia el paisaje, sino que altera por completo la visibilidad y la atmósfera, haciendo que el camping se sienta vivo y, a veces, muy hostil.</p>",
   "g2.idx":"Terror / Exploración","g2.badge":"Gratis · 16 feb 2024",
   "g2.desc":"El mayor crucero del mundo naufraga y queda tomado por espíritus. Como agente, entras al \"Nocturne\" con tu linterna para encontrar al Capitán Blackhood —vivo o muerto— y destapar la maldición que arrastra el barco.",
   "g2.dlc":"+ DLC gratis: <b>Obscuria: The Tragedy</b> — juega como el Capitán Blackhood.",
@@ -519,8 +545,8 @@ const I18N={
   "nav.games":"Jocs","nav.roadmap":"Roadmap","nav.studio":"Estudi","nav.contact":"Contacte",
   "hero.eyebrow":"Estudi independent · Terror i Aventura","hero.cta1":"Veure els jocs","hero.cta2":"Seguir a Steam","hero.scroll":"Explora",
   "games.kicker":"// Els nostres jocs","games.title":"Els jocs","games.note":"Quatre mons. Una obsessió: atmosfera densa, exploració i sustos de veritat.",
-  "g1.idx":"Aventura","g1.badge":"Properament · 2026","g1.act1":"Afegir a desitjats",
-  "g1.desc":"Després de la mort de la teva mare et converteixes en el guarda d'un campament aïllat en plena muntanya. Quan l'hivern cobreix de neu els camins, el silenci comença a semblar que amaga alguna cosa que mai havia de ser desvetllada.",
+  "g1.idx":"Aventura","g1.badge":"Properament · 2026","g1.act1":"Afegir a desitjats","g1.flagship":"El nostre proper llançament","g1.releasedate":"30 D'OCTUBRE DE 2026",
+  "g1.desc":"<p>Després de la mort de la teva mare, i sense cap altra opció, et veus obligat a acceptar l'única feina disponible: convertir-te en el nou guarda d'un càmping solitari a les profunditats de les muntanyes. Arribes al lloc buscant un refugi on trobar una mica de pau i endreçar la teva vida, però la solitud dels cims aviat es torna asfixiant.</p><p>El que comença com una rutina de vigilància i manteniment es transforma en una experiència inquietant. El silenci del bosc no és buit, sinó que sembla amagar veritats que ningú et va explicar. Mentre recorres els camins i l'hivern comença a cobrir-ho tot de neu, descobriràs que el càmping guarda secrets enterrats que mai haurien d'haver estat pertorbats.</p><p>A Lost Camp, el clima és dinàmic i imprevisible: pots estar treballant sota un sol tranquil i, de sobte, veure't atrapat per una pluja torrencial o una nevada que ho cobreix tot. Aquest sistema no només canvia el paisatge, sinó que altera per complet la visibilitat i l'atmosfera, fent que el càmping se senti viu i, de vegades, molt hostil.</p>",
   "g2.idx":"Terror / Exploració","g2.badge":"Gratis · 16 feb 2024",
   "g2.desc":"El creuer més gran del món naufraga i queda envaït per esperits. Com a agent, entres al \"Nocturne\" amb la teva llanterna per trobar el Capità Blackhood —viu o mort— i destapar la maledicció que enfonsa el vaixell.",
   "g2.dlc":"+ DLC gratuït: <b>Obscuria: The Tragedy</b> — juga com el Capità Blackhood.",
@@ -542,15 +568,15 @@ const I18N={
   "nav.games":"Jeux","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contact",
   "hero.eyebrow":"Studio indépendant · Horreur et Aventure","hero.cta1":"Découvrir les jeux","hero.cta2":"Suivre sur Steam","hero.scroll":"Défiler",
   "games.kicker":"// Nos jeux","games.title":"Les jeux","games.note":"Quatre mondes. Une obsession : une atmosphère dense, l'exploration et de vraies frayeurs.",
-  "g1.idx":"Aventure","g1.badge":"À venir · 2026","g1.act1":"Liste de souhaits",
-  "g1.desc":"Après la mort de votre mère, vous devenez le gardien d'un camp isolé au cœur des montagnes. Tandis que l'hiver ensevelit les sentiers sous la neige, le silence semble cacher quelque chose qui n'aurait jamais dû être réveillé.",
+  "g1.idx":"Aventure","g1.badge":"À venir · 2026","g1.act1":"Liste de souhaits","g1.flagship":"Notre prochaine sortie","g1.releasedate":"30 OCTOBRE 2026",
+  "g1.desc":"<p>Après la mort de votre mère, et sans autre choix, vous êtes contraint d'accepter le seul emploi disponible : devenir le nouveau gardien d'un camping isolé au cœur des montagnes. Vous arrivez en quête d'un refuge où trouver un peu de paix et remettre de l'ordre dans votre vie, mais la solitude des sommets devient vite étouffante.</p><p>Ce qui commence comme une routine de surveillance et d'entretien se transforme en une expérience troublante. Le silence de la forêt n'est pas vide : il semble cacher des vérités que personne ne vous a dites. En parcourant les sentiers, tandis que l'hiver commence à tout recouvrir de neige, vous découvrirez que le camping renferme des secrets enfouis qui n'auraient jamais dû être dérangés.</p><p>Dans Lost Camp, la météo est dynamique et imprévisible : vous pouvez travailler sous un soleil paisible et, soudain, vous retrouver pris sous une pluie torrentielle ou une tempête de neige qui recouvre tout. Ce système ne change pas seulement le paysage : il modifie entièrement la visibilité et l'atmosphère, rendant le camping vivant et, parfois, terriblement hostile.</p>",
   "g2.idx":"Horreur / Exploration","g2.badge":"Gratuit · 16 fév. 2024",
   "g2.desc":"Le plus grand paquebot du monde fait naufrage et se retrouve envahi par des esprits. En tant qu'agent, vous montez à bord du \"Nocturne\" avec votre lampe torche pour retrouver le Capitaine Blackhood — vivant ou mort — et percer la malédiction qui entraîne le navire vers le fond.",
   "g2.dlc":"+ DLC gratuit : <b>Obscuria: The Tragedy</b> — jouez le Capitaine Blackhood.",
   "g3.idx":"Obscuria 2 · Horreur d'action","g3.badge":"Payant · 28 oct. 2024",
   "g3.desc":"Une patrouille de police de routine se transforme en cauchemar lorsqu'un naufrage vous échoue sur l'île de Nocturne. Explorez forêts, bâtiments abandonnés et tunnels cachés, résolvez des énigmes et défendez-vous pour percer l'histoire tortueuse de l'île.",
   "g4.idx":"Sandbox multijoueur","g4.badge":"Gratuit · 3 juil. 2023",
-  "g4.desc":"Créez des mondes, explorez la carte et construisez tout ce que vous imaginez : jeu de rôle, parkour, matchs, courses et plus encore. Roulez sans limites, replongez dans le mode classique et jouez à tout avec vos amis. Seule votre imagination est la limite.",
+  "g4.desc":"Créez des mondes, explorez la carte et construisez tout ce que vous imaginez : jeu de rôle, parkour, courses et plus encore. Roulez sans limites, replongez dans le mode classique et jouez à tout avec vos amis. Seule votre imagination est la limite.",
   "act.view":"Voir sur Steam","act.viewpage":"Voir la page","act.playfree":"Jouer gratuitement","act.buy":"Acheter sur Steam",
   "t.horror":"Horreur","t.survival":"Survie","t.mystery":"Mystère","t.atmos":"Atmosphérique","t.exploration":"Exploration","t.scares":"Frayeurs","t.tension":"Tension","t.adventure":"Aventure","t.combat":"Combat","t.sandbox":"Sandbox","t.multiplayer":"Multijoueur","t.driving":"Conduite","t.creative":"Créatif",
   "rm.kicker":"// Chronologie du studio","rm.title":"Roadmap","rm.note":"Chaque sortie et ce qui reste à venir, année après année.","rm.upcoming":"À venir",
@@ -565,8 +591,8 @@ const I18N={
   "nav.games":"Gry","nav.roadmap":"Roadmapa","nav.studio":"Studio","nav.contact":"Kontakt",
   "hero.eyebrow":"Niezależne studio · Horror i Przygoda","hero.cta1":"Zobacz gry","hero.cta2":"Obserwuj na Steam","hero.scroll":"Przewiń",
   "games.kicker":"// Nasze gry","games.title":"Gry","games.note":"Cztery światy. Jedna obsesja: gęsta atmosfera, eksploracja i prawdziwy strach.",
-  "g1.idx":"Przygoda","g1.badge":"Wkrótce · 2026","g1.act1":"Lista życzeń",
-  "g1.desc":"Po śmierci matki zostajesz dozorcą odludnego obozowiska wysoko w górach. Gdy zima zasypuje szlaki śniegiem, cisza zaczyna skrywać coś, czego nigdy nie należało budzić.",
+  "g1.idx":"Przygoda","g1.badge":"Wkrótce · 2026","g1.act1":"Lista życzeń","g1.flagship":"Nasza nadchodząca premiera","g1.releasedate":"30 PAŹDZIERNIKA 2026",
+  "g1.desc":"<p>Po śmierci matki, nie mając innego wyjścia, jesteś zmuszony przyjąć jedyną dostępną pracę: zostać nowym dozorcą samotnego obozowiska głęboko w górach. Docierasz na miejsce w poszukiwaniu schronienia, gdzie mógłbyś znaleźć odrobinę spokoju i poukładać swoje życie, lecz samotność szczytów szybko staje się dusząca.</p><p>To, co zaczyna się jako rutyna dozoru i konserwacji, zamienia się w niepokojące doświadczenie. Cisza lasu nie jest pusta — zdaje się kryć prawdy, o których nikt ci nie powiedział. Wędrując szlakami, gdy zima zaczyna zasypywać wszystko śniegiem, odkryjesz, że obozowisko skrywa pogrzebane sekrety, których nigdy nie powinno się było naruszać.</p><p>W Lost Camp pogoda jest dynamiczna i nieprzewidywalna: możesz pracować w spokojnym słońcu, a chwilę później znaleźć się w ulewnym deszczu lub śnieżycy, która zasypuje wszystko. Ten system nie tylko zmienia krajobraz, ale całkowicie zmienia widoczność i atmosferę, sprawiając, że obozowisko wydaje się żywe, a czasem bardzo wrogie.</p>",
   "g2.idx":"Horror / Eksploracja","g2.badge":"Za darmo · 16 lut 2024",
   "g2.desc":"Największy statek wycieczkowy na świecie tonie i zostaje opanowany przez duchy. Jako agent wkraczasz na „Nocturne” z latarką, by odnaleźć kapitana Blackhooda — żywego lub martwego — i odkryć klątwę ciągnącą statek na dno.",
   "g2.dlc":"+ darmowe DLC: <b>Obscuria: The Tragedy</b> — wciel się w kapitana Blackhooda.",
@@ -588,8 +614,8 @@ const I18N={
   "nav.games":"Giochi","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contatti",
   "hero.eyebrow":"Studio indipendente · Horror e Avventura","hero.cta1":"Esplora i giochi","hero.cta2":"Segui su Steam","hero.scroll":"Scorri",
   "games.kicker":"// I nostri giochi","games.title":"I giochi","games.note":"Quattro mondi. Un'ossessione: atmosfera densa, esplorazione e veri spaventi.",
-  "g1.idx":"Avventura","g1.badge":"In arrivo · 2026","g1.act1":"Lista dei desideri",
-  "g1.desc":"Dopo la morte di tua madre diventi il custode di un campeggio isolato tra le montagne. Mentre l'inverno seppellisce i sentieri sotto la neve, il silenzio sembra nascondere qualcosa che non avrebbe mai dovuto essere disturbato.",
+  "g1.idx":"Avventura","g1.badge":"In arrivo · 2026","g1.act1":"Lista dei desideri","g1.flagship":"La nostra prossima uscita","g1.releasedate":"30 OTTOBRE 2026",
+  "g1.desc":"<p>Dopo la morte di tua madre, senza altra scelta, sei costretto ad accettare l'unico lavoro disponibile: diventare il nuovo custode di un campeggio solitario nel profondo delle montagne. Arrivi cercando un rifugio dove trovare un po' di pace e rimettere ordine nella tua vita, ma la solitudine delle vette diventa presto soffocante.</p><p>Ciò che inizia come una routine di sorveglianza e manutenzione si trasforma in un'esperienza inquietante. Il silenzio della foresta non è vuoto: sembra nascondere verità che nessuno ti ha mai raccontato. Mentre percorri i sentieri e l'inverno inizia a ricoprire tutto di neve, scoprirai che il campeggio custodisce segreti sepolti che non avrebbero mai dovuto essere disturbati.</p><p>In Lost Camp, il meteo è dinamico e imprevedibile: puoi lavorare sotto un sole tranquillo e, all'improvviso, ritrovarti travolto da una pioggia torrenziale o da una nevicata che ricopre ogni cosa. Questo sistema non si limita a cambiare il paesaggio, ma altera completamente la visibilità e l'atmosfera, rendendo il campeggio vivo e, a volte, davvero ostile.</p>",
   "g2.idx":"Horror / Esplorazione","g2.badge":"Gratis · 16 feb 2024",
   "g2.desc":"La più grande nave da crociera del mondo affonda ed è invasa dagli spiriti. Come agente, sali a bordo del \"Nocturne\" con la tua torcia per trovare il Capitano Blackhood — vivo o morto — e svelare la maledizione che trascina la nave a fondo.",
   "g2.dlc":"+ DLC gratuito: <b>Obscuria: The Tragedy</b> — gioca nei panni del Capitano Blackhood.",
@@ -611,8 +637,8 @@ const I18N={
   "nav.games":"Spiele","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Kontakt",
   "hero.eyebrow":"Unabhängiges Studio · Horror & Abenteuer","hero.cta1":"Spiele entdecken","hero.cta2":"Auf Steam folgen","hero.scroll":"Scrollen",
   "games.kicker":"// Unsere Spiele","games.title":"Die Spiele","games.note":"Vier Welten. Eine Obsession: dichte Atmosphäre, Erkundung und echter Schrecken.",
-  "g1.idx":"Abenteuer","g1.badge":"Demnächst · 2026","g1.act1":"Wunschliste",
-  "g1.desc":"Nach dem Tod deiner Mutter wirst du zum Wächter eines abgelegenen Campingplatzes tief in den Bergen. Während der Winter die Pfade unter Schnee begräbt, scheint die Stille etwas zu verbergen, das niemals geweckt werden sollte.",
+  "g1.idx":"Abenteuer","g1.badge":"Demnächst · 2026","g1.act1":"Wunschliste","g1.flagship":"Unser nächstes Release","g1.releasedate":"30. OKTOBER 2026",
+  "g1.desc":"<p>Nach dem Tod deiner Mutter bleibt dir keine andere Wahl, als den einzigen verfügbaren Job anzunehmen: den neuen Wächter eines einsamen Campingplatzes tief in den Bergen. Du kommst auf der Suche nach einem Rückzugsort an, an dem du etwas Frieden finden und dein Leben ordnen kannst — doch die Einsamkeit der Gipfel wird bald erdrückend.</p><p>Was als Routine aus Überwachung und Instandhaltung beginnt, verwandelt sich in eine beunruhigende Erfahrung. Die Stille des Waldes ist nicht leer — sie scheint Wahrheiten zu verbergen, von denen dir niemand erzählt hat. Während du die Pfade entlangwanderst und der Winter alles unter Schnee begräbt, wirst du entdecken, dass der Campingplatz vergrabene Geheimnisse birgt, die niemals gestört werden sollten.</p><p>In Lost Camp ist das Wetter dynamisch und unberechenbar: Du kannst bei ruhigem Sonnenschein arbeiten und dich plötzlich in strömendem Regen oder einem alles bedeckenden Schneesturm wiederfinden. Dieses System verändert nicht nur die Landschaft, sondern auch vollständig die Sicht und die Atmosphäre — der Campingplatz fühlt sich lebendig an und manchmal zutiefst feindselig.</p>",
   "g2.idx":"Horror / Erkundung","g2.badge":"Kostenlos · 16. Feb. 2024",
   "g2.desc":"Das größte Kreuzfahrtschiff der Welt sinkt und wird von Geistern überrannt. Als Agent betrittst du die „Nocturne“ mit deiner Taschenlampe, um Kapitän Blackhood zu finden — lebendig oder tot — und den Fluch zu lüften, der das Schiff in die Tiefe zieht.",
   "g2.dlc":"+ kostenloses DLC: <b>Obscuria: The Tragedy</b> — spiele als Kapitän Blackhood.",
@@ -634,8 +660,8 @@ const I18N={
   "nav.games":"游戏","nav.roadmap":"路线图","nav.studio":"工作室","nav.contact":"联系",
   "hero.eyebrow":"独立工作室 · 恐怖与冒险","hero.cta1":"探索游戏","hero.cta2":"在 Steam 关注","hero.scroll":"向下滚动",
   "games.kicker":"// 我们的游戏","games.title":"游戏作品","games.note":"四个世界，一种执念：浓厚的氛围、探索与真正的惊吓。",
-  "g1.idx":"冒险","g1.badge":"即将推出 · 2026","g1.act1":"加入愿望单",
-  "g1.desc":"母亲去世后，你成为深山中一处偏僻营地的看守人。当寒冬将小径埋入积雪，寂静仿佛藏着某种本不该被惊扰的东西。",
+  "g1.idx":"冒险","g1.badge":"即将推出 · 2026","g1.act1":"加入愿望单","g1.flagship":"我们的下一部作品","g1.releasedate":"2026年10月30日",
+  "g1.desc":"<p>母亲去世后，你别无选择，只能接受唯一可以得到的工作——成为深山中一处偏僻营地的新看守人。你来到这里，本想寻得一处能让自己喘息、重新整理生活的避风港，但山巅的孤独很快变得令人窒息。</p><p>起初只是日常的巡视与维护工作，却逐渐演变成一段令人不安的经历。森林中的寂静并非空无一物，它似乎隐藏着从未有人告诉过你的真相。当你走过一条条小径，冬天开始将一切掩埋在积雪之下时，你会发现这座营地埋藏着本不该被打扰的秘密。</p><p>在《Lost Camp》中，天气系统是动态且难以预测的：你可能正在平静的阳光下工作，转眼间就被倾盆大雨或覆盖一切的暴风雪困住。这一系统不仅会改变地貌，还会彻底影响能见度与氛围，让整座营地显得鲜活，有时甚至充满敌意。</p>",
   "g2.idx":"恐怖 / 探索","g2.badge":"免费 · 2024年2月16日",
   "g2.desc":"世界上最大的邮轮沉没，被幽灵占据。作为特工，你手持手电筒登上「Nocturne」号，寻找失踪的布莱克胡德船长——无论生死——并揭开拖垮这艘船的诅咒。",
   "g2.dlc":"+ 免费 DLC：<b>Obscuria: The Tragedy</b>——扮演布莱克胡德船长。",
