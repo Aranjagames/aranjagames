@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ARANJA GAMES — Independent horror &amp; adventure studio</title>
+<meta name="description" content="Aranja Games is a Spanish independent studio founded by Enzo Colomer in 2020. Making it real: Lost Camp, Obscuria, Nocturne Island and Jump to Survive." />
+
+ <link rel="icon" href="assets/logo.png" type="image/png">
+ <link rel="shortcut icon" href="assets/logo.png" type="image/png">
+ <link rel="apple-touch-icon" href="assets/logo.png">
+ 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --void:#070708; --void-2:#0c0c0f; --surface:#101015; --surface-2:#16161d;
+  --line:#23232b; --line-2:#2f2f39;
+  --ember:#ff6a00; --ember-hot:#ff8a24; --ember-glow:#ffae54;
+  --ash:#f3f1ec; --ash-dim:#9a958c; --ash-dimmer:#67635c;
+  --maxw:1240px; --ease:cubic-bezier(.16,1,.3,1); --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ash);font-family:"Inter",system-ui,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--ember);color:#000}
+.mono{font-family:"JetBrains Mono",monospace}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;position:relative;z-index:2}
+
+#stage{position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--void);opacity:0;transition:opacity .9s var(--ease),background-color .9s var(--ease)}
+#stage.on{opacity:1}
+#stageImg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .9s var(--ease);filter:saturate(.85)}
+#veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 50% 0%, transparent 50%, rgba(0,0,0,.55) 100%)}
+#progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;background:linear-gradient(90deg,var(--ember),var(--ember-glow));box-shadow:0 0 12px var(--ember)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 28px;transition:background .45s var(--ease),padding .45s var(--ease),border-color .45s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(7,7,8,.78);backdrop-filter:blur(16px);border-color:var(--line);padding:11px 28px}
+.brand{display:flex;align-items:center;gap:12px;font-family:"Anton";font-size:21px;letter-spacing:.05em;min-width:0;flex-shrink:1;white-space:nowrap;overflow:hidden}
+.brand img{width:34px;height:34px;flex-shrink:0;filter:drop-shadow(0 0 10px rgba(255,106,0,.45))}
+.nav-mid{display:flex;gap:30px;align-items:center}
+.nav-mid a{font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ash-dim);transition:color .25s;position:relative}
+.nav-mid a:hover{color:var(--ash)}
+.nav-mid a::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--ember);transition:width .3s var(--ease)}
+.nav-mid a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:16px;flex-shrink:0}
+/* language dropdown */
+.langdd{position:relative;font-family:"JetBrains Mono";font-size:10.5px}
+.langbtn{display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--line-2);color:var(--ash);cursor:pointer;padding:6px 10px;border-radius:6px;font-family:inherit;font-size:12.5px;letter-spacing:.04em;transition:.25s;white-space:nowrap}
+.langbtn:hover{border-color:var(--ember);color:var(--ember)}
+.langbtn .caret{transition:transform .3s}
+.langdd.open .caret{transform:rotate(180deg)}
+.langmenu{position:absolute;top:calc(100% + 8px);right:0;min-width:150px;background:rgba(12,12,15,.96);backdrop-filter:blur(14px);border:1px solid var(--line-2);border-radius:10px;padding:6px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:.25s var(--ease);box-shadow:0 24px 60px -20px #000}
+.langdd.open .langmenu{opacity:1;visibility:visible;transform:none}
+.langmenu button{display:flex;width:100%;align-items:center;gap:10px;background:none;border:none;color:var(--ash-dim);cursor:pointer;padding:9px 12px;border-radius:6px;font-family:inherit;font-size:12.5px;text-align:left;transition:.2s}
+.langmenu button:hover{background:rgba(255,255,255,.05);color:var(--ash)}
+.langmenu button.active{color:var(--ember)}
+.langmenu button .tick{margin-left:auto;opacity:0}
+.langmenu button.active .tick{opacity:1}
+.nav-cta{padding:9px 18px;border:1px solid var(--ember);border-radius:8px;color:var(--ember)!important;font-family:"JetBrains Mono";font-size:12px;letter-spacing:.1em;transition:.3s;white-space:nowrap}
+.nav-cta:hover{background:var(--ember);color:#000!important;box-shadow:0 0 24px rgba(255,106,0,.5)}
+
+/* HERO */
+#hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;inset:-8% -2%;z-index:0;overflow:hidden;opacity:.42;transform:scale(1.18);will-change:transform}
+.hero-bg video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;background:var(--void)}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,7,8,.55) 0%, rgba(7,7,8,.35) 35%, rgba(7,7,8,.8) 80%, var(--void) 100%)}
+#embers{position:absolute;inset:0;z-index:1}
+#torch{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle 340px at var(--mx,50%) var(--my,42%), rgba(255,140,40,.12), rgba(255,106,0,.04) 46%, transparent 70%);transition:background .1s linear}
+.hero-inner{position:relative;z-index:2;padding:120px 28px 80px;max-width:900px}
+.hero-logo{width:clamp(96px,14vw,150px);margin:0 auto 28px;filter:drop-shadow(0 14px 40px rgba(255,106,0,.4));animation:floaty 6s ease-in-out infinite,fadeUp 1s var(--ease) .1s both}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.eyebrow{font-family:"JetBrains Mono";font-size:12.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--ember);margin-bottom:22px;animation:fadeUp .9s var(--ease) .25s both}
+.eyebrow::before,.eyebrow::after{content:"";display:inline-block;width:30px;height:1px;background:var(--ember);vertical-align:middle;margin:0 14px;opacity:.6}
+.hero-title{font-family:"Anton";font-weight:400;line-height:.84;letter-spacing:.01em;text-transform:uppercase;font-size:clamp(58px,13vw,168px);margin-bottom:14px}
+.hero-title .l1{display:block;color:transparent;-webkit-text-stroke:1.4px var(--ash)}
+.hero-title .l2{display:block;color:var(--ember);text-shadow:0 0 50px rgba(255,106,0,.5)}
+.hero-sub{font-family:"JetBrains Mono";font-size:clamp(14px,2.4vw,20px);letter-spacing:.36em;text-transform:lowercase;color:var(--ash);margin:18px auto 40px;animation:fadeUp .9s var(--ease) .5s both}
+.hero-sub .real{position:relative;display:inline-block;font-weight:700;background:linear-gradient(100deg,var(--ember-hot) 0%,var(--ember-glow) 18%,#fff 28%,var(--ember-glow) 38%,var(--ember-hot) 56%,var(--ember) 100%);background-size:260% 100%;background-position:0% 0%;-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;animation:realShimmer 3.2s linear infinite,realPulse 2.6s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(255,106,0,.55))}
+@keyframes realShimmer{0%{background-position:0% 0%}100%{background-position:-260% 0%}}
+@keyframes realPulse{0%,100%{filter:drop-shadow(0 0 8px rgba(255,106,0,.45))}50%{filter:drop-shadow(0 0 20px rgba(255,138,36,.85))}}
+@media (prefers-reduced-motion:reduce){.hero-sub .real{animation:none;background-position:0% 0%}}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .9s var(--ease) .65s both}
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:8px;font-family:"JetBrains Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:.3s var(--ease);border:1px solid transparent;overflow:hidden}
+.btn-primary{background:var(--ember);color:#000;font-weight:700}
+.btn-primary::after{content:"";position:absolute;top:0;left:-130%;width:55%;height:100%;background:linear-gradient(110deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);animation:shimmer 5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-130%}14%{left:140%}100%{left:140%}}
+.btn-primary:hover{background:var(--ember-hot);box-shadow:0 0 30px rgba(255,106,0,.55);transform:translateY(-2px)}
+.btn-ghost{border-color:var(--line-2);color:var(--ash)}
+.btn-ghost:hover{border-color:var(--ember);color:var(--ember);transform:translateY(-2px)}
+.btn span{position:relative;z-index:1}
+.btn .arr{transition:transform .3s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+.scrollcue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;font-family:"JetBrains Mono";font-size:10px;letter-spacing:.3em;color:var(--ash-dimmer);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scrollcue::after{content:"";width:1px;height:42px;background:linear-gradient(var(--ember),transparent);animation:cue 2.4s infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* TICKER */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(12,12,15,.6);backdrop-filter:blur(6px);overflow:hidden;position:relative;z-index:2}
+.ticker-mask{display:flex;width:max-content;animation:marquee 26s linear infinite}
+.ticker-seq{display:flex;flex:none;padding:15px 0;font-family:"Anton";font-size:18px;letter-spacing:.08em;text-transform:uppercase}
+.ticker-seq span{margin:0 22px;color:var(--ash-dimmer);white-space:nowrap}
+.ticker-seq span b{color:var(--ember);font-weight:400}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.ticker:hover .ticker-mask{animation-play-state:paused}
+
+/* SECTIONS */
+section.block{position:relative;z-index:2;padding:130px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:70px;flex-wrap:wrap}
+.sec-kicker{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--ember);margin-bottom:16px}
+.sec-title{font-family:"Anton";font-size:clamp(38px,6.5vw,78px);line-height:.95;text-transform:uppercase;letter-spacing:.01em}
+.sec-note{max-width:340px;color:var(--ash-dim);font-size:14.5px}
+.reveal{opacity:0;transform:translateY(38px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* GAMES */
+#juegos{padding-top:130px;padding-bottom:40px}
+.game{display:grid;grid-template-columns:1fr 1.05fr;gap:60px;align-items:center;min-height:88vh;padding:70px 0;border-top:1px solid var(--line)}
+.game.flip .game-media{order:-1}
+.game-meta-idx{font-family:"JetBrains Mono";font-size:13px;color:var(--ember);letter-spacing:.22em;margin-bottom:18px;text-transform:uppercase}
+.game-title{font-family:"Anton";font-size:clamp(40px,5.6vw,72px);line-height:.9;text-transform:uppercase;margin-bottom:10px}
+
+/* FEATURED (Lost Camp — flagship upcoming release) */
+.game.featured{grid-template-columns:1fr 1.22fr;gap:70px;min-height:auto;padding:90px 0 20px;border-top-color:rgba(255,106,0,.35)}
+.flagship-kicker{display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono";font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--ember-glow);margin-bottom:20px}
+.flagship-kicker::before{content:"★";color:var(--ember)}
+.game.featured .game-title{font-size:clamp(52px,7.4vw,104px);text-shadow:0 0 60px rgba(255,106,0,.22)}
+.game.featured .game-desc{max-width:640px;font-size:16.5px}
+.game.featured .game-desc p{margin-bottom:16px}
+.game.featured .game-desc p:last-child{margin-bottom:0}
+.release-row{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+.release-date-big{font-family:"Anton";font-size:clamp(26px,3.4vw,46px);line-height:1;letter-spacing:.02em;color:var(--ember-glow);text-shadow:0 0 34px rgba(255,106,0,.4);white-space:nowrap}
+.game.featured .countdown{font-size:12.5px;padding:8px 14px}
+.lc-gallery{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:10px 0 70px}
+.lc-gallery-img{aspect-ratio:16/9;border-radius:var(--r);background-size:cover;background-position:center;border:1px solid var(--line-2);box-shadow:0 30px 70px -30px #000;transition:transform .5s var(--ease);filter:saturate(1.05)}
+.lc-gallery-img:hover{transform:translateY(-4px)}
+@media (max-width:960px){
+  .game.featured{grid-template-columns:1fr;gap:30px}
+  .lc-gallery{grid-template-columns:1fr}
+}
+.badge{display:inline-block;font-family:"JetBrains Mono";font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:6px 13px;border-radius:6px;margin-bottom:22px}
+.badge.soon{background:rgba(255,106,0,.14);color:var(--ember-glow);border:1px solid rgba(255,106,0,.4)}
+.badge.free{background:rgba(80,200,120,.12);color:#6fdc97;border:1px solid rgba(80,200,120,.35)}
+.badge.paid{background:rgba(255,255,255,.06);color:var(--ash-dim);border:1px solid var(--line-2)}
+.badge-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.badge-row .badge{margin-bottom:0}
+.countdown{display:inline-flex;align-items:center;gap:7px;font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.04em;color:var(--ash);background:rgba(255,255,255,.04);border:1px solid var(--line-2);padding:6px 12px;border-radius:6px;white-space:nowrap}
+.countdown b{color:var(--ember-glow);font-weight:600}
+.countdown .cd-sep{color:var(--ash-dimmer);margin:0 1px}
+.price-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;min-height:34px}
+.price-normal{font-family:"JetBrains Mono";font-size:18px;font-weight:700;color:var(--ash);background:rgba(255,255,255,.06);border:1px solid var(--line-2);padding:6px 14px;border-radius:6px}
+.price-sale-badge{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono";font-size:12px;font-weight:700;letter-spacing:.04em;color:#0a0a0a;background:linear-gradient(100deg,var(--ember-hot),var(--ember-glow));padding:6px 11px;border-radius:6px;text-transform:uppercase}
+.price-old{font-family:"JetBrains Mono";font-size:14px;color:var(--ash-dimmer);text-decoration:line-through}
+.price-final{font-family:"JetBrains Mono";font-size:19px;font-weight:700;color:var(--ember-glow)}
+.price-sale-label{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash-dim)}
+.game-desc{color:var(--ash-dim);font-size:16px;margin-bottom:20px;max-width:500px}
+.dlc-note{font-family:"JetBrains Mono";font-size:12px;color:var(--ash-dimmer);margin:-6px 0 20px;max-width:480px}
+.dlc-note b{color:var(--ember);font-weight:400}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px}
+.tag{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.06em;color:var(--ash-dim);border:1px solid var(--line-2);padding:5px 11px;border-radius:6px;text-transform:uppercase}
+.game-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+/* carousel */
+.carousel{position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;border:1px solid var(--line-2);box-shadow:0 40px 80px -34px #000;background:var(--void-2)}
+.carousel .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.1s var(--ease);background-size:cover;background-position:center}
+.carousel .slide.active{opacity:1;animation:kenburns 9s ease-out forwards}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.12)}}
+.carousel::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 90px rgba(0,0,0,.5);border-radius:var(--r);z-index:3}
+.cdots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:4;transition:opacity .4s}
+.cdots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);transition:.3s;cursor:pointer}
+.cdots i.active{background:var(--ember);width:22px;border-radius:5px}
+
+/* ROADMAP */
+.roadmap{position:relative;max-width:880px;margin:0 auto;padding-left:8px}
+.roadmap::before{content:"";position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--ember),var(--line) 80%)}
+.rm-year{position:relative;padding:34px 0 6px 56px;font-family:"Anton";font-size:40px;color:#fff;opacity:.16;letter-spacing:.04em}
+.rm-item{position:relative;padding:16px 0 16px 56px;transition:.3s var(--ease)}
+.rm-item::before{content:"";position:absolute;left:7px;top:24px;width:16px;height:16px;border-radius:50%;background:var(--void);border:2px solid var(--ember);transition:.3s}
+.rm-item:hover::before{box-shadow:0 0 16px var(--ember);transform:scale(1.15)}
+.rm-item.up::before{border-style:dashed;border-color:var(--ember-glow);animation:pulsedot 2.4s infinite}
+@keyframes pulsedot{0%,100%{box-shadow:0 0 0 0 rgba(255,174,84,.5)}50%{box-shadow:0 0 0 7px rgba(255,174,84,0)}}
+.rm-item.mile::before{background:var(--ember)}
+.rm-date{font-family:"JetBrains Mono";font-size:12px;color:var(--ember);letter-spacing:.1em;margin-bottom:5px}
+.rm-item h3{font-size:20px;font-weight:700;margin-bottom:4px}
+.rm-item p{color:var(--ash-dim);font-size:14.5px;max-width:580px}
+.rm-pill{display:inline-block;margin-left:10px;font-family:"JetBrains Mono";font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(255,106,0,.4);color:var(--ember-glow);padding:2px 8px;border-radius:20px;vertical-align:middle}
+
+/* NEWS */
+.news-wrap{display:flex;align-items:stretch;gap:18px}
+.news-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;min-width:0}
+.news-card{display:flex;flex-direction:column;background:linear-gradient(160deg,var(--surface),var(--void-2));border:1px solid var(--line-2);border-radius:var(--r);padding:26px 24px;transition:.3s var(--ease);cursor:pointer;min-height:240px}
+.news-card:hover{border-color:rgba(255,106,0,.45);transform:translateY(-4px);box-shadow:0 20px 50px -24px rgba(255,106,0,.25)}
+.news-card .news-date{font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.12em;color:var(--ember);text-transform:uppercase;margin-bottom:14px}
+.news-card h3{font-family:"Anton";font-size:22px;line-height:1.08;text-transform:uppercase;letter-spacing:.01em;margin-bottom:12px}
+.news-card p{color:var(--ash-dim);font-size:14px;line-height:1.55;flex:1;margin-bottom:18px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.news-read{display:inline-flex;align-items:center;gap:8px;font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);align-self:flex-start;transition:.25s}
+.news-card:hover .news-read{color:var(--ember)}
+.news-read .arr{transition:transform .3s var(--ease)}
+.news-card:hover .news-read .arr{transform:translateX(4px)}
+.news-card.hidden-news{display:none}
+.news-more{flex-shrink:0;width:54px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);color:var(--ash);font-size:20px;cursor:pointer;transition:.3s var(--ease);display:flex;align-items:center;justify-content:center}
+.news-more:hover{border-color:var(--ember);color:var(--ember);background:rgba(255,106,0,.06)}
+.news-more.spin .arr{display:inline-block;transform:rotate(180deg)}
+.news-more[disabled]{opacity:.3;cursor:not-allowed;pointer-events:none}
+
+.news-modal{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility .3s}
+.news-modal.open{opacity:1;visibility:visible}
+.news-modal-backdrop{position:absolute;inset:0;background:rgba(5,5,6,.78);backdrop-filter:blur(6px)}
+.news-modal-card{position:relative;z-index:1;max-width:640px;width:100%;max-height:80vh;overflow-y:auto;background:linear-gradient(160deg,var(--surface),var(--void-2));border:1px solid var(--line-2);border-radius:var(--r);padding:40px 38px;transform:translateY(20px) scale(.97);transition:.35s var(--ease);box-shadow:0 50px 100px -40px #000}
+.news-modal.open .news-modal-card{transform:none}
+.news-modal-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:8px;border:1px solid var(--line-2);background:none;color:var(--ash-dim);font-size:14px;cursor:pointer;transition:.25s}
+.news-modal-close:hover{border-color:var(--ember);color:var(--ember)}
+.news-modal-date{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.14em;color:var(--ember);text-transform:uppercase;margin-bottom:14px}
+.news-modal-title{font-family:"Anton";font-size:clamp(26px,4vw,38px);line-height:1.05;text-transform:uppercase;margin-bottom:20px;padding-right:30px}
+.news-modal-body{color:var(--ash-dim);font-size:15.5px;line-height:1.75;white-space:pre-line}
+
+@media (max-width:960px){
+  .news-wrap{flex-direction:column}
+  .news-grid{grid-template-columns:1fr}
+  .news-more{width:100%;height:44px}
+  .news-more .arr{display:inline-block;transform:rotate(90deg)}
+  .news-more.spin .arr{transform:rotate(-90deg)}
+}
+
+/* STUDIO */
+.studio-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:64px;align-items:start}
+.studio-grid p{color:var(--ash-dim);font-size:16.5px;margin-bottom:20px}
+.studio-grid p b{color:var(--ash);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.stat{background:var(--surface);padding:30px 20px;text-align:center}
+.stat .n{font-family:"Anton";font-size:44px;color:var(--ember);line-height:1}
+.stat .l{font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash-dim);margin-top:8px}
+
+/* CONTACT */
+#contacto{padding:140px 0 70px;border-top:1px solid var(--line);position:relative;z-index:2;background:radial-gradient(60% 100% at 50% 0%, rgba(255,106,0,.07), transparent 70%)}
+.contact-logo{width:74px;margin:0 auto 26px;filter:drop-shadow(0 0 18px rgba(255,106,0,.4));animation:floaty 6s ease-in-out infinite}
+.contact-big{font-family:"Anton";font-size:clamp(48px,10vw,128px);line-height:.9;text-transform:lowercase;text-align:center;margin-bottom:34px;letter-spacing:.01em}
+.contact-big .accent{color:var(--ember);text-shadow:0 0 40px rgba(255,106,0,.5)}
+.founder-card{display:flex;align-items:center;gap:20px;justify-content:center;margin:54px auto 10px;width:fit-content;border:1px solid var(--line-2);border-radius:var(--r);padding:18px 26px 18px 18px;background:linear-gradient(160deg,var(--surface),var(--void-2))}
+.founder-card img{width:72px;height:72px;border-radius:12px;object-fit:cover;filter:saturate(1.05)}
+.founder-card .role{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ember);margin-bottom:5px}
+.founder-card h3{font-family:"Anton";font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+.socials{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:46px 0 72px}
+.social{display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid var(--line-2);border-radius:8px;font-family:"JetBrains Mono";font-size:12.5px;letter-spacing:.06em;transition:.3s var(--ease)}
+.social:hover{border-color:var(--ember);color:var(--ember);transform:translateY(-3px);box-shadow:0 0 24px rgba(255,106,0,.25)}
+.xp-launch{max-width:760px;margin:0 auto 72px;padding:clamp(30px,5vw,52px);text-align:center;border:1px solid rgba(255,106,0,.55);border-radius:var(--r);background:radial-gradient(circle at 50% 0%,rgba(255,106,0,.18),transparent 62%),linear-gradient(160deg,var(--surface),var(--void-2));box-shadow:0 28px 80px -42px rgba(255,106,0,.8)}
+.xp-launch-label{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash-dim);margin-bottom:18px}
+.xp-launch-btn{display:inline-flex;align-items:center;justify-content:center;min-width:min(100%,340px);padding:20px 34px;border:1px solid var(--ember-hot);border-radius:10px;background:var(--ember);color:#050505;font-family:"Anton";font-size:clamp(30px,6vw,48px);line-height:1;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 0 34px rgba(255,106,0,.38);transition:transform .3s var(--ease),background .3s var(--ease),box-shadow .3s var(--ease)}
+.xp-launch-btn:hover,.xp-launch-btn:focus-visible{background:var(--ember-hot);transform:translateY(-3px) scale(1.015);box-shadow:0 0 48px rgba(255,106,0,.62);outline:none}
+.xp-launch-btn:focus-visible{outline:3px solid var(--ash);outline-offset:5px}
+.foot-row{display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:30px;color:var(--ash-dimmer);font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.1em}
+
+@media (max-width:960px){
+  nav{padding:13px 16px}
+  nav.scrolled{padding:10px 16px}
+  .brand{font-size:15px;gap:8px}
+  .brand img{width:26px;height:26px}
+  .nav-mid{display:none}
+  .nav-right .nav-cta{display:none}
+  .langbtn{padding:6px 8px;font-size:11px;gap:5px}
+  .langbtn .lang-label{display:none}
+  .game,.game.flip .game-media{grid-template-columns:1fr;order:0}
+  .game{min-height:auto}
+  .game-media{order:-1!important;margin-bottom:8px}
+  .studio-grid{grid-template-columns:1fr;gap:42px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.001ms!important}
+  .reveal{opacity:1;transform:none}.hero-bg{transform:scale(1.1)}
+}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.hero-logo,.eyebrow,.hero-sub,.hero-actions{opacity:1!important}</style></noscript>
+</head>
+<body>
+<div id="stage"><div id="stageImg"></div></div>
+<div id="veil"></div>
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="brand"><img data-img="logo" alt="Aranja Games logo">ARANJA&nbsp;GAMES</a>
+  <div class="nav-mid" id="navmid">
+    <a href="#juegos" data-i18n="nav.games">Games</a>
+    <a href="#roadmap" data-i18n="nav.roadmap">Roadmap</a>
+    <a href="#estudio" data-i18n="nav.studio">Studio</a>
+    <a href="#contacto" data-i18n="nav.contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <div class="langdd" id="langdd">
+      <button class="langbtn" id="langbtn" aria-haspopup="true" aria-expanded="false">🌐 <span id="langcur" class="lang-label">English</span> <span class="caret">▾</span></button>
+      <div class="langmenu" id="langmenu"></div>
+    </div>
+    <a class="nav-cta" href="https://store.steampowered.com/developer/ARANJA/" target="_blank" rel="noopener">▶ STEAM</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="hero">
+  <div class="hero-bg" data-parallax="0.10" data-pscale="1.18">
+    <video autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg">
+      <source src="assets/hero-bg.mp4" type="video/mp4">
+    </video>
+  </div>
+  <canvas id="embers"></canvas>
+  <div id="torch"></div>
+  <div class="hero-inner" data-parallax="0.06">
+    <img class="hero-logo" data-img="logo" alt="Aranja Games">
+    <div class="eyebrow" data-i18n="hero.eyebrow">Independent studio · Horror &amp; Adventure</div>
+    <h1 class="hero-title"><span class="l1">ARANJA</span><span class="l2">GAMES</span></h1>
+    <p class="hero-sub">making it <span class="real">real</span></p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#juegos"><span data-i18n="hero.cta1">Explore the games</span> <span class="arr">→</span></a>
+      <a class="btn btn-ghost" href="https://store.steampowered.com/developer/ARANJA/" target="_blank" rel="noopener" data-i18n="hero.cta2">Follow on Steam</a>
+    </div>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker"><div class="ticker-mask" id="ticker"></div></div>
+
+<!-- GAMES -->
+<section id="juegos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="sec-kicker" data-i18n="games.kicker">// Our games</div><h2 class="sec-title" data-i18n="games.title">The Games</h2></div>
+      <p class="sec-note" data-i18n="games.note">Four worlds. One obsession: dense atmosphere, exploration and real scares.</p>
+    </div>
+
+    <article class="game featured reveal" data-theme="lostcamp">
+      <div class="game-body">
+        <div class="flagship-kicker" data-i18n="g1.flagship">Our next release</div>
+        <div class="game-meta-idx" data-i18n="g1.idx">Adventure</div>
+        <h3 class="game-title">Lost Camp</h3>
+        <div class="badge-row">
+          <span class="badge soon" data-i18n="g1.badge">Upcoming · 2026</span>
+        </div>
+        <div class="release-row">
+          <div class="release-date-big" data-i18n="g1.releasedate">OCTOBER 30, 2026</div>
+          <span class="countdown" id="cd-lostcamp" data-target="2026-10-30T19:00:00" aria-live="polite"></span>
+        </div>
+        <p class="game-desc" data-i18n="g1.desc"></p>
+        <div class="tags"><span class="tag" data-i18n="t.adventure">Adventure</span><span class="tag" data-i18n="t.survival">Survival</span><span class="tag" data-i18n="t.mystery">Mystery</span><span class="tag" data-i18n="t.atmos">Atmospheric</span></div>
+        <div class="game-actions">
+          <a class="btn btn-primary" href="https://store.steampowered.com/app/4476390/Lost_Camp/" target="_blank" rel="noopener"><span data-i18n="g1.act1">Wishlist</span> <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="https://store.steampowered.com/app/4476390/Lost_Camp/" target="_blank" rel="noopener" data-i18n="act.view">View on Steam</a>
+          <a class="btn btn-ghost" href="https://www.youtube.com/watch?v=nmVjw0dNfXw" target="_blank" rel="noopener">▷ <span data-i18n="trailer">Trailer</span></a>
+        </div>
+      </div>
+      <div class="game-media"><div class="carousel" data-imgs="lc1,lc2,lc3,lc4,lc5" data-game="lostcamp"></div></div>
+      <div class="lc-gallery">
+        <div class="lc-gallery-img" style="background-image:url(assets/lc4.jpg)"></div>
+        <div class="lc-gallery-img" style="background-image:url(assets/lc5.jpg)"></div>
+      </div>
+    </article>
+
+    <article class="game flip reveal" data-theme="obscuria">
+      <div class="game-body">
+        <div class="game-meta-idx" data-i18n="g2.idx">Horror / Exploration</div>
+        <h3 class="game-title">Obscuria</h3>
+        <span class="badge free" data-i18n="g2.badge">Free · Feb 16, 2024</span>
+        <p class="game-desc" data-i18n="g2.desc"></p>
+        <p class="dlc-note" data-i18n="g2.dlc"></p>
+        <div class="tags"><span class="tag" data-i18n="t.horror">Horror</span><span class="tag" data-i18n="t.exploration">Exploration</span><span class="tag" data-i18n="t.scares">Scares</span><span class="tag" data-i18n="t.tension">Tension</span></div>
+        <div class="game-actions">
+          <a class="btn btn-primary" href="https://store.steampowered.com/app/2756780/OBSCURIA/" target="_blank" rel="noopener"><span data-i18n="act.playfree">Play free</span> <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="https://store.steampowered.com/app/2756780/OBSCURIA/" target="_blank" rel="noopener" data-i18n="act.view">View on Steam</a>
+          <a class="btn btn-ghost" href="https://youtu.be/M7ZfkXodze8?si=vOTY0dfpHwevla2a" target="_blank" rel="noopener">▷ <span data-i18n="trailer">Trailer</span></a>
+        </div>
+      </div>
+      <div class="game-media"><div class="carousel" data-imgs="ob1,ob2,ob3" data-game="obscuria"></div></div>
+    </article>
+
+    <article class="game reveal" data-theme="nocturne">
+      <div class="game-body">
+        <div class="game-meta-idx" data-i18n="g3.idx">Obscuria 2 · Action horror</div>
+        <h3 class="game-title">Nocturne Island</h3>
+        <div class="price-row" id="price-nocturne"></div>
+        <p class="game-desc" data-i18n="g3.desc"></p>
+        <div class="tags"><span class="tag" data-i18n="t.horror">Horror</span><span class="tag" data-i18n="t.adventure">Adventure</span><span class="tag" data-i18n="t.combat">Combat</span><span class="tag" data-i18n="t.exploration">Exploration</span></div>
+        <div class="game-actions">
+          <a class="btn btn-primary" href="https://store.steampowered.com/app/3102660/Nocturne_Island_Obscuria/" target="_blank" rel="noopener"><span data-i18n="act.buy">Buy on Steam</span> <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="https://store.steampowered.com/app/3102660/Nocturne_Island_Obscuria/" target="_blank" rel="noopener" data-i18n="act.viewpage">View page</a>
+          <a class="btn btn-ghost" href="https://youtu.be/lZnnWu47mEk?si=D_58YWMO-FXQpCB8" target="_blank" rel="noopener">▷ <span data-i18n="trailer">Trailer</span></a>
+        </div>
+      </div>
+      <div class="game-media"><div class="carousel" data-imgs="ni1,ni2,ni3" data-game="nocturne"></div></div>
+    </article>
+
+    <article class="game flip reveal" data-theme="jump">
+      <div class="game-body">
+        <div class="game-meta-idx" data-i18n="g4.idx">Sandbox multiplayer</div>
+        <h3 class="game-title">Jump to Survive 2</h3>
+        <span class="badge free" data-i18n="g4.badge">Free · Jul 3, 2023</span>
+        <p class="game-desc" data-i18n="g4.desc"></p>
+        <div class="tags"><span class="tag" data-i18n="t.sandbox">Sandbox</span><span class="tag" data-i18n="t.multiplayer">Multiplayer</span><span class="tag" data-i18n="t.driving">Driving</span><span class="tag" data-i18n="t.creative">Creative</span></div>
+        <div class="game-actions">
+          <a class="btn btn-primary" href="https://store.steampowered.com/app/2393550/JUMP_TO_SURVIVE_2/" target="_blank" rel="noopener"><span data-i18n="act.playfree">Play free</span> <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="https://store.steampowered.com/app/2393550/JUMP_TO_SURVIVE_2/" target="_blank" rel="noopener" data-i18n="act.view">View on Steam</a>
+          <a class="btn btn-ghost" href="https://youtu.be/L-kjbj2XzLI?si=2LSS2fBPZrX75_GZ" target="_blank" rel="noopener">▷ <span data-i18n="trailer">Trailer</span></a>
+        </div>
+      </div>
+      <div class="game-media"><div class="carousel" data-imgs="jt1,jt2,jt3" data-game="jump"></div></div>
+    </article>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="block" id="roadmap">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="sec-kicker" data-i18n="rm.kicker">// Studio timeline</div><h2 class="sec-title" data-i18n="rm.title">Roadmap</h2></div>
+      <p class="sec-note" data-i18n="rm.note">Every release and what's still coming, year by year.</p>
+    </div>
+    <div class="roadmap reveal" id="roadmapList"></div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="block" id="noticias">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="sec-kicker" data-i18n="news.kicker">// Latest updates</div><h2 class="sec-title" data-i18n="news.title">News</h2></div>
+      <p class="sec-note" data-i18n="news.note">Announcements and updates from the studio.</p>
+    </div>
+    <div class="news-wrap reveal">
+      <div class="news-grid" id="newsGrid"></div>
+      <button class="news-more" id="newsMoreBtn" aria-label="More news">
+        <span class="arr">→</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS MODAL -->
+<div class="news-modal" id="newsModal" aria-hidden="true">
+  <div class="news-modal-backdrop" id="newsModalBackdrop"></div>
+  <div class="news-modal-card" role="dialog" aria-modal="true">
+    <button class="news-modal-close" id="newsModalClose" aria-label="Close">✕</button>
+    <div class="news-modal-date" id="newsModalDate"></div>
+    <h3 class="news-modal-title" id="newsModalTitle"></h3>
+    <p class="news-modal-body" id="newsModalBody"></p>
+  </div>
+</div>
+
+<!-- STUDIO -->
+<section class="block" id="estudio">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><div class="sec-kicker" data-i18n="studio.kicker">// Who we are</div><h2 class="sec-title" data-i18n="studio.title">The Studio</h2></div></div>
+    <div class="studio-grid reveal">
+      <div data-i18n="studio.bio"></div>
+      <div class="stats" id="stats">
+        <div class="stat"><div class="n" data-count="4" data-pad="2">04</div><div class="l" data-i18n="stat.games">Games published</div></div>
+        <div class="stat"><div class="n" data-count="2020">2020</div><div class="l" data-i18n="stat.founded">Founded</div></div>
+        <div class="stat"><div class="n">∞</div><div class="l" data-i18n="stat.more">More to come</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center">
+      <img class="contact-logo" data-img="logo" alt="Aranja Games">
+      <div class="sec-kicker" style="text-align:center" data-i18n="contact.kicker">// Let's talk</div>
+      <h2 class="contact-big">making<br>it <span class="accent">real</span></h2>
+      <a class="btn btn-primary" href="mailto:aranjagames@gmail.com" style="margin:0 auto"><span>aranjagames@gmail.com</span> <span class="arr">→</span></a>
+      <div class="founder-card">
+        <img data-img="enzo" alt="Enzo Colomer">
+        <div><div class="role" data-i18n="studio.founderRole">Founder · 2020</div><h3>Enzo Colomer</h3></div>
+      </div>
+    </div>
+    <div class="socials reveal">
+      <a class="social" href="https://www.instagram.com/aranjagamesofficial" target="_blank" rel="noopener">◎ Instagram</a>
+      <a class="social" href="https://store.steampowered.com/developer/ARANJA/" target="_blank" rel="noopener">▶ Steam</a>
+      <a class="social" href="https://www.youtube.com/@ARANJAGAMES" target="_blank" rel="noopener">▷ YouTube</a>
+      <a class="social" href="https://www.tiktok.com/@aranja_games" target="_blank" rel="noopener">♪ TikTok</a>
+    </div>
+    <div class="xp-launch" aria-labelledby="xp-launch-title">
+      <p class="xp-launch-label">Sistema operativo de Aranja Games</p>
+      <a class="xp-launch-btn" id="xp-launch-title" href="Aranja-XP.html">ARANJA XP</a>
+    </div>
+    <footer><div class="foot-row"><span>© 2026 ARANJA GAMES</span></div></footer>
+  </div>
+</section>
+
+<script>
+const IMG={logo:"assets/logo.png",hero:"assets/hero.jpg",lc1:"assets/lc1.jpg",lc2:"assets/lc2.jpg",lc3:"assets/lc3.jpg",lc4:"assets/lc4.jpg",lc5:"assets/lc5.jpg",ob1:"assets/ob1.jpg",ob2:"assets/ob2.jpg",ob3:"assets/ob3.jpg",ni1:"assets/ni1.jpg",ni2:"assets/ni2.jpg",ni3:"assets/ni3.jpg",jt1:"assets/jt1.jpg",jt2:"assets/jt2.jpg",jt3:"assets/jt3.jpg",enzo:"assets/enzo.jpg"};
+document.querySelectorAll('[data-img]').forEach(el=>{const k=el.dataset.img;if(el.tagName==='IMG')el.src=IMG[k];else el.style.backgroundImage=`url(${IMG[k]})`;});
+
+/* per-game theme: background colour + faint background image */
+const THEME={
+  lostcamp:{c:"#170f1c",img:"lc2"},
+  obscuria:{c:"#08131f",img:"ob2"},
+  nocturne:{c:"#1a1206",img:"ni2"},
+  jump:{c:"#15110a",img:"jt1"}
+};
+
+const LANGS=[["en","English"],["es","Español"],["ca","Català"],["fr","Français"],["pl","Polski"],["it","Italiano"],["de","Deutsch"],["zh","中文"]];
+
+const I18N={
+ en:{
+  "nav.games":"Games","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contact",
+  "hero.eyebrow":"Independent studio · Horror &amp; Adventure","hero.cta1":"Explore the games","hero.cta2":"Follow on Steam","hero.scroll":"Scroll",
+  "games.kicker":"// Our games","games.title":"The Games","games.note":"Four worlds. One obsession: dense atmosphere, exploration and real scares.",
+  "g1.idx":"Adventure","g1.badge":"Upcoming · 2026","g1.act1":"Wishlist","g1.flagship":"Our next release","g1.releasedate":"OCTOBER 30, 2026",
+  "g1.desc":"<p>After your mother's death, and with no other option, you're forced to take the only job available: becoming the new warden of a solitary campsite deep in the mountains. You arrive looking for a refuge — somewhere to find some peace and put your life back together — but the solitude of the peaks soon turns suffocating.</p><p>What begins as a routine of watching over the grounds and basic upkeep slowly turns into something unsettling. The silence of the forest isn't empty — it seems to be hiding truths nobody told you about. As you wander the trails and winter starts burying everything in snow, you'll discover the campsite holds buried secrets that were never meant to be disturbed.</p><p>In Lost Camp, the weather is dynamic and unpredictable: you can be working under a calm sun one moment and suddenly caught in torrential rain or a snowstorm that blankets everything. This system doesn't just reshape the landscape — it completely alters visibility and atmosphere, making the campsite feel alive, and at times, deeply hostile.</p>",
+  "g2.idx":"Horror / Exploration","g2.badge":"Free · Feb 16, 2024",
+  "g2.desc":"The world's largest cruise ship sinks and is overrun by spirits. As an agent, you board the \"Nocturne\" with your flashlight to find Captain Blackhood — alive or dead — and uncover the curse dragging the ship down.",
+  "g2.dlc":"+ free DLC: <b>Obscuria: The Tragedy</b> — play as Captain Blackhood.",
+  "g3.idx":"Obscuria 2 · Action horror","g3.badge":"Paid · Oct 28, 2024",
+  "g3.desc":"A routine police patrol turns into a nightmare when a shipwreck strands you on Nocturne Island. Explore forests, abandoned buildings and hidden tunnels, solve puzzles and fight back to uncover the island's twisted history.",
+  "g4.idx":"Sandbox multiplayer","g4.badge":"Free · Jul 3, 2023",
+  "g4.desc":"Create worlds, explore the map and build whatever you imagine: roleplay, parkour, matches, races and more. Drive without limits, jump into classic mode and play it all with friends. Only your imagination is the limit.",
+  "act.view":"View on Steam","act.viewpage":"View page","act.playfree":"Play free","act.buy":"Buy on Steam",
+  "t.horror":"Horror","t.survival":"Survival","t.mystery":"Mystery","t.atmos":"Atmospheric","t.exploration":"Exploration","t.scares":"Scares","t.tension":"Tension","t.adventure":"Adventure","t.combat":"Combat","t.sandbox":"Sandbox","t.multiplayer":"Multiplayer","t.driving":"Driving","t.creative":"Creative",
+  "rm.kicker":"// Studio timeline","rm.title":"Roadmap","rm.note":"Every release and what's still coming, year by year.","rm.upcoming":"Upcoming",
+  "studio.kicker":"// Who we are","studio.title":"The Studio",
+  "studio.bio":"<p><b>Aranja Games</b> is a Spanish studio created and founded by <b>Enzo Colomer in 2020</b>. Our main goal with Aranja is to differentiate ourselves from other games and companies — we want to offer unique, quality experiences for players.</p><p>We always think about the player's experience and the player first, before anything else. We believe that work and perseverance pay off.</p>",
+  "studio.founderRole":"Founder · 2020","stat.games":"Games published","stat.founded":"Founded","stat.more":"More to come",
+  "contact.kicker":"// Let's talk","trailer":"Trailer",
+  "news.kicker":"// Latest updates","news.title":"News","news.note":"Announcements and updates from the studio.","news.readmore":"Read article",
+  "price.base":"4.99€","price.sale":"On sale","price.endsIn":"Sale ends in"
+ },
+ es:{
+  "nav.games":"Juegos","nav.roadmap":"Roadmap","nav.studio":"Estudio","nav.contact":"Contacto",
+  "hero.eyebrow":"Estudio independiente · Terror y Aventura","hero.cta1":"Ver los juegos","hero.cta2":"Seguir en Steam","hero.scroll":"Explora",
+  "games.kicker":"// Nuestros juegos","games.title":"Los juegos","games.note":"Cuatro mundos. Una obsesión: atmósfera densa, exploración y sustos de verdad.",
+  "g1.idx":"Aventura","g1.badge":"Próximamente · 2026","g1.act1":"Añadir a deseados","g1.flagship":"Nuestro próximo lanzamiento","g1.releasedate":"30 DE OCTUBRE DE 2026",
+  "g1.desc":"<p>Tras la muerte de tu madre y sin otra opción, te ves obligado a aceptar el único trabajo disponible: convertirte en el nuevo guarda de un camping solitario en lo profundo de las montañas. Llegas al lugar buscando un refugio donde encontrar algo de paz y ordenar tu vida, pero la soledad de las cumbres pronto se vuelve asfixiante.</p><p>Lo que empieza como una rutina de vigilancia y mantenimiento se transforma en una experiencia inquietante. El silencio del bosque no es vacío, sino que parece esconder verdades que nadie te contó. A medida que recorres los senderos y el invierno comienza a cubrirlo todo con nieve, descubrirás que el camping guarda secretos enterrados que nunca debieron ser perturbados.</p><p>En Lost Camp, el clima es dinámico e imprevisible: puedes estar trabajando bajo un sol tranquilo y, de golpe, verte atrapado por una lluvia torrencial o una nevada que lo cubre todo. Este sistema no solo cambia el paisaje, sino que altera por completo la visibilidad y la atmósfera, haciendo que el camping se sienta vivo y, a veces, muy hostil.</p>",
+  "g2.idx":"Terror / Exploración","g2.badge":"Gratis · 16 feb 2024",
+  "g2.desc":"El mayor crucero del mundo naufraga y queda tomado por espíritus. Como agente, entras al \"Nocturne\" con tu linterna para encontrar al Capitán Blackhood —vivo o muerto— y destapar la maldición que arrastra el barco.",
+  "g2.dlc":"+ DLC gratis: <b>Obscuria: The Tragedy</b> — juega como el Capitán Blackhood.",
+  "g3.idx":"Obscuria 2 · Terror de acción","g3.badge":"De pago · 28 oct 2024",
+  "g3.desc":"Una patrulla policial rutinaria se convierte en pesadilla cuando un naufragio te deja atrapado en la isla Nocturne. Explora bosques, edificios abandonados y túneles ocultos, resuelve puzzles y defiéndete para descubrir la retorcida historia de la isla.",
+  "g4.idx":"Sandbox multijugador","g4.badge":"Gratis · 3 jul 2023",
+  "g4.desc":"Crea mundos, explora el mapa y construye lo que imagines: rol, parkour, partidas, carreras y mucho más. Conduce sin límites, vuelve al modo clásico y juégalo todo con amigos. Solo tu imaginación es el límite.",
+  "act.view":"Ver en Steam","act.viewpage":"Ver ficha","act.playfree":"Jugar gratis","act.buy":"Comprar en Steam",
+  "t.horror":"Terror","t.survival":"Supervivencia","t.mystery":"Misterio","t.atmos":"Atmosférico","t.exploration":"Exploración","t.scares":"Sustos","t.tension":"Tensión","t.adventure":"Aventura","t.combat":"Combate","t.sandbox":"Sandbox","t.multiplayer":"Multijugador","t.driving":"Conducción","t.creative":"Creativo",
+  "rm.kicker":"// Línea de tiempo","rm.title":"Roadmap","rm.note":"Cada lanzamiento y lo que aún está por llegar, año a año.","rm.upcoming":"Próximo",
+  "studio.kicker":"// Quiénes somos","studio.title":"El estudio",
+  "studio.bio":"<p><b>Aranja Games</b> es un estudio español creado y fundado por <b>Enzo Colomer en 2020</b>. Nuestro objetivo principal con Aranja es diferenciarnos de otros juegos y compañías: queremos ofrecer experiencias únicas y de calidad para los jugadores.</p><p>Pensamos siempre primero en la experiencia del jugador y en el jugador, antes que en nada. Creemos que el trabajo y la perseverancia dan sus frutos.</p>",
+  "studio.founderRole":"Fundador · 2020","stat.games":"Juegos publicados","stat.founded":"Fundado","stat.more":"Por venir",
+  "contact.kicker":"// Hablemos","trailer":"Tráiler",
+  "news.kicker":"// Últimas novedades","news.title":"Noticias","news.note":"Anuncios y novedades del estudio.","news.readmore":"Leer noticia",
+  "price.base":"4.99€","price.sale":"Oferta","price.endsIn":"La oferta termina en"
+ },
+ ca:{
+  "nav.games":"Jocs","nav.roadmap":"Roadmap","nav.studio":"Estudi","nav.contact":"Contacte",
+  "hero.eyebrow":"Estudi independent · Terror i Aventura","hero.cta1":"Veure els jocs","hero.cta2":"Seguir a Steam","hero.scroll":"Explora",
+  "games.kicker":"// Els nostres jocs","games.title":"Els jocs","games.note":"Quatre mons. Una obsessió: atmosfera densa, exploració i sustos de veritat.",
+  "g1.idx":"Aventura","g1.badge":"Properament · 2026","g1.act1":"Afegir a desitjats","g1.flagship":"El nostre proper llançament","g1.releasedate":"30 D'OCTUBRE DE 2026",
+  "g1.desc":"<p>Després de la mort de la teva mare, i sense cap altra opció, et veus obligat a acceptar l'única feina disponible: convertir-te en el nou guarda d'un càmping solitari a les profunditats de les muntanyes. Arribes al lloc buscant un refugi on trobar una mica de pau i endreçar la teva vida, però la solitud dels cims aviat es torna asfixiant.</p><p>El que comença com una rutina de vigilància i manteniment es transforma en una experiència inquietant. El silenci del bosc no és buit, sinó que sembla amagar veritats que ningú et va explicar. Mentre recorres els camins i l'hivern comença a cobrir-ho tot de neu, descobriràs que el càmping guarda secrets enterrats que mai haurien d'haver estat pertorbats.</p><p>A Lost Camp, el clima és dinàmic i imprevisible: pots estar treballant sota un sol tranquil i, de sobte, veure't atrapat per una pluja torrencial o una nevada que ho cobreix tot. Aquest sistema no només canvia el paisatge, sinó que altera per complet la visibilitat i l'atmosfera, fent que el càmping se senti viu i, de vegades, molt hostil.</p>",
+  "g2.idx":"Terror / Exploració","g2.badge":"Gratis · 16 feb 2024",
+  "g2.desc":"El creuer més gran del món naufraga i queda envaït per esperits. Com a agent, entres al \"Nocturne\" amb la teva llanterna per trobar el Capità Blackhood —viu o mort— i destapar la maledicció que enfonsa el vaixell.",
+  "g2.dlc":"+ DLC gratuït: <b>Obscuria: The Tragedy</b> — juga com el Capità Blackhood.",
+  "g3.idx":"Obscuria 2 · Terror d'acció","g3.badge":"De pagament · 28 oct 2024",
+  "g3.desc":"Una patrulla policial rutinària es converteix en malson quan un naufragi et deixa atrapat a l'illa Nocturne. Explora boscos, edificis abandonats i túnels amagats, resol trencaclosques i defensa't per descobrir la tèrbola història de l'illa.",
+  "g4.idx":"Sandbox multijugador","g4.badge":"Gratis · 3 jul 2023",
+  "g4.desc":"Crea mons, explora el mapa i construeix el que imaginis: rol, parkour, partides, curses i molt més. Condueix sense límits, torna al mode clàssic i juga-ho tot amb amics. Només la teva imaginació és el límit.",
+  "act.view":"Veure a Steam","act.viewpage":"Veure fitxa","act.playfree":"Jugar gratis","act.buy":"Comprar a Steam",
+  "t.horror":"Terror","t.survival":"Supervivència","t.mystery":"Misteri","t.atmos":"Atmosfèric","t.exploration":"Exploració","t.scares":"Sustos","t.tension":"Tensió","t.adventure":"Aventura","t.combat":"Combat","t.sandbox":"Sandbox","t.multiplayer":"Multijugador","t.driving":"Conducció","t.creative":"Creatiu",
+  "rm.kicker":"// Línia de temps","rm.title":"Roadmap","rm.note":"Cada llançament i el que encara està per venir, any rere any.","rm.upcoming":"Proper",
+  "studio.kicker":"// Qui som","studio.title":"L'estudi",
+  "studio.bio":"<p><b>Aranja Games</b> és un estudi espanyol creat i fundat per <b>Enzo Colomer el 2020</b>. El nostre objectiu principal amb Aranja és diferenciar-nos d'altres jocs i companyies — volem oferir experiències úniques i de qualitat per als jugadors.</p><p>Pensem sempre primer en l'experiència del jugador i en el jugador, abans que en qualsevol altra cosa. Creiem que el treball i la perseverança donen fruits.</p>",
+  "studio.founderRole":"Fundador · 2020","stat.games":"Jocs publicats","stat.founded":"Fundat","stat.more":"Per venir",
+  "contact.kicker":"// Parlem","trailer":"Tràiler",
+  "news.kicker":"// Últimes novetats","news.title":"Notícies","news.note":"Anuncis i novetats de l'estudi.","news.readmore":"Llegir notícia",
+  "price.base":"4.99€","price.sale":"Oferta","price.endsIn":"L'oferta acaba en"
+ },
+ fr:{
+  "nav.games":"Jeux","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contact",
+  "hero.eyebrow":"Studio indépendant · Horreur et Aventure","hero.cta1":"Découvrir les jeux","hero.cta2":"Suivre sur Steam","hero.scroll":"Défiler",
+  "games.kicker":"// Nos jeux","games.title":"Les jeux","games.note":"Quatre mondes. Une obsession : une atmosphère dense, l'exploration et de vraies frayeurs.",
+  "g1.idx":"Aventure","g1.badge":"À venir · 2026","g1.act1":"Liste de souhaits","g1.flagship":"Notre prochaine sortie","g1.releasedate":"30 OCTOBRE 2026",
+  "g1.desc":"<p>Après la mort de votre mère, et sans autre choix, vous êtes contraint d'accepter le seul emploi disponible : devenir le nouveau gardien d'un camping isolé au cœur des montagnes. Vous arrivez en quête d'un refuge où trouver un peu de paix et remettre de l'ordre dans votre vie, mais la solitude des sommets devient vite étouffante.</p><p>Ce qui commence comme une routine de surveillance et d'entretien se transforme en une expérience troublante. Le silence de la forêt n'est pas vide : il semble cacher des vérités que personne ne vous a dites. En parcourant les sentiers, tandis que l'hiver commence à tout recouvrir de neige, vous découvrirez que le camping renferme des secrets enfouis qui n'auraient jamais dû être dérangés.</p><p>Dans Lost Camp, la météo est dynamique et imprévisible : vous pouvez travailler sous un soleil paisible et, soudain, vous retrouver pris sous une pluie torrentielle ou une tempête de neige qui recouvre tout. Ce système ne change pas seulement le paysage : il modifie entièrement la visibilité et l'atmosphère, rendant le camping vivant et, parfois, terriblement hostile.</p>",
+  "g2.idx":"Horreur / Exploration","g2.badge":"Gratuit · 16 fév. 2024",
+  "g2.desc":"Le plus grand paquebot du monde fait naufrage et se retrouve envahi par des esprits. En tant qu'agent, vous montez à bord du \"Nocturne\" avec votre lampe torche pour retrouver le Capitaine Blackhood — vivant ou mort — et percer la malédiction qui entraîne le navire vers le fond.",
+  "g2.dlc":"+ DLC gratuit : <b>Obscuria: The Tragedy</b> — jouez le Capitaine Blackhood.",
+  "g3.idx":"Obscuria 2 · Horreur d'action","g3.badge":"Payant · 28 oct. 2024",
+  "g3.desc":"Une patrouille de police de routine se transforme en cauchemar lorsqu'un naufrage vous échoue sur l'île de Nocturne. Explorez forêts, bâtiments abandonnés et tunnels cachés, résolvez des énigmes et défendez-vous pour percer l'histoire tortueuse de l'île.",
+  "g4.idx":"Sandbox multijoueur","g4.badge":"Gratuit · 3 juil. 2023",
+  "g4.desc":"Créez des mondes, explorez la carte et construisez tout ce que vous imaginez : jeu de rôle, parkour, courses et plus encore. Roulez sans limites, replongez dans le mode classique et jouez à tout avec vos amis. Seule votre imagination est la limite.",
+  "act.view":"Voir sur Steam","act.viewpage":"Voir la page","act.playfree":"Jouer gratuitement","act.buy":"Acheter sur Steam",
+  "t.horror":"Horreur","t.survival":"Survie","t.mystery":"Mystère","t.atmos":"Atmosphérique","t.exploration":"Exploration","t.scares":"Frayeurs","t.tension":"Tension","t.adventure":"Aventure","t.combat":"Combat","t.sandbox":"Sandbox","t.multiplayer":"Multijoueur","t.driving":"Conduite","t.creative":"Créatif",
+  "rm.kicker":"// Chronologie du studio","rm.title":"Roadmap","rm.note":"Chaque sortie et ce qui reste à venir, année après année.","rm.upcoming":"À venir",
+  "studio.kicker":"// Qui sommes-nous","studio.title":"Le studio",
+  "studio.bio":"<p><b>Aranja Games</b> est un studio espagnol créé et fondé par <b>Enzo Colomer en 2020</b>. Notre objectif principal avec Aranja est de nous différencier des autres jeux et entreprises — nous voulons offrir aux joueurs des expériences uniques et de qualité.</p><p>Nous pensons toujours d'abord à l'expérience du joueur et au joueur lui-même, avant tout le reste. Nous croyons que le travail et la persévérance finissent par payer.</p>",
+  "studio.founderRole":"Fondateur · 2020","stat.games":"Jeux publiés","stat.founded":"Fondé","stat.more":"À venir",
+  "contact.kicker":"// Discutons","trailer":"Bande-annonce",
+  "news.kicker":"// Dernières actualités","news.title":"Actualités","news.note":"Annonces et actualités du studio.","news.readmore":"Lire l'article",
+  "price.base":"4.99€","price.sale":"Promo","price.endsIn":"Fin de la promo dans"
+ },
+ pl:{
+  "nav.games":"Gry","nav.roadmap":"Roadmapa","nav.studio":"Studio","nav.contact":"Kontakt",
+  "hero.eyebrow":"Niezależne studio · Horror i Przygoda","hero.cta1":"Zobacz gry","hero.cta2":"Obserwuj na Steam","hero.scroll":"Przewiń",
+  "games.kicker":"// Nasze gry","games.title":"Gry","games.note":"Cztery światy. Jedna obsesja: gęsta atmosfera, eksploracja i prawdziwy strach.",
+  "g1.idx":"Przygoda","g1.badge":"Wkrótce · 2026","g1.act1":"Lista życzeń","g1.flagship":"Nasza nadchodząca premiera","g1.releasedate":"30 PAŹDZIERNIKA 2026",
+  "g1.desc":"<p>Po śmierci matki, nie mając innego wyjścia, jesteś zmuszony przyjąć jedyną dostępną pracę: zostać nowym dozorcą samotnego obozowiska głęboko w górach. Docierasz na miejsce w poszukiwaniu schronienia, gdzie mógłbyś znaleźć odrobinę spokoju i poukładać swoje życie, lecz samotność szczytów szybko staje się dusząca.</p><p>To, co zaczyna się jako rutyna dozoru i konserwacji, zamienia się w niepokojące doświadczenie. Cisza lasu nie jest pusta — zdaje się kryć prawdy, o których nikt ci nie powiedział. Wędrując szlakami, gdy zima zaczyna zasypywać wszystko śniegiem, odkryjesz, że obozowisko skrywa pogrzebane sekrety, których nigdy nie powinno się było naruszać.</p><p>W Lost Camp pogoda jest dynamiczna i nieprzewidywalna: możesz pracować w spokojnym słońcu, a chwilę później znaleźć się w ulewnym deszczu lub śnieżycy, która zasypuje wszystko. Ten system nie tylko zmienia krajobraz, ale całkowicie zmienia widoczność i atmosferę, sprawiając, że obozowisko wydaje się żywe, a czasem bardzo wrogie.</p>",
+  "g2.idx":"Horror / Eksploracja","g2.badge":"Za darmo · 16 lut 2024",
+  "g2.desc":"Największy statek wycieczkowy na świecie tonie i zostaje opanowany przez duchy. Jako agent wkraczasz na „Nocturne” z latarką, by odnaleźć kapitana Blackhooda — żywego lub martwego — i odkryć klątwę ciągnącą statek na dno.",
+  "g2.dlc":"+ darmowe DLC: <b>Obscuria: The Tragedy</b> — wciel się w kapitana Blackhooda.",
+  "g3.idx":"Obscuria 2 · Horror akcji","g3.badge":"Płatne · 28 paź 2024",
+  "g3.desc":"Rutynowy patrol policyjny zamienia się w koszmar, gdy katastrofa statku zostawia cię na wyspie Nocturne. Przemierzaj lasy, opuszczone budynki i ukryte tunele, rozwiązuj zagadki i walcz, by odkryć mroczną historię wyspy.",
+  "g4.idx":"Piaskownica multiplayer","g4.badge":"Za darmo · 3 lip 2023",
+  "g4.desc":"Twórz światy, eksploruj mapę i buduj, co tylko sobie wyobrazisz: roleplay, parkour, mecze, wyścigi i więcej. Jeźdź bez ograniczeń, wskakuj do trybu klasycznego i graj we wszystko ze znajomymi. Tylko wyobraźnia jest granicą.",
+  "act.view":"Zobacz na Steam","act.viewpage":"Zobacz stronę","act.playfree":"Graj za darmo","act.buy":"Kup na Steam",
+  "t.horror":"Horror","t.survival":"Survival","t.mystery":"Tajemnica","t.atmos":"Klimatyczna","t.exploration":"Eksploracja","t.scares":"Strachy","t.tension":"Napięcie","t.adventure":"Przygoda","t.combat":"Walka","t.sandbox":"Piaskownica","t.multiplayer":"Multiplayer","t.driving":"Jazda","t.creative":"Kreatywna",
+  "rm.kicker":"// Oś czasu studia","rm.title":"Roadmapa","rm.note":"Każda premiera i to, co dopiero nadejdzie — rok po roku.","rm.upcoming":"Wkrótce",
+  "studio.kicker":"// Kim jesteśmy","studio.title":"Studio",
+  "studio.bio":"<p><b>Aranja Games</b> to hiszpańskie studio założone przez <b>Enzo Colomera w 2020 roku</b>. Naszym głównym celem jest wyróżnienie się na tle innych gier i firm — chcemy oferować graczom wyjątkowe doświadczenia wysokiej jakości.</p><p>Zawsze stawiamy doświadczenie gracza i samego gracza na pierwszym miejscu, ponad wszystko inne. Wierzymy, że praca i wytrwałość się opłacają.</p>",
+  "studio.founderRole":"Założyciel · 2020","stat.games":"Wydane gry","stat.founded":"Założono","stat.more":"Więcej wkrótce",
+  "contact.kicker":"// Porozmawiajmy","trailer":"Zwiastun",
+  "news.kicker":"// Najnowsze wiadomości","news.title":"Aktualności","news.note":"Ogłoszenia i nowości ze studia.","news.readmore":"Czytaj dalej",
+  "price.base":"4.99€","price.sale":"Promocja","price.endsIn":"Promocja kończy się za"
+ },
+ it:{
+  "nav.games":"Giochi","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Contatti",
+  "hero.eyebrow":"Studio indipendente · Horror e Avventura","hero.cta1":"Esplora i giochi","hero.cta2":"Segui su Steam","hero.scroll":"Scorri",
+  "games.kicker":"// I nostri giochi","games.title":"I giochi","games.note":"Quattro mondi. Un'ossessione: atmosfera densa, esplorazione e veri spaventi.",
+  "g1.idx":"Avventura","g1.badge":"In arrivo · 2026","g1.act1":"Lista dei desideri","g1.flagship":"La nostra prossima uscita","g1.releasedate":"30 OTTOBRE 2026",
+  "g1.desc":"<p>Dopo la morte di tua madre, senza altra scelta, sei costretto ad accettare l'unico lavoro disponibile: diventare il nuovo custode di un campeggio solitario nel profondo delle montagne. Arrivi cercando un rifugio dove trovare un po' di pace e rimettere ordine nella tua vita, ma la solitudine delle vette diventa presto soffocante.</p><p>Ciò che inizia come una routine di sorveglianza e manutenzione si trasforma in un'esperienza inquietante. Il silenzio della foresta non è vuoto: sembra nascondere verità che nessuno ti ha mai raccontato. Mentre percorri i sentieri e l'inverno inizia a ricoprire tutto di neve, scoprirai che il campeggio custodisce segreti sepolti che non avrebbero mai dovuto essere disturbati.</p><p>In Lost Camp, il meteo è dinamico e imprevedibile: puoi lavorare sotto un sole tranquillo e, all'improvviso, ritrovarti travolto da una pioggia torrenziale o da una nevicata che ricopre ogni cosa. Questo sistema non si limita a cambiare il paesaggio, ma altera completamente la visibilità e l'atmosfera, rendendo il campeggio vivo e, a volte, davvero ostile.</p>",
+  "g2.idx":"Horror / Esplorazione","g2.badge":"Gratis · 16 feb 2024",
+  "g2.desc":"La più grande nave da crociera del mondo affonda ed è invasa dagli spiriti. Come agente, sali a bordo del \"Nocturne\" con la tua torcia per trovare il Capitano Blackhood — vivo o morto — e svelare la maledizione che trascina la nave a fondo.",
+  "g2.dlc":"+ DLC gratuito: <b>Obscuria: The Tragedy</b> — gioca nei panni del Capitano Blackhood.",
+  "g3.idx":"Obscuria 2 · Horror d'azione","g3.badge":"A pagamento · 28 ott 2024",
+  "g3.desc":"Una pattuglia di routine si trasforma in un incubo quando un naufragio ti lascia bloccato sull'isola di Nocturne. Esplora foreste, edifici abbandonati e tunnel nascosti, risolvi enigmi e combatti per svelare la contorta storia dell'isola.",
+  "g4.idx":"Sandbox multigiocatore","g4.badge":"Gratis · 3 lug 2023",
+  "g4.desc":"Crea mondi, esplora la mappa e costruisci tutto ciò che immagini: roleplay, parkour, partite, gare e altro. Guida senza limiti, salta nella modalità classica e gioca a tutto con gli amici. Solo la tua immaginazione è il limite.",
+  "act.view":"Vedi su Steam","act.viewpage":"Vedi pagina","act.playfree":"Gioca gratis","act.buy":"Acquista su Steam",
+  "t.horror":"Horror","t.survival":"Sopravvivenza","t.mystery":"Mistero","t.atmos":"Atmosferico","t.exploration":"Esplorazione","t.scares":"Spaventi","t.tension":"Tensione","t.adventure":"Avventura","t.combat":"Combattimento","t.sandbox":"Sandbox","t.multiplayer":"Multigiocatore","t.driving":"Guida","t.creative":"Creativo",
+  "rm.kicker":"// Cronologia dello studio","rm.title":"Roadmap","rm.note":"Ogni uscita e ciò che deve ancora arrivare, anno dopo anno.","rm.upcoming":"In arrivo",
+  "studio.kicker":"// Chi siamo","studio.title":"Lo studio",
+  "studio.bio":"<p><b>Aranja Games</b> è uno studio spagnolo creato e fondato da <b>Enzo Colomer nel 2020</b>. Il nostro obiettivo principale è distinguerci dagli altri giochi e aziende: vogliamo offrire ai giocatori esperienze uniche e di qualità.</p><p>Pensiamo sempre prima all'esperienza del giocatore e al giocatore stesso, prima di ogni altra cosa. Crediamo che il lavoro e la perseveranza ripaghino.</p>",
+  "studio.founderRole":"Fondatore · 2020","stat.games":"Giochi pubblicati","stat.founded":"Fondato","stat.more":"Altro in arrivo",
+  "contact.kicker":"// Parliamone","trailer":"Trailer",
+  "news.kicker":"// Ultime novità","news.title":"Notizie","news.note":"Annunci e novità dallo studio.","news.readmore":"Leggi la notizia",
+  "price.base":"4.99€","price.sale":"In offerta","price.endsIn":"L'offerta termina in"
+ },
+ de:{
+  "nav.games":"Spiele","nav.roadmap":"Roadmap","nav.studio":"Studio","nav.contact":"Kontakt",
+  "hero.eyebrow":"Unabhängiges Studio · Horror & Abenteuer","hero.cta1":"Spiele entdecken","hero.cta2":"Auf Steam folgen","hero.scroll":"Scrollen",
+  "games.kicker":"// Unsere Spiele","games.title":"Die Spiele","games.note":"Vier Welten. Eine Obsession: dichte Atmosphäre, Erkundung und echter Schrecken.",
+  "g1.idx":"Abenteuer","g1.badge":"Demnächst · 2026","g1.act1":"Wunschliste","g1.flagship":"Unser nächstes Release","g1.releasedate":"30. OKTOBER 2026",
+  "g1.desc":"<p>Nach dem Tod deiner Mutter bleibt dir keine andere Wahl, als den einzigen verfügbaren Job anzunehmen: den neuen Wächter eines einsamen Campingplatzes tief in den Bergen. Du kommst auf der Suche nach einem Rückzugsort an, an dem du etwas Frieden finden und dein Leben ordnen kannst — doch die Einsamkeit der Gipfel wird bald erdrückend.</p><p>Was als Routine aus Überwachung und Instandhaltung beginnt, verwandelt sich in eine beunruhigende Erfahrung. Die Stille des Waldes ist nicht leer — sie scheint Wahrheiten zu verbergen, von denen dir niemand erzählt hat. Während du die Pfade entlangwanderst und der Winter alles unter Schnee begräbt, wirst du entdecken, dass der Campingplatz vergrabene Geheimnisse birgt, die niemals gestört werden sollten.</p><p>In Lost Camp ist das Wetter dynamisch und unberechenbar: Du kannst bei ruhigem Sonnenschein arbeiten und dich plötzlich in strömendem Regen oder einem alles bedeckenden Schneesturm wiederfinden. Dieses System verändert nicht nur die Landschaft, sondern auch vollständig die Sicht und die Atmosphäre — der Campingplatz fühlt sich lebendig an und manchmal zutiefst feindselig.</p>",
+  "g2.idx":"Horror / Erkundung","g2.badge":"Kostenlos · 16. Feb. 2024",
+  "g2.desc":"Das größte Kreuzfahrtschiff der Welt sinkt und wird von Geistern überrannt. Als Agent betrittst du die „Nocturne“ mit deiner Taschenlampe, um Kapitän Blackhood zu finden — lebendig oder tot — und den Fluch zu lüften, der das Schiff in die Tiefe zieht.",
+  "g2.dlc":"+ kostenloses DLC: <b>Obscuria: The Tragedy</b> — spiele als Kapitän Blackhood.",
+  "g3.idx":"Obscuria 2 · Action-Horror","g3.badge":"Kostenpflichtig · 28. Okt. 2024",
+  "g3.desc":"Eine routinemäßige Polizeistreife wird zum Albtraum, als dich ein Schiffbruch auf Nocturne Island stranden lässt. Erkunde Wälder, verlassene Gebäude und versteckte Tunnel, löse Rätsel und wehre dich, um die verdrehte Geschichte der Insel aufzudecken.",
+  "g4.idx":"Sandbox-Mehrspieler","g4.badge":"Kostenlos · 3. Juli 2023",
+  "g4.desc":"Erschaffe Welten, erkunde die Karte und baue, was du dir vorstellst: Rollenspiel, Parkour, Matches, Rennen und mehr. Fahre ohne Grenzen, springe in den klassischen Modus und spiele alles mit Freunden. Nur deine Fantasie ist die Grenze.",
+  "act.view":"Auf Steam ansehen","act.viewpage":"Seite ansehen","act.playfree":"Kostenlos spielen","act.buy":"Auf Steam kaufen",
+  "t.horror":"Horror","t.survival":"Survival","t.mystery":"Mystery","t.atmos":"Atmosphärisch","t.exploration":"Erkundung","t.scares":"Schrecken","t.tension":"Spannung","t.adventure":"Abenteuer","t.combat":"Kampf","t.sandbox":"Sandbox","t.multiplayer":"Mehrspieler","t.driving":"Fahren","t.creative":"Kreativ",
+  "rm.kicker":"// Studio-Zeitleiste","rm.title":"Roadmap","rm.note":"Jede Veröffentlichung und was noch kommt — Jahr für Jahr.","rm.upcoming":"Demnächst",
+  "studio.kicker":"// Wer wir sind","studio.title":"Das Studio",
+  "studio.bio":"<p><b>Aranja Games</b> ist ein spanisches Studio, gegründet von <b>Enzo Colomer im Jahr 2020</b>. Unser Hauptziel ist es, uns von anderen Spielen und Unternehmen abzuheben — wir möchten den Spielern einzigartige, hochwertige Erlebnisse bieten.</p><p>Wir denken immer zuerst an das Erlebnis des Spielers und an den Spieler selbst, vor allem anderen. Wir glauben, dass sich Arbeit und Ausdauer auszahlen.</p>",
+  "studio.founderRole":"Gründer · 2020","stat.games":"Veröffentlichte Spiele","stat.founded":"Gegründet","stat.more":"Mehr folgt",
+  "contact.kicker":"// Sprich uns an","trailer":"Trailer",
+  "news.kicker":"// Neueste Updates","news.title":"News","news.note":"Ankündigungen und Neuigkeiten aus dem Studio.","news.readmore":"Artikel lesen",
+  "price.base":"4.99€","price.sale":"Im Angebot","price.endsIn":"Angebot endet in"
+ },
+ zh:{
+  "nav.games":"游戏","nav.roadmap":"路线图","nav.studio":"工作室","nav.contact":"联系",
+  "hero.eyebrow":"独立工作室 · 恐怖与冒险","hero.cta1":"探索游戏","hero.cta2":"在 Steam 关注","hero.scroll":"向下滚动",
+  "games.kicker":"// 我们的游戏","games.title":"游戏作品","games.note":"四个世界，一种执念：浓厚的氛围、探索与真正的惊吓。",
+  "g1.idx":"冒险","g1.badge":"即将推出 · 2026","g1.act1":"加入愿望单","g1.flagship":"我们的下一部作品","g1.releasedate":"2026年10月30日",
+  "g1.desc":"<p>母亲去世后，你别无选择，只能接受唯一可以得到的工作——成为深山中一处偏僻营地的新看守人。你来到这里，本想寻得一处能让自己喘息、重新整理生活的避风港，但山巅的孤独很快变得令人窒息。</p><p>起初只是日常的巡视与维护工作，却逐渐演变成一段令人不安的经历。森林中的寂静并非空无一物，它似乎隐藏着从未有人告诉过你的真相。当你走过一条条小径，冬天开始将一切掩埋在积雪之下时，你会发现这座营地埋藏着本不该被打扰的秘密。</p><p>在《Lost Camp》中，天气系统是动态且难以预测的：你可能正在平静的阳光下工作，转眼间就被倾盆大雨或覆盖一切的暴风雪困住。这一系统不仅会改变地貌，还会彻底影响能见度与氛围，让整座营地显得鲜活，有时甚至充满敌意。</p>",
+  "g2.idx":"恐怖 / 探索","g2.badge":"免费 · 2024年2月16日",
+  "g2.desc":"世界上最大的邮轮沉没，被幽灵占据。作为特工，你手持手电筒登上「Nocturne」号，寻找失踪的布莱克胡德船长——无论生死——并揭开拖垮这艘船的诅咒。",
+  "g2.dlc":"+ 免费 DLC：<b>Obscuria: The Tragedy</b>——扮演布莱克胡德船长。",
+  "g3.idx":"Obscuria 2 · 动作恐怖","g3.badge":"付费 · 2024年10月28日",
+  "g3.desc":"一次例行巡逻变成噩梦——一场海难让你被困在 Nocturne 岛。探索森林、废弃建筑和隐秘地道，解开谜题并奋力反击，揭开这座岛屿扭曲的历史。",
+  "g4.idx":"沙盒多人","g4.badge":"免费 · 2023年7月3日",
+  "g4.desc":"创造世界、探索地图，构建你想象的一切：角色扮演、跑酷、对战、竞速等等。无限制驾驶，跳入经典模式，和朋友一起畅玩。唯一的限制是你的想象力。",
+  "act.view":"在 Steam 查看","act.viewpage":"查看页面","act.playfree":"免费游玩","act.buy":"在 Steam 购买",
+  "t.horror":"恐怖","t.survival":"生存","t.mystery":"悬疑","t.atmos":"氛围","t.exploration":"探索","t.scares":"惊吓","t.tension":"紧张","t.adventure":"冒险","t.combat":"战斗","t.sandbox":"沙盒","t.multiplayer":"多人","t.driving":"驾驶","t.creative":"创造",
+  "rm.kicker":"// 工作室时间线","rm.title":"路线图","rm.note":"每一次发布以及即将到来的内容，逐年呈现。","rm.upcoming":"即将",
+  "studio.kicker":"// 关于我们","studio.title":"工作室",
+  "studio.bio":"<p><b>Aranja Games</b> 是一家西班牙工作室，由 <b>Enzo Colomer 于 2020 年</b>创立。我们的核心目标是与其他游戏和公司有所不同——为玩家带来独特而优质的体验。</p><p>我们始终把玩家的体验和玩家本身放在第一位，高于一切。我们相信努力与坚持终有回报。</p>",
+  "studio.founderRole":"创始人 · 2020","stat.games":"已发行游戏","stat.founded":"成立","stat.more":"更多即将到来",
+  "contact.kicker":"// 联系我们","trailer":"预告片",
+  "news.kicker":"// 最新动态","news.title":"新闻","news.note":"工作室的公告与最新消息。","news.readmore":"阅读全文",
+  "price.base":"4.99€","price.sale":"特惠","price.endsIn":"优惠剩余"
+ }
+};
+
+const ROADMAP=[
+ {year:2026,items:[{date:"2026",status:"up",
+   en:{t:"Lost Camp",d:"After your mother's death you take the only job left — warden of a lonely mountain campsite. As winter falls, its buried secrets begin to surface. Wishlist it on Steam."},
+   es:{t:"Lost Camp",d:"Tras la muerte de tu madre aceptas el único trabajo que queda: guarda de un campamento solitario en la montaña. Cuando llega el invierno, sus secretos enterrados empiezan a aflorar. Añádelo a deseados en Steam."},
+   ca:{t:"Lost Camp",d:"Després de la mort de la teva mare acceptes l'única feina que queda: guarda d'un campament solitari a la muntanya. Quan arriba l'hivern, els seus secrets enterrats comencen a sortir a la llum. Afegeix-lo a desitjats a Steam."},
+   fr:{t:"Lost Camp",d:"Après la mort de votre mère, vous acceptez le seul emploi qui reste : gardien d'un camp isolé en montagne. Quand l'hiver arrive, ses secrets enfouis commencent à refaire surface. Ajoutez-le à votre liste de souhaits sur Steam."},
+   pl:{t:"Lost Camp",d:"Po śmierci matki przyjmujesz jedyną dostępną pracę — dozorcy samotnego górskiego obozowiska. Gdy nadchodzi zima, jego pogrzebane sekrety zaczynają wychodzić na jaw. Dodaj do listy życzeń na Steam."},
+   it:{t:"Lost Camp",d:"Dopo la morte di tua madre accetti l'unico lavoro rimasto: custode di un campeggio solitario in montagna. Quando arriva l'inverno, i suoi segreti sepolti riaffiorano. Aggiungilo alla lista dei desideri su Steam."},
+   de:{t:"Lost Camp",d:"Nach dem Tod deiner Mutter nimmst du den einzigen verbliebenen Job an — Wächter eines einsamen Bergcampingplatzes. Wenn der Winter kommt, treten seine vergrabenen Geheimnisse zutage. Setze es auf deine Steam-Wunschliste."},
+   zh:{t:"Lost Camp",d:"母亲去世后，你接受了唯一的工作——一座偏僻山间营地的看守人。寒冬降临，被掩埋的秘密开始浮现。在 Steam 加入愿望单。"}}]},
+ {year:2025,items:[{date:"Feb 2025",status:"rel",
+   en:{t:"Obscuria: The Tragedy",d:"Free DLC: play as Captain Blackhood against “The Penitence”."},
+   es:{t:"Obscuria: The Tragedy",d:"DLC gratuito: juega como el Capitán Blackhood frente a “The Penitence”."},
+   ca:{t:"Obscuria: The Tragedy",d:"DLC gratuït: juga com el Capità Blackhood davant “The Penitence”."},
+   fr:{t:"Obscuria: The Tragedy",d:"DLC gratuit : jouez le Capitaine Blackhood face à “The Penitence”."},
+   pl:{t:"Obscuria: The Tragedy",d:"Darmowe DLC: wciel się w kapitana Blackhooda przeciw „The Penitence”."},
+   it:{t:"Obscuria: The Tragedy",d:"DLC gratuito: gioca nei panni del Capitano Blackhood contro “The Penitence”."},
+   de:{t:"Obscuria: The Tragedy",d:"Kostenloses DLC: spiele als Kapitän Blackhood gegen „The Penitence“."},
+   zh:{t:"Obscuria: The Tragedy",d:"免费 DLC：扮演布莱克胡德船长对抗「The Penitence」。"}}]},
+ {year:2024,items:[
+   {date:"Oct 2024",status:"rel",
+    en:{t:"Nocturne Island Obscuria",d:"The Obscuria sequel — action horror on an abandoned island."},
+    es:{t:"Nocturne Island Obscuria",d:"La secuela de Obscuria — terror de acción en una isla abandonada."},
+    ca:{t:"Nocturne Island Obscuria",d:"La seqüela d'Obscuria — terror d'acció en una illa abandonada."},
+    fr:{t:"Nocturne Island Obscuria",d:"La suite d'Obscuria — horreur d'action sur une île abandonnée."},
+    pl:{t:"Nocturne Island Obscuria",d:"Kontynuacja Obscurii — horror akcji na opuszczonej wyspie."},
+    it:{t:"Nocturne Island Obscuria",d:"Il seguito di Obscuria — horror d'azione su un'isola abbandonata."},
+    de:{t:"Nocturne Island Obscuria",d:"Die Fortsetzung von Obscuria — Action-Horror auf einer verlassenen Insel."},
+    zh:{t:"Nocturne Island Obscuria",d:"Obscuria 续作——废弃岛屿上的动作恐怖。"}},
+   {date:"Feb 2024",status:"rel",
+    en:{t:"Obscuria",d:"Free horror aboard the cursed cruise ship “Nocturne”."},
+    es:{t:"Obscuria",d:"Terror gratuito a bordo del crucero maldito “Nocturne”."},
+    ca:{t:"Obscuria",d:"Terror gratuït a bord del creuer maleït “Nocturne”."},
+    fr:{t:"Obscuria",d:"Horreur gratuite à bord du paquebot maudit “Nocturne”."},
+    pl:{t:"Obscuria",d:"Darmowy horror na pokładzie przeklętego statku „Nocturne”."},
+    it:{t:"Obscuria",d:"Horror gratuito a bordo della nave maledetta “Nocturne”."},
+    de:{t:"Obscuria",d:"Kostenloser Horror an Bord des verfluchten Kreuzfahrtschiffs „Nocturne“."},
+    zh:{t:"Obscuria",d:"免费恐怖体验，登上被诅咒的邮轮「Nocturne」。"}}]},
+ {year:2023,items:[{date:"Jul 2023",status:"rel",
+   en:{t:"Jump to Survive 2",d:"The sandbox universe launches on Steam."},
+   es:{t:"Jump to Survive 2",d:"El universo sandbox se lanza en Steam."},
+   ca:{t:"Jump to Survive 2",d:"L'univers sandbox es llança a Steam."},
+   fr:{t:"Jump to Survive 2",d:"L'univers sandbox sort sur Steam."},
+   pl:{t:"Jump to Survive 2",d:"Piaskownicowy wszechświat debiutuje na Steam."},
+   it:{t:"Jump to Survive 2",d:"L'universo sandbox arriva su Steam."},
+   de:{t:"Jump to Survive 2",d:"Das Sandbox-Universum erscheint auf Steam."},
+   zh:{t:"Jump to Survive 2",d:"沙盒宇宙登陆 Steam。"}}]},
+ {year:2020,items:[{date:"2020",status:"mile",
+   en:{t:"Aranja Games is founded",d:"Enzo Colomer starts the studio. Making it real."},
+   es:{t:"Nace Aranja Games",d:"Enzo Colomer funda el estudio. Making it real."},
+   ca:{t:"Neix Aranja Games",d:"Enzo Colomer fundà l'estudi. Making it real."},
+   fr:{t:"Naissance d'Aranja Games",d:"Enzo Colomer fonde le studio. Making it real."},
+   pl:{t:"Powstaje Aranja Games",d:"Enzo Colomer zakłada studio. Making it real."},
+   it:{t:"Nasce Aranja Games",d:"Enzo Colomer fonda lo studio. Making it real."},
+   de:{t:"Aranja Games wird gegründet",d:"Enzo Colomer gründet das Studio. Making it real."},
+   zh:{t:"Aranja Games 成立",d:"Enzo Colomer 创立工作室。Making it real。"}}]}
+];
+
+const NEWS=[
+ {id:"wishlist-record",date:"2026-07-18",
+  en:{t:"An incredible day for Lost Camp's wishlists",
+      s:"Today has seen more people add Lost Camp to their wishlist than on any other day since the page went live! Thank you for the incredible support.",
+      b:"Today has seen more people add Lost Camp to their wishlist than on any other day since the page went live! We'd like to thank you for your tremendous support and interest in our project; we're truly at a loss for words. We're working flat out to bring you the best possible product—the one you deserve.\n\nSee you on October 30th!\n\nSincerely,\nEnzo Colomer"},
+  es:{t:"Un día increíble para los deseados de Lost Camp",
+      s:"¡Hoy más gente ha añadido Lost Camp a su lista de deseados que en ningún otro día desde que la página está activa! Gracias por vuestro apoyo increíble.",
+      b:"¡Hoy más gente ha añadido Lost Camp a su lista de deseados que en ningún otro día desde que la página está activa! Queremos daros las gracias por vuestro enorme apoyo e interés en nuestro proyecto; de verdad que no tenemos palabras. Estamos trabajando a tope para ofreceros el mejor producto posible, el que os merecéis.\n\n¡Nos vemos el 30 de octubre!\n\nAtentamente,\nEnzo Colomer"},
+  ca:{t:"Un dia increïble per als desitjats de Lost Camp",
+      s:"Avui més gent ha afegit Lost Camp a la seva llista de desitjats que en cap altre dia des que la pàgina està activa! Gràcies pel vostre suport increïble.",
+      b:"Avui més gent ha afegit Lost Camp a la seva llista de desitjats que en cap altre dia des que la pàgina està activa! Volem donar-vos les gràcies pel vostre enorme suport i interès en el nostre projecte; de veritat que no tenim paraules. Estem treballant al màxim per oferir-vos el millor producte possible, el que us mereixeu.\n\nEns veiem el 30 d'octubre!\n\nAtentament,\nEnzo Colomer"},
+  fr:{t:"Une journée incroyable pour les listes de souhaits de Lost Camp",
+      s:"Aujourd'hui, plus de personnes ont ajouté Lost Camp à leur liste de souhaits que n'importe quel autre jour depuis la mise en ligne de la page ! Merci pour ce soutien incroyable.",
+      b:"Aujourd'hui, plus de personnes ont ajouté Lost Camp à leur liste de souhaits que n'importe quel autre jour depuis la mise en ligne de la page ! Nous tenons à vous remercier pour votre soutien et votre intérêt formidables pour notre projet ; nous sommes vraiment sans voix. Nous travaillons d'arrache-pied pour vous offrir le meilleur produit possible, celui que vous méritez.\n\nRendez-vous le 30 octobre !\n\nBien à vous,\nEnzo Colomer"},
+  pl:{t:"Niesamowity dzień dla listy życzeń Lost Camp",
+      s:"Dziś więcej osób dodało Lost Camp do listy życzeń niż w jakikolwiek inny dzień od uruchomienia strony! Dziękujemy za niesamowite wsparcie.",
+      b:"Dziś więcej osób dodało Lost Camp do listy życzeń niż w jakikolwiek inny dzień od uruchomienia strony! Chcemy podziękować wam za ogromne wsparcie i zainteresowanie naszym projektem — naprawdę brakuje nam słów. Pracujemy z pełnym zaangażowaniem, aby dostarczyć wam najlepszy możliwy produkt — taki, na jaki zasługujecie.\n\nDo zobaczenia 30 października!\n\nZ poważaniem,\nEnzo Colomer"},
+  it:{t:"Una giornata incredibile per le liste dei desideri di Lost Camp",
+      s:"Oggi più persone hanno aggiunto Lost Camp alla lista dei desideri rispetto a qualsiasi altro giorno da quando la pagina è online! Grazie per il supporto incredibile.",
+      b:"Oggi più persone hanno aggiunto Lost Camp alla lista dei desideri rispetto a qualsiasi altro giorno da quando la pagina è online! Vogliamo ringraziarvi per l'enorme supporto e interesse verso il nostro progetto; siamo davvero senza parole. Stiamo lavorando al massimo per offrirvi il miglior prodotto possibile, quello che meritate.\n\nCi vediamo il 30 ottobre!\n\nCordialmente,\nEnzo Colomer"},
+  de:{t:"Ein unglaublicher Tag für die Lost-Camp-Wunschlisten",
+      s:"Heute haben mehr Menschen Lost Camp zu ihrer Wunschliste hinzugefügt als an jedem anderen Tag seit dem Start der Seite! Danke für die unglaubliche Unterstützung.",
+      b:"Heute haben mehr Menschen Lost Camp zu ihrer Wunschliste hinzugefügt als an jedem anderen Tag seit dem Start der Seite! Wir möchten euch für eure enorme Unterstützung und euer Interesse an unserem Projekt danken — uns fehlen wirklich die Worte. Wir arbeiten mit Hochdruck daran, euch das bestmögliche Produkt zu liefern — dasjenige, das ihr verdient.\n\nWir sehen uns am 30. Oktober!\n\nMit freundlichen Grüßen,\nEnzo Colomer"},
+  zh:{t:"《Lost Camp》愿望单迎来惊人的一天",
+      s:"今天加入《Lost Camp》愿望单的人数超过了页面上线以来的任何一天！感谢大家难以置信的支持。",
+      b:"今天加入《Lost Camp》愿望单的人数超过了页面上线以来的任何一天！我们想借此机会感谢大家对我们项目的巨大支持与关注，真的难以用言语表达我们的感激之情。我们正在全力以赴，为大家带来最好的作品——你们应得的作品。\n\n10月30日见！\n\n此致，\nEnzo Colomer"}},
+ {id:"lostcamp-release-date",date:"2026-07-16",
+  en:{t:"Lost Camp launches October 30 — and the trailer is here!",
+      s:"We're excited to confirm Lost Camp's release date: October 30, 2026. The first official trailer is now live on our YouTube channel.",
+      b:"We're thrilled to finally confirm it: Lost Camp launches on Steam on October 30, 2026. After months of development, we can't wait for you to step into the boots of the campsite's new warden and discover everything hidden in those mountains.\n\nTo celebrate, we've also just released the first official trailer, giving you a proper look at the atmosphere, the setting and the mystery waiting for you at the camp. You can watch it now on our YouTube channel and on the Steam page.\n\nMark the date: October 30, 2026. Wishlist Lost Camp on Steam so you don't miss the launch, and get ready for winter to bury more than just the trails."},
+  es:{t:"¡Lost Camp llega el 30 de octubre — y ya está el tráiler!",
+      s:"Confirmamos la fecha de lanzamiento de Lost Camp: 30 de octubre de 2026. Ya puedes ver el primer tráiler oficial en nuestro canal de YouTube.",
+      b:"Estamos encantados de confirmarlo por fin: Lost Camp llega a Steam el 30 de octubre de 2026. Después de meses de desarrollo, no podemos esperar a que os pongáis en la piel del nuevo guarda del camping y descubráis todo lo que se esconde en esas montañas.\n\nPara celebrarlo, también acabamos de publicar el primer tráiler oficial, que os muestra la atmósfera, el escenario y el misterio que os espera en el camping. Ya puedes verlo en nuestro canal de YouTube y en la página de Steam.\n\nApunta la fecha: 30 de octubre de 2026. Añade Lost Camp a tu lista de deseados en Steam para no perderte el lanzamiento, y prepárate porque el invierno va a enterrar algo más que los senderos."},
+  ca:{t:"Lost Camp arriba el 30 d'octubre — i ja tenim tràiler!",
+      s:"Confirmem la data de llançament de Lost Camp: 30 d'octubre de 2026. Ja pots veure el primer tràiler oficial al nostre canal de YouTube.",
+      b:"Estem encantats de confirmar-ho per fi: Lost Camp arriba a Steam el 30 d'octubre de 2026. Després de mesos de desenvolupament, no podem esperar que us poseu a la pell del nou guarda del càmping i descobriu tot el que s'amaga en aquestes muntanyes.\n\nPer celebrar-ho, també acabem de publicar el primer tràiler oficial, que us mostra l'atmosfera, l'escenari i el misteri que us espera al càmping. Ja el pots veure al nostre canal de YouTube i a la pàgina de Steam.\n\nApunta la data: 30 d'octubre de 2026. Afegeix Lost Camp a la teva llista de desitjats a Steam per no perdre't el llançament, i prepara't perquè l'hivern enterrarà alguna cosa més que els camins."},
+  fr:{t:"Lost Camp sort le 30 octobre — et voici la bande-annonce !",
+      s:"Nous confirmons la date de sortie de Lost Camp : le 30 octobre 2026. La première bande-annonce officielle est désormais disponible sur notre chaîne YouTube.",
+      b:"Nous sommes ravis de le confirmer enfin : Lost Camp sortira sur Steam le 30 octobre 2026. Après des mois de développement, nous avons hâte que vous incarniez le nouveau gardien du camping et découvriez tout ce qui se cache dans ces montagnes.\n\nPour fêter ça, nous venons également de publier la première bande-annonce officielle, qui vous donne un aperçu de l'atmosphère, du décor et du mystère qui vous attend au camping. Vous pouvez la regarder dès maintenant sur notre chaîne YouTube et sur la page Steam.\n\nNotez la date : le 30 octobre 2026. Ajoutez Lost Camp à votre liste de souhaits sur Steam pour ne pas manquer la sortie, et préparez-vous : l'hiver va enterrer bien plus que les sentiers."},
+  pl:{t:"Lost Camp wychodzi 30 października — i jest zwiastun!",
+      s:"Potwierdzamy datę premiery Lost Camp: 30 października 2026. Pierwszy oficjalny zwiastun jest już dostępny na naszym kanale YouTube.",
+      b:"Z radością potwierdzamy: Lost Camp trafi na Steam 30 października 2026 roku. Po miesiącach pracy nie możemy się doczekać, aż wcielicie się w nowego dozorcę obozowiska i odkryjecie wszystko, co kryją te góry.\n\nZ tej okazji opublikowaliśmy też pierwszy oficjalny zwiastun, pokazujący klimat, scenerię i tajemnicę czekającą na was w obozie. Możecie go już obejrzeć na naszym kanale YouTube oraz na stronie Steam.\n\nZapiszcie datę: 30 października 2026. Dodajcie Lost Camp do listy życzeń na Steam, aby nie przegapić premiery, i przygotujcie się — zima zasypie coś więcej niż tylko szlaki."},
+  it:{t:"Lost Camp esce il 30 ottobre — ed ecco il trailer!",
+      s:"Confermiamo la data di uscita di Lost Camp: 30 ottobre 2026. Il primo trailer ufficiale è ora disponibile sul nostro canale YouTube.",
+      b:"Siamo felicissimi di confermarlo finalmente: Lost Camp arriverà su Steam il 30 ottobre 2026. Dopo mesi di sviluppo, non vediamo l'ora che vestiate i panni del nuovo custode del campeggio e scopriate tutto ciò che si nasconde tra quelle montagne.\n\nPer festeggiare, abbiamo anche appena pubblicato il primo trailer ufficiale, che vi mostra l'atmosfera, l'ambientazione e il mistero che vi aspetta al campeggio. Potete guardarlo già ora sul nostro canale YouTube e sulla pagina Steam.\n\nSegnatevi la data: 30 ottobre 2026. Aggiungete Lost Camp alla vostra lista dei desideri su Steam per non perdervi l'uscita, e preparatevi: l'inverno seppellirà ben più dei sentieri."},
+  de:{t:"Lost Camp erscheint am 30. Oktober — und der Trailer ist da!",
+      s:"Wir bestätigen den Erscheinungstermin von Lost Camp: 30. Oktober 2026. Der erste offizielle Trailer ist jetzt auf unserem YouTube-Kanal zu sehen.",
+      b:"Wir freuen uns, es endlich bestätigen zu können: Lost Camp erscheint am 30. Oktober 2026 auf Steam. Nach Monaten der Entwicklung können wir es kaum erwarten, dass ihr in die Rolle des neuen Wächters des Campingplatzes schlüpft und alles entdeckt, was sich in diesen Bergen verbirgt.\n\nZur Feier des Tages haben wir außerdem gerade den ersten offiziellen Trailer veröffentlicht, der euch einen Einblick in die Atmosphäre, die Kulisse und das Mysterium gibt, das auf dem Campingplatz auf euch wartet. Ihr könnt ihn jetzt auf unserem YouTube-Kanal und auf der Steam-Seite ansehen.\n\nMerkt euch das Datum: 30. Oktober 2026. Setzt Lost Camp auf eure Steam-Wunschliste, um die Veröffentlichung nicht zu verpassen, und macht euch bereit — der Winter wird mehr als nur die Pfade begraben."},
+  zh:{t:"《Lost Camp》10月30日发售——预告片已上线！",
+      s:"我们正式确认《Lost Camp》的发售日期：2026年10月30日。首支官方预告片现已在我们的 YouTube 频道上线。",
+      b:"我们非常高兴终于可以正式确认：《Lost Camp》将于2026年10月30日登陆 Steam。经过数月的开发，我们迫不及待想让大家扮演这座营地的新看守人，去发现隐藏在这些山脉中的一切。\n\n为了庆祝这一消息，我们也刚刚发布了首支官方预告片，让大家提前感受营地的氛围、场景以及等待着你们的谜团。现在就可以在我们的 YouTube 频道和 Steam 页面观看。\n\n请记住这个日期：2026年10月30日。快去 Steam 将《Lost Camp》加入愿望单，以免错过发售，并做好准备——这个冬天，被掩埋的可不只是那些小径。"}},
+ {id:"lostcamp-2026",date:"2026-06-15",
+  en:{t:"Lost Camp arrives in 2026",
+      s:"Our next project, with a planned release for late 2026, is generating huge buzz with players on social media. Big things are expected from this one.",
+      b:"Aranja Games' next project, Lost Camp, is scheduled for release in late 2026 and is already generating huge buzz among players on social media. Set in an isolated mountain campsite after the death of the protagonist's mother, the game blends survival, mystery and atmospheric horror, and early previews have sparked strong expectations within the community.\n\nThe team is currently polishing exploration mechanics, environmental storytelling and the winter setting that defines the experience. We'll be sharing more gameplay details, screenshots and a release window as development progresses. You can already add Lost Camp to your wishlist on Steam to be notified the moment it launches."},
+  es:{t:"Lost Camp sale en 2026",
+      s:"El siguiente proyecto de Aranja Games, con fecha de salida prevista para finales de 2026, está creando gran expectación entre los jugadores en redes sociales. Se esperan grandes cosas de este proyecto.",
+      b:"El siguiente proyecto de Aranja Games, Lost Camp, tiene su lanzamiento previsto para finales de 2026 y ya está generando gran expectación entre los jugadores en redes sociales. Ambientado en un campamento aislado en la montaña tras la muerte de la madre del protagonista, el juego combina supervivencia, misterio y terror atmosférico, y los primeros adelantos han despertado muchas ganas dentro de la comunidad.\n\nEl equipo está puliendo ahora mismo las mecánicas de exploración, la narrativa ambiental y el escenario invernal que define la experiencia. Iremos compartiendo más detalles de gameplay, capturas y una ventana de lanzamiento a medida que avance el desarrollo. Ya puedes añadir Lost Camp a tu lista de deseados en Steam para que te avisen en el momento exacto del lanzamiento."},
+  ca:{t:"Lost Camp arriba el 2026",
+      s:"El següent projecte d'Aranja Games, amb data de sortida prevista per a finals de 2026, està generant molta expectació entre els jugadors a les xarxes socials. S'esperen grans coses d'aquest projecte.",
+      b:"El següent projecte d'Aranja Games, Lost Camp, té previst el llançament per a finals de 2026 i ja està generant molta expectació entre els jugadors a les xarxes socials. Ambientat en un campament aïllat a la muntanya després de la mort de la mare del protagonista, el joc combina supervivència, misteri i terror atmosfèric, i els primers avenços han despertat moltes ganes dins la comunitat.\n\nL'equip està polint ara mateix les mecàniques d'exploració, la narrativa ambiental i l'escenari hivernal que defineix l'experiència. Anirem compartint més detalls de gameplay, captures i una finestra de llançament a mesura que avanci el desenvolupament. Ja pots afegir Lost Camp a la teva llista de desitjats a Steam perquè t'avisin en el moment exacte del llançament."},
+  fr:{t:"Lost Camp arrive en 2026",
+      s:"Le prochain projet d'Aranja Games, dont la sortie est prévue pour fin 2026, suscite déjà un grand engouement chez les joueurs sur les réseaux sociaux. On attend de grandes choses de ce projet.",
+      b:"Le prochain projet d'Aranja Games, Lost Camp, doit sortir fin 2026 et suscite déjà un grand engouement chez les joueurs sur les réseaux sociaux. Situé dans un camp isolé en montagne après la mort de la mère du protagoniste, le jeu mêle survie, mystère et horreur atmosphérique, et les premiers aperçus ont éveillé beaucoup d'attentes au sein de la communauté.\n\nL'équipe peaufine actuellement les mécaniques d'exploration, la narration environnementale et le décor hivernal qui définit l'expérience. Nous partagerons davantage de détails de gameplay, des captures d'écran et une fenêtre de sortie au fur et à mesure de l'avancement du développement. Vous pouvez déjà ajouter Lost Camp à votre liste de souhaits sur Steam pour être averti dès sa sortie."},
+  pl:{t:"Lost Camp wychodzi w 2026",
+      s:"Kolejny projekt Aranja Games, z planowaną premierą na koniec 2026 roku, wzbudza już ogromne zainteresowanie wśród graczy w mediach społecznościowych. Po tym projekcie oczekuje się wielkich rzeczy.",
+      b:"Kolejny projekt Aranja Games, Lost Camp, ma zadebiutować pod koniec 2026 roku i już teraz wzbudza ogromne zainteresowanie wśród graczy w mediach społecznościowych. Akcja gry rozgrywa się na odosobnionym górskim obozowisku po śmierci matki głównego bohatera, łącząc survival, mystery i atmosferyczny horror — pierwsze materiały wzbudziły duże oczekiwania w społeczności.\n\nZespół obecnie dopracowuje mechaniki eksploracji, narrację środowiskową oraz zimowy klimat, który definiuje to doświadczenie. Będziemy dzielić się kolejnymi szczegółami rozgrywki, zrzutami ekranu oraz oknem wydania w miarę postępu prac. Już teraz możesz dodać Lost Camp do listy życzeń na Steam, aby otrzymać powiadomienie w momencie premiery."},
+  it:{t:"Lost Camp arriva nel 2026",
+      s:"Il prossimo progetto di Aranja Games, con uscita prevista per la fine del 2026, sta già generando grande attesa tra i giocatori sui social media. Da questo progetto ci si aspettano grandi cose.",
+      b:"Il prossimo progetto di Aranja Games, Lost Camp, è previsto per la fine del 2026 e sta già generando grande attesa tra i giocatori sui social media. Ambientato in un campeggio isolato in montagna dopo la morte della madre del protagonista, il gioco unisce sopravvivenza, mistero e horror atmosferico, e le prime anteprime hanno suscitato grandi aspettative nella community.\n\nIl team sta attualmente perfezionando le meccaniche di esplorazione, la narrazione ambientale e l'ambientazione invernale che definisce l'esperienza. Condivideremo presto altri dettagli di gameplay, screenshot e una finestra di uscita con l'avanzare dello sviluppo. Puoi già aggiungere Lost Camp alla tua lista dei desideri su Steam per essere avvisato non appena uscirà."},
+  de:{t:"Lost Camp erscheint 2026",
+      s:"Das nächste Projekt von Aranja Games, dessen Veröffentlichung für Ende 2026 geplant ist, sorgt bereits für große Vorfreude bei Spielern in sozialen Netzwerken. Von diesem Projekt wird viel erwartet.",
+      b:"Das nächste Projekt von Aranja Games, Lost Camp, soll Ende 2026 erscheinen und sorgt bereits jetzt für große Vorfreude bei Spielern in sozialen Netzwerken. Die Handlung spielt auf einem abgelegenen Bergcampingplatz nach dem Tod der Mutter des Protagonisten und verbindet Survival, Mystery und atmosphärischen Horror — erste Einblicke haben in der Community große Erwartungen geweckt.\n\nDas Team feilt derzeit an den Erkundungsmechaniken, der Umgebungserzählung und der winterlichen Kulisse, die das Erlebnis prägt. Wir werden im Laufe der Entwicklung weitere Gameplay-Details, Screenshots und ein Veröffentlichungsfenster teilen. Du kannst Lost Camp schon jetzt auf Steam auf deine Wunschliste setzen, um sofort benachrichtigt zu werden."},
+  zh:{t:"《Lost Camp》将于2026年发布",
+      s:"Aranja Games 的下一部作品，预计于2026年底发布，已经在社交媒体上引发了玩家的极大期待。这个项目被寄予厚望。",
+      b:"Aranja Games 的下一部作品《Lost Camp》计划于2026年底发布，目前已在社交媒体上引发玩家的极大关注。故事发生在主角母亲去世后、他成为看守人的一座偏僻山间营地，游戏融合了生存、悬疑与氛围恐怖元素，早期预览已经在社区中激起了很高的期待。\n\n开发团队目前正在打磨探索机制、环境叙事，以及定义整体体验的冬季场景。随着开发推进，我们会分享更多玩法细节、截图以及发布窗口信息。现在就可以在 Steam 上将《Lost Camp》加入愿望单，以便在发布的第一时间收到通知。"}},
+ {id:"obscuria-update",date:"2025-02-16",
+  en:{t:"Obscuria keeps haunting new players",
+      s:"Our free horror title aboard the cursed cruise ship Nocturne keeps reaching new players, with the free DLC Obscuria: The Tragedy adding even more to explore.",
+      b:"Obscuria, Aranja Games' free horror title set aboard the cursed cruise ship Nocturne, continues to find new players long after its original release. Tasked with finding Captain Blackhood — alive or dead — players keep sharing their scares and theories about the curse dragging the ship down.\n\nThe free DLC, Obscuria: The Tragedy, lets players step into the boots of Captain Blackhood himself, facing 'The Penitence' from a whole new perspective. Together, the base game and its DLC have become the entry point many players use to discover Aranja Games for the first time, before later exploring Nocturne Island, the direct sequel. Obscuria remains completely free on Steam for anyone who wants to dare to board the Nocturne."},
+  es:{t:"Obscuria sigue atrapando a nuevos jugadores",
+      s:"Nuestro título de terror gratuito a bordo del crucero maldito Nocturne sigue llegando a nuevos jugadores, con el DLC gratuito Obscuria: The Tragedy añadiendo aún más para explorar.",
+      b:"Obscuria, el título de terror gratuito de Aranja Games ambientado a bordo del crucero maldito Nocturne, sigue encontrando nuevos jugadores mucho tiempo después de su lanzamiento original. Con la misión de encontrar al Capitán Blackhood —vivo o muerto—, los jugadores siguen compartiendo sus sustos y teorías sobre la maldición que arrastra el barco hacia el fondo.\n\nEl DLC gratuito, Obscuria: The Tragedy, permite ponerse en la piel del propio Capitán Blackhood, enfrentándose a \"The Penitence\" desde una perspectiva totalmente nueva. Juntos, el juego base y su DLC se han convertido en la puerta de entrada que muchos jugadores usan para descubrir Aranja Games por primera vez, antes de explorar más adelante Nocturne Island, su secuela directa. Obscuria sigue siendo completamente gratuito en Steam para quien se atreva a subir a bordo del Nocturne."},
+  ca:{t:"Obscuria continua atrapant nous jugadors",
+      s:"El nostre títol de terror gratuït a bord del creuer maleït Nocturne continua arribant a nous jugadors, amb el DLC gratuït Obscuria: The Tragedy afegint encara més per explorar.",
+      b:"Obscuria, el títol de terror gratuït d'Aranja Games ambientat a bord del creuer maleït Nocturne, continua trobant nous jugadors molt després del seu llançament original. Amb la missió de trobar el Capità Blackhood —viu o mort—, els jugadors continuen compartint els seus sustos i teories sobre la maledicció que enfonsa el vaixell.\n\nEl DLC gratuït, Obscuria: The Tragedy, permet posar-se a la pell del mateix Capità Blackhood, enfrontant-se a \"The Penitence\" des d'una perspectiva totalment nova. Junts, el joc base i el seu DLC s'han convertit en la porta d'entrada que molts jugadors fan servir per descobrir Aranja Games per primera vegada, abans d'explorar més endavant Nocturne Island, la seva seqüela directa. Obscuria continua sent completament gratuït a Steam per a qui s'atreveixi a pujar a bord del Nocturne."},
+  fr:{t:"Obscuria continue de hanter de nouveaux joueurs",
+      s:"Notre titre d'horreur gratuit à bord du paquebot maudit Nocturne continue d'atteindre de nouveaux joueurs, avec le DLC gratuit Obscuria: The Tragedy ajoutant encore plus à explorer.",
+      b:"Obscuria, le titre d'horreur gratuit d'Aranja Games se déroulant à bord du paquebot maudit Nocturne, continue de séduire de nouveaux joueurs longtemps après sa sortie initiale. Chargés de retrouver le Capitaine Blackhood — vivant ou mort —, les joueurs continuent de partager leurs frayeurs et leurs théories sur la malédiction qui entraîne le navire vers le fond.\n\nLe DLC gratuit, Obscuria: The Tragedy, permet d'incarner le Capitaine Blackhood lui-même, affrontant \"The Penitence\" sous un angle totalement nouveau. Ensemble, le jeu de base et son DLC sont devenus la porte d'entrée par laquelle de nombreux joueurs découvrent Aranja Games pour la première fois, avant d'explorer plus tard Nocturne Island, sa suite directe. Obscuria reste entièrement gratuit sur Steam pour quiconque ose monter à bord du Nocturne."},
+  pl:{t:"Obscuria wciąż nawiedza nowych graczy",
+      s:"Nasz darmowy horror na pokładzie przeklętego statku Nocturne wciąż przyciąga nowych graczy, a darmowe DLC Obscuria: The Tragedy dodaje jeszcze więcej do odkrycia.",
+      b:"Obscuria, darmowy horror Aranja Games rozgrywający się na pokładzie przeklętego statku Nocturne, wciąż zdobywa nowych graczy długo po swojej pierwotnej premierze. Mając za zadanie odnalezienie kapitana Blackhooda — żywego lub martwego — gracze nieustannie dzielą się swoimi strachami i teoriami na temat klątwy ciągnącej statek na dno.\n\nDarmowe DLC, Obscuria: The Tragedy, pozwala wcielić się w samego kapitana Blackhooda i stawić czoła „The Penitence” z zupełnie nowej perspektywy. Razem podstawowa gra i jej DLC stały się bramą, przez którą wielu graczy po raz pierwszy odkrywa Aranja Games, zanim później przejdą do Nocturne Island, jej bezpośredniej kontynuacji. Obscuria pozostaje całkowicie darmowa na Steam dla każdego, kto odważy się wejść na pokład Nocturne."},
+  it:{t:"Obscuria continua a spaventare nuovi giocatori",
+      s:"Il nostro titolo horror gratuito a bordo della nave maledetta Nocturne continua a raggiungere nuovi giocatori, con il DLC gratuito Obscuria: The Tragedy che aggiunge ancora più contenuti da esplorare.",
+      b:"Obscuria, il titolo horror gratuito di Aranja Games ambientato a bordo della nave maledetta Nocturne, continua a conquistare nuovi giocatori molto tempo dopo il suo lancio originale. Con il compito di trovare il Capitano Blackhood — vivo o morto — i giocatori continuano a condividere i loro spaventi e le loro teorie sulla maledizione che trascina la nave a fondo.\n\nIl DLC gratuito, Obscuria: The Tragedy, permette di calarsi nei panni dello stesso Capitano Blackhood, affrontando \"The Penitence\" da una prospettiva completamente nuova. Insieme, il gioco base e il suo DLC sono diventati la porta d'accesso che molti giocatori usano per scoprire Aranja Games per la prima volta, prima di esplorare in seguito Nocturne Island, il suo seguito diretto. Obscuria resta completamente gratuito su Steam per chiunque osi salire a bordo della Nocturne."},
+  de:{t:"Obscuria sucht weiterhin neue Spieler heim",
+      s:"Unser kostenloses Horror-Spiel an Bord des verfluchten Kreuzfahrtschiffs Nocturne erreicht weiterhin neue Spieler — mit dem kostenlosen DLC Obscuria: The Tragedy gibt es noch mehr zu entdecken.",
+      b:"Obscuria, der kostenlose Horror-Titel von Aranja Games an Bord des verfluchten Kreuzfahrtschiffs Nocturne, findet auch lange nach seiner ursprünglichen Veröffentlichung weiterhin neue Spieler. Mit der Aufgabe, Kapitän Blackhood zu finden — lebendig oder tot — teilen Spieler weiterhin ihre Schreckmomente und Theorien über den Fluch, der das Schiff in die Tiefe zieht.\n\nDas kostenlose DLC, Obscuria: The Tragedy, lässt Spieler in die Rolle von Kapitän Blackhood selbst schlüpfen und sich „The Penitence“ aus einer völlig neuen Perspektive stellen. Zusammen sind das Basisspiel und sein DLC zum Einstiegspunkt geworden, über den viele Spieler Aranja Games zum ersten Mal entdecken, bevor sie später Nocturne Island, die direkte Fortsetzung, erkunden. Obscuria bleibt auf Steam komplett kostenlos für alle, die es wagen, an Bord der Nocturne zu gehen."},
+  zh:{t:"《Obscuria》持续吸引新玩家",
+      s:"我们这款发生在被诅咒邮轮「Nocturne」上的免费恐怖游戏持续吸引新玩家，免费 DLC《Obscuria: The Tragedy》带来了更多可探索的内容。",
+      b:"Aranja Games 的免费恐怖游戏《Obscuria》发生在被诅咒的邮轮「Nocturne」上，即便在最初发布很久之后，依然持续吸引着新玩家。玩家的任务是找到失踪的布莱克胡德船长——无论生死——他们不断分享着自己的惊吓瞬间，以及关于拖垮这艘船的诅咒的各种猜想。\n\n免费 DLC《Obscuria: The Tragedy》让玩家能够扮演布莱克胡德船长本人，从全新的视角面对「The Penitence」。本体与这个 DLC 一起，已经成为许多玩家第一次了解 Aranja Games 的入口，之后他们才会进一步探索其直接续作《Nocturne Island》。《Obscuria》在 Steam 上依然完全免费，欢迎任何敢于登上「Nocturne」号的玩家。"}},
+ {id:"enzo-studio",date:"2024-01-10",
+  en:{t:"From one developer to a growing studio",
+      s:"Aranja Games started in 2020 as Enzo Colomer's solo project. Today it's a studio with four published games and a community that keeps growing.",
+      b:"When Enzo Colomer founded Aranja Games back in 2020, it started as a one-person project driven by a passion for horror and adventure games. Years later, the studio has grown into something much bigger: four published titles, an active community across Steam and social media, and a clear identity built around dense atmosphere, exploration and real scares.\n\nEnzo continues to be hands-on across every project — from game design and programming in Unreal Engine to managing the studio's web presence and community communication. That close, personal involvement is part of what makes Aranja Games' games feel distinct. As the studio looks toward Lost Camp and whatever comes after it, the goal remains the same as it was on day one: offering players unique, quality experiences, built with patience and perseverance."},
+  es:{t:"De un desarrollador a un estudio en crecimiento",
+      s:"Aranja Games empezó en 2020 como el proyecto en solitario de Enzo Colomer. Hoy es un estudio con cuatro juegos publicados y una comunidad que no para de crecer.",
+      b:"Cuando Enzo Colomer fundó Aranja Games en 2020, empezó como un proyecto en solitario impulsado por la pasión por los juegos de terror y aventura. Años después, el estudio se ha convertido en algo mucho más grande: cuatro títulos publicados, una comunidad activa en Steam y redes sociales, y una identidad clara construida alrededor de la atmósfera densa, la exploración y los sustos de verdad.\n\nEnzo sigue implicado de forma directa en cada proyecto, desde el diseño y la programación en Unreal Engine hasta la gestión de la web del estudio y la comunicación con la comunidad. Esa implicación cercana y personal es parte de lo que hace que los juegos de Aranja Games se sientan distintos. Con la vista puesta en Lost Camp y en lo que venga después, el objetivo sigue siendo el mismo que el primer día: ofrecer a los jugadores experiencias únicas y de calidad, construidas con paciencia y perseverancia."},
+  ca:{t:"D'un desenvolupador a un estudi en creixement",
+      s:"Aranja Games va començar el 2020 com el projecte en solitari d'Enzo Colomer. Avui és un estudi amb quatre jocs publicats i una comunitat que no para de créixer.",
+      b:"Quan Enzo Colomer va fundar Aranja Games el 2020, va començar com un projecte en solitari impulsat per la passió pels jocs de terror i aventura. Anys després, l'estudi s'ha convertit en una cosa molt més gran: quatre títols publicats, una comunitat activa a Steam i xarxes socials, i una identitat clara construïda al voltant de l'atmosfera densa, l'exploració i els sustos de veritat.\n\nEnzo continua implicat de manera directa en cada projecte, des del disseny i la programació en Unreal Engine fins a la gestió del web de l'estudi i la comunicació amb la comunitat. Aquesta implicació propera i personal és part del que fa que els jocs d'Aranja Games se sentin diferents. Amb la vista posada en Lost Camp i en el que vingui després, l'objectiu continua sent el mateix que el primer dia: oferir als jugadors experiències úniques i de qualitat, construïdes amb paciència i perseverança."},
+  fr:{t:"D'un développeur solo à un studio en pleine croissance",
+      s:"Aranja Games a commencé en 2020 comme le projet solo d'Enzo Colomer. Aujourd'hui, c'est un studio avec quatre jeux publiés et une communauté en constante croissance.",
+      b:"Lorsque Enzo Colomer a fondé Aranja Games en 2020, le studio n'était qu'un projet solo porté par une passion pour les jeux d'horreur et d'aventure. Des années plus tard, le studio est devenu bien plus grand : quatre titres publiés, une communauté active sur Steam et les réseaux sociaux, et une identité claire bâtie autour d'une atmosphère dense, de l'exploration et de vraies frayeurs.\n\nEnzo reste impliqué personnellement dans chaque projet, du game design et de la programmation sous Unreal Engine à la gestion du site du studio et à la communication avec la communauté. Cette implication proche et personnelle fait partie de ce qui rend les jeux d'Aranja Games si particuliers. En regardant vers Lost Camp et ce qui suivra, l'objectif reste le même qu'au premier jour : offrir aux joueurs des expériences uniques et de qualité, construites avec patience et persévérance."},
+  pl:{t:"Od jednego dewelopera do rozwijającego się studia",
+      s:"Aranja Games zaczęło w 2020 roku jako solowy projekt Enzo Colomera. Dziś to studio z czterema wydanymi grami i wciąż rosnącą społecznością.",
+      b:"Kiedy Enzo Colomer założył Aranja Games w 2020 roku, był to solowy projekt napędzany pasją do gier horror i przygodowych. Lata później studio rozrosło się w coś znacznie większego: cztery wydane tytuły, aktywną społeczność na Steam i w mediach społecznościowych oraz wyraźną tożsamość zbudowaną wokół gęstej atmosfery, eksploracji i prawdziwego strachu.\n\nEnzo wciąż jest bezpośrednio zaangażowany w każdy projekt — od projektowania gier i programowania w Unreal Engine, po zarządzanie stroną studia i komunikację ze społecznością. To bliskie, osobiste zaangażowanie jest częścią tego, co sprawia, że gry Aranja Games wyróżniają się na tle innych. Patrząc w stronę Lost Camp i tego, co przyjdzie potem, cel pozostaje taki sam jak pierwszego dnia: dawać graczom unikalne, wysokiej jakości doświadczenia, budowane z cierpliwością i wytrwałością."},
+  it:{t:"Da un solo sviluppatore a uno studio in crescita",
+      s:"Aranja Games è nato nel 2020 come progetto solitario di Enzo Colomer. Oggi è uno studio con quattro giochi pubblicati e una community in costante crescita.",
+      b:"Quando Enzo Colomer ha fondato Aranja Games nel 2020, tutto è iniziato come un progetto da solista guidato dalla passione per i giochi horror e d'avventura. Anni dopo, lo studio è diventato qualcosa di molto più grande: quattro titoli pubblicati, una community attiva su Steam e sui social media, e un'identità chiara costruita attorno a un'atmosfera densa, l'esplorazione e veri spaventi.\n\nEnzo continua a essere coinvolto direttamente in ogni progetto, dal game design e la programmazione in Unreal Engine alla gestione del sito web dello studio e alla comunicazione con la community. Questo coinvolgimento personale e diretto è parte di ciò che rende i giochi di Aranja Games così distintivi. Guardando a Lost Camp e a ciò che verrà dopo, l'obiettivo resta lo stesso del primo giorno: offrire ai giocatori esperienze uniche e di qualità, costruite con pazienza e perseveranza."},
+  de:{t:"Von einem Entwickler zu einem wachsenden Studio",
+      s:"Aranja Games begann 2020 als Solo-Projekt von Enzo Colomer. Heute ist es ein Studio mit vier veröffentlichten Spielen und einer stetig wachsenden Community.",
+      b:"Als Enzo Colomer 2020 Aranja Games gründete, war es ein Solo-Projekt, angetrieben von der Leidenschaft für Horror- und Abenteuerspiele. Jahre später ist aus dem Studio etwas viel Größeres geworden: vier veröffentlichte Titel, eine aktive Community auf Steam und in sozialen Netzwerken sowie eine klare Identität rund um dichte Atmosphäre, Erkundung und echten Schrecken.\n\nEnzo ist weiterhin bei jedem Projekt persönlich involviert — vom Game Design und der Programmierung in Unreal Engine bis zur Verwaltung der Studio-Website und der Kommunikation mit der Community. Genau dieses enge, persönliche Engagement macht die Spiele von Aranja Games so besonders. Mit Blick auf Lost Camp und alles, was danach kommt, bleibt das Ziel dasselbe wie am ersten Tag: den Spielern einzigartige, hochwertige Erlebnisse zu bieten, die mit Geduld und Ausdauer entstanden sind."},
+  zh:{t:"从一人开发到不断成长的工作室",
+      s:"Aranja Games 始于2020年，是 Enzo Colomer 的个人项目。如今，它已成为一家拥有四部已发行作品、社区持续壮大的工作室。",
+      b:"当 Enzo Colomer 于2020年创立 Aranja Games 时，这只是一个由对恐怖与冒险游戏的热爱驱动的个人项目。多年之后，这家工作室已发展成更大的存在：四部已发行的作品、在 Steam 与社交媒体上活跃的社区，以及围绕浓厚氛围、探索与真正惊吓所建立起的鲜明风格。\n\nEnzo 仍然亲自参与每一个项目——从游戏设计、Unreal Engine 编程，到管理工作室网站与社区沟通，事事亲力亲为。这种紧密、个人化的投入，正是 Aranja Games 的作品与众不同的原因之一。展望《Lost Camp》以及未来的作品，目标始终与第一天一样：以耐心与坚持，为玩家带来独特、优质的体验。"}}
+];
+
+let LANG="en";
+
+/* language dropdown */
+const dd=document.getElementById('langdd'),menu=document.getElementById('langmenu'),cur=document.getElementById('langcur');
+menu.innerHTML=LANGS.map(([c,n])=>`<button data-l="${c}">${n}<span class="tick">✓</span></button>`).join('');
+document.getElementById('langbtn').addEventListener('click',e=>{e.stopPropagation();dd.classList.toggle('open');});
+menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{applyLang(b.dataset.l);dd.classList.remove('open');}));
+document.addEventListener('click',e=>{if(!dd.contains(e.target))dd.classList.remove('open');});
+
+function renderRoadmap(){
+  document.getElementById('roadmapList').innerHTML=ROADMAP.map(y=>{
+    const items=y.items.map(it=>{
+      const cls=it.status==="up"?"up":it.status==="mile"?"mile":"";
+      const pill=it.status==="up"?`<span class="rm-pill">${I18N[LANG]["rm.upcoming"]}</span>`:"";
+      return `<div class="rm-item ${cls}"><div class="rm-date">${it.date}</div><h3>${it[LANG].t}${pill}</h3><p>${it[LANG].d}</p></div>`;
+    }).join("");
+    return `<div class="rm-year">${y.year}</div>${items}`;
+  }).join("");
+}
+const LOCALE_MAP={en:"en-US",es:"es-ES",ca:"ca-ES",fr:"fr-FR",pl:"pl-PL",it:"it-IT",de:"de-DE",zh:"zh-CN"};
+function fmtNewsDate(iso){
+  const d=new Date(iso+"T00:00:00");
+  try{return d.toLocaleDateString(LOCALE_MAP[LANG]||"en-US",{day:"numeric",month:"long",year:"numeric"});}
+  catch(e){return iso;}
+}
+let newsExpanded=false;
+function renderNews(){
+  const grid=document.getElementById('newsGrid');
+  grid.innerHTML=NEWS.map((n,i)=>{
+    const hidden=i>=3&&!newsExpanded?" hidden-news":"";
+    return `<article class="news-card${hidden}" data-news-i="${i}">
+      <div class="news-date">${fmtNewsDate(n.date)}</div>
+      <h3>${n[LANG].t}</h3>
+      <p>${n[LANG].s}</p>
+      <span class="news-read">${I18N[LANG]["news.readmore"]} <span class="arr">→</span></span>
+    </article>`;
+  }).join("");
+  grid.querySelectorAll('.news-card').forEach(card=>card.addEventListener('click',()=>openNewsModal(+card.dataset.newsI)));
+  const moreBtn=document.getElementById('newsMoreBtn');
+  if(NEWS.length<=3){moreBtn.style.display='none';}
+  else{moreBtn.style.display='';moreBtn.classList.toggle('spin',newsExpanded);}
+}
+function toggleNews(){newsExpanded=!newsExpanded;renderNews();}
+function openNewsModal(i){
+  const n=NEWS[i];if(!n)return;
+  document.getElementById('newsModalDate').textContent=fmtNewsDate(n.date);
+  document.getElementById('newsModalTitle').textContent=n[LANG].t;
+  document.getElementById('newsModalBody').textContent=n[LANG].b;
+  document.getElementById('newsModal').classList.add('open');
+  document.getElementById('newsModal').setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeNewsModal(){
+  document.getElementById('newsModal').classList.remove('open');
+  document.getElementById('newsModal').setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+function renderTicker(){
+  const names=["LOST CAMP","OBSCURIA","NOCTURNE ISLAND","JUMP TO SURVIVE"];
+  const seq=names.map(n=>`<span>${n}</span><span><b>·</b></span>`).join("").repeat(2);
+  document.getElementById('ticker').innerHTML=`<div class="ticker-seq">${seq}</div><div class="ticker-seq">${seq}</div>`;
+}
+function fmtCountdown(diff){
+  if(diff<=0)return'<b>0</b>d <b>0</b>h <b>0</b>m <b>0</b>s';
+  const d=Math.floor(diff/86400000);diff-=d*86400000;
+  const h=Math.floor(diff/3600000);diff-=h*3600000;
+  const m=Math.floor(diff/60000);diff-=m*60000;
+  const s=Math.floor(diff/1000);
+  return `<b>${d}</b>d<span class="cd-sep">·</span><b>${h}</b>h<span class="cd-sep">·</span><b>${m}</b>m<span class="cd-sep">·</span><b>${s}</b>s`;
+}
+function startCountdowns(){
+  const els=[...document.querySelectorAll('.countdown[data-target]')];
+  if(!els.length)return;
+  const tick=()=>{
+    const now=Date.now();
+    els.forEach(el=>{
+      const target=new Date(el.dataset.target).getTime();
+      el.innerHTML=fmtCountdown(target-now);
+    });
+  };
+  tick();setInterval(tick,1000);
+}
+/* Spain offset: CEST (UTC+2) Apr-Oct, CET (UTC+1) the rest of the year */
+function esOffsetHours(month){return(month>=4&&month<=10)?2:1;}
+function esStartOfDay(y,m,d){
+  const off=esOffsetHours(m);
+  return new Date(Date.UTC(y,m-1,d,0,0,0)-off*3600000).getTime();
+}
+function esEndOfDay(y,m,d){
+  const off=esOffsetHours(m);
+  return new Date(Date.UTC(y,m-1,d,23,59,59)-off*3600000).getTime();
+}
+const SALES=[
+ {start:esStartOfDay(2026,6,25),end:esEndOfDay(2026,7,9),pct:88,price:"0.60€"},
+ {start:esStartOfDay(2026,7,25),end:esEndOfDay(2026,8,8),pct:88,price:"0.60€"},
+ {start:esStartOfDay(2026,9,7),end:esEndOfDay(2026,9,21),pct:84,price:"0.80€"},
+ {start:esStartOfDay(2026,10,1),end:esEndOfDay(2026,10,8),pct:84,price:"0.80€"},
+ {start:esStartOfDay(2026,10,21),end:esEndOfDay(2026,11,4),pct:84,price:"0.80€"},
+ {start:esStartOfDay(2026,12,4),end:esEndOfDay(2026,12,18),pct:88,price:"0.60€"}
+];
+function currentSale(now){return SALES.find(s=>now>=s.start&&now<s.end)||null;}
+function renderPrice(){
+  const el=document.getElementById('price-nocturne');
+  if(!el)return;
+  const sale=currentSale(Date.now());
+  if(sale){
+    el.innerHTML=`<span class="price-sale-badge">−${sale.pct}%</span><span class="price-old">${I18N[LANG]["price.base"]}</span><span class="price-final">${sale.price}</span>`+
+      `<span class="countdown" id="cd-nocturne-sale" data-target-ms="${sale.end}" aria-live="polite"></span>`+
+      `<span class="price-sale-label">${I18N[LANG]["price.endsIn"]}</span>`;
+  }else{
+    el.innerHTML=`<span class="price-normal">${I18N[LANG]["price.base"]}</span>`;
+  }
+}
+function startSaleCountdown(){
+  setInterval(()=>{
+    const el=document.getElementById('cd-nocturne-sale');
+    if(!el)return;
+    const target=+el.dataset.targetMs;
+    el.innerHTML=fmtCountdown(target-Date.now());
+  },1000);
+  setInterval(renderPrice,60000);
+}
+function applyLang(l){
+  LANG=l;document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(I18N[l][k]!=null)el.innerHTML=I18N[l][k];});
+  cur.textContent=(LANGS.find(x=>x[0]===l)||["","English"])[1];
+  menu.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.l===l));
+  renderRoadmap();
+  renderNews();
+  renderPrice();
+}
+
+/* carousels */
+function buildCarousels(){
+  document.querySelectorAll('.carousel').forEach(c=>{
+    const keys=c.dataset.imgs.split(',');
+    c.innerHTML=keys.map((k,i)=>`<div class="slide${i===0?' active':''}" style="background-image:url(${IMG[k]})"></div>`).join('')
+      +`<div class="cdots">${keys.map((_,i)=>`<i class="${i===0?'active':''}" data-i="${i}"></i>`).join('')}</div>`;
+    let idx=0;const slides=c.querySelectorAll('.slide'),dots=c.querySelectorAll('.cdots i');
+    const go=i=>{slides.forEach((s,j)=>s.classList.toggle('active',j===i));dots.forEach((d,j)=>d.classList.toggle('active',j===i));idx=i;};
+    dots.forEach(d=>d.addEventListener('click',e=>{e.stopPropagation();go(+d.dataset.i);reset();}));
+    let timer=setInterval(()=>go((idx+1)%slides.length),4500);
+    function reset(){clearInterval(timer);timer=setInterval(()=>go((idx+1)%slides.length),4500);}
+  });
+}
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const heroVideo=document.querySelector('.hero-bg video');
+if(heroVideo&&reduce){heroVideo.pause();heroVideo.removeAttribute('autoplay');}
+/* nav + progress + menu */
+const nav=document.getElementById('nav'),prog=document.getElementById('progress');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40);
+  const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
+
+/* reveal */
+const revealAll=()=>document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));setTimeout(revealAll,4500);
+}else revealAll();
+
+/* count-up stats */
+function countUp(el){const target=+el.dataset.count,pad=+(el.dataset.pad||0);let s=null;
+  const step=t=>{if(!s)s=t;const p=Math.min((t-s)/1100,1);const v=Math.floor(p*target);
+    el.textContent=pad?String(v).padStart(pad,'0'):v;if(p<1)requestAnimationFrame(step);};
+  requestAnimationFrame(step);}
+const statsEl=document.getElementById('stats');
+if(statsEl){new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){
+  statsEl.querySelectorAll('[data-count]').forEach(countUp);o.disconnect();}}),{threshold:.4}).observe(statsEl);}
+
+/* theme-shifting stage */
+const stage=document.getElementById('stage'),stageImg=document.getElementById('stageImg');
+const gamesSection=document.getElementById('juegos');let curTheme=null;
+function setTheme(t){if(t===curTheme)return;curTheme=t;const th=THEME[t];if(!th)return;
+  stage.style.backgroundColor=th.c;stageImg.style.opacity=0;
+  setTimeout(()=>{stageImg.style.backgroundImage=`url(${IMG[th.img]})`;stageImg.style.opacity=.12;},220);}
+const themeIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setTheme(e.target.dataset.theme);}),{rootMargin:"-45% 0px -45% 0px"});
+document.querySelectorAll('.game').forEach(g=>themeIO.observe(g));
+new IntersectionObserver(es=>es.forEach(e=>stage.classList.toggle('on',e.isIntersecting)),{threshold:.02}).observe(gamesSection);
+
+const fine=matchMedia('(pointer:fine)').matches;
+if(fine){const hero=document.getElementById('hero'),torch=document.getElementById('torch');
+  hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();
+    torch.style.setProperty('--mx',(e.clientX-r.left)+'px');torch.style.setProperty('--my',(e.clientY-r.top)+'px');});}
+
+/* parallax */
+const plx=[...document.querySelectorAll('[data-parallax]')];
+if(!reduce&&plx.length){let ticking=false;
+  const upd=()=>{const vh=innerHeight;plx.forEach(el=>{const r=el.getBoundingClientRect();
+    const center=r.top+r.height/2-vh/2;const sp=parseFloat(el.dataset.parallax)||.1;
+    el.style.setProperty('--py',(-center*sp)+'px');
+    const sc=el.dataset.pscale?` scale(${el.dataset.pscale})`:'';
+    el.style.transform=`translateY(var(--py,0))${sc}`;});ticking=false;};
+  addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(upd);ticking=true;}},{passive:true});upd();}
+
+/* embers */
+const cv=document.getElementById('embers'),cx=cv.getContext('2d'),heroEl=document.getElementById('hero');
+let W,H,parts;
+function seed(rand){return{x:Math.random()*W,y:rand?Math.random()*H:H+10,r:Math.random()*1.8+.4,s:Math.random()*.5+.18,d:Math.random()*.6-.3,a:Math.random()*.5+.25,t:Math.random()*6.28};}
+function rsz(){W=cv.width=heroEl.offsetWidth;H=cv.height=heroEl.offsetHeight;parts=Array.from({length:reduce?0:Math.min(70,Math.floor(W/24))},()=>seed(true));}
+function tick(){cx.clearRect(0,0,W,H);for(const p of parts){p.y-=p.s;p.t+=.02;p.x+=Math.sin(p.t)*.3+p.d*.2;
+  if(p.y<-10)Object.assign(p,seed(false));const fl=.6+Math.sin(p.t*3)*.4;
+  cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fillStyle=`rgba(255,${120+Math.floor(60*fl)},40,${p.a*fl})`;
+  cx.shadowBlur=8;cx.shadowColor='rgba(255,106,0,.8)';cx.fill();}requestAnimationFrame(tick);}
+rsz();addEventListener('resize',rsz);if(!reduce)tick();
+
+/* init */
+document.getElementById('newsMoreBtn').addEventListener('click',toggleNews);
+document.getElementById('newsModalClose').addEventListener('click',closeNewsModal);
+document.getElementById('newsModalBackdrop').addEventListener('click',closeNewsModal);
+addEventListener('keydown',e=>{if(e.key==='Escape')closeNewsModal();});
+document.getElementById('xp-launch-title').addEventListener('click',e=>{
+  e.preventDefault();
+  window.location.replace(e.currentTarget.href);
+});
+renderTicker();buildCarousels();applyLang('en');startCountdowns();startSaleCountdown();
+</script>
+</body>
+</html>
