@@ -248,6 +248,11 @@ section.block{position:relative;z-index:2;padding:130px 0}
 .socials{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:46px 0 72px}
 .social{display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid var(--line-2);border-radius:8px;font-family:"JetBrains Mono";font-size:12.5px;letter-spacing:.06em;transition:.3s var(--ease)}
 .social:hover{border-color:var(--ember);color:var(--ember);transform:translateY(-3px);box-shadow:0 0 24px rgba(255,106,0,.25)}
+.xp-launch{max-width:760px;margin:0 auto 72px;padding:clamp(30px,5vw,52px);text-align:center;border:1px solid rgba(255,106,0,.55);border-radius:var(--r);background:radial-gradient(circle at 50% 0%,rgba(255,106,0,.18),transparent 62%),linear-gradient(160deg,var(--surface),var(--void-2));box-shadow:0 28px 80px -42px rgba(255,106,0,.8)}
+.xp-launch-label{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash-dim);margin-bottom:18px}
+.xp-launch-btn{display:inline-flex;align-items:center;justify-content:center;min-width:min(100%,340px);padding:20px 34px;border:1px solid var(--ember-hot);border-radius:10px;background:var(--ember);color:#050505;font-family:"Anton";font-size:clamp(30px,6vw,48px);line-height:1;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 0 34px rgba(255,106,0,.38);transition:transform .3s var(--ease),background .3s var(--ease),box-shadow .3s var(--ease)}
+.xp-launch-btn:hover,.xp-launch-btn:focus-visible{background:var(--ember-hot);transform:translateY(-3px) scale(1.015);box-shadow:0 0 48px rgba(255,106,0,.62);outline:none}
+.xp-launch-btn:focus-visible{outline:3px solid var(--ash);outline-offset:5px}
 .foot-row{display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:30px;color:var(--ash-dimmer);font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.1em}
 
 @media (max-width:960px){
@@ -475,6 +480,10 @@ section.block{position:relative;z-index:2;padding:130px 0}
       <a class="social" href="https://store.steampowered.com/developer/ARANJA/" target="_blank" rel="noopener">▶ Steam</a>
       <a class="social" href="https://www.youtube.com/@ARANJAGAMES" target="_blank" rel="noopener">▷ YouTube</a>
       <a class="social" href="https://www.tiktok.com/@aranja_games" target="_blank" rel="noopener">♪ TikTok</a>
+    </div>
+    <div class="xp-launch" aria-labelledby="xp-launch-title">
+      <p class="xp-launch-label">Sistema operativo de Aranja Games</p>
+      <a class="xp-launch-btn" id="xp-launch-title" href="Aranja-XP.html">ARANJA XP</a>
     </div>
     <footer><div class="foot-row"><span>© 2026 ARANJA GAMES</span></div></footer>
   </div>
@@ -1077,6 +1086,10 @@ document.getElementById('newsMoreBtn').addEventListener('click',toggleNews);
 document.getElementById('newsModalClose').addEventListener('click',closeNewsModal);
 document.getElementById('newsModalBackdrop').addEventListener('click',closeNewsModal);
 addEventListener('keydown',e=>{if(e.key==='Escape')closeNewsModal();});
+document.getElementById('xp-launch-title').addEventListener('click',e=>{
+  e.preventDefault();
+  window.location.replace(e.currentTarget.href);
+});
 renderTicker();buildCarousels();applyLang('en');startCountdowns();startSaleCountdown();
 </script>
 </body>
