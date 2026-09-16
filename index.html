@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-<meta charset="UTF-8" /> 
+<head>
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ARANJA GAMES — Independent horror &amp; adventure studio</title>
 <meta name="description" content="Aranja Games is a Spanish independent studio founded by Enzo Colomer in 2020. Making it real: Lost Camp, Obscuria, Nocturne Island and Jump to Survive." />
 
- <link rel="icon" href="assets/logo.png" type="image/png">
- <link rel="shortcut icon" href="assets/logo.png" type="image/png">
- <link rel="apple-touch-icon" href="assets/logo.png">
+ <link rel="icon" href="logo (1).png" type="image/png">
+ <link rel="shortcut icon" href="logo (1).png" type="image/png">
+ <link rel="apple-touch-icon" href="logo (1).png">
  
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -307,8 +307,8 @@ section.block{position:relative;z-index:2;padding:130px 0}
 <!-- HERO -->
 <header id="hero">
   <div class="hero-bg" data-parallax="0.10" data-pscale="1.18">
-    <video autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg">
-      <source src="assets/hero-bg.mp4" type="video/mp4">
+    <video autoplay muted loop playsinline preload="auto" poster="hero.jpg">
+      <source src="hero-bg (1).mp4" type="video/mp4">
     </video>
   </div>
   <canvas id="embers"></canvas>
@@ -367,8 +367,8 @@ section.block{position:relative;z-index:2;padding:130px 0}
       </div>
       <div class="game-media"><div class="carousel" data-imgs="lc1,lc2,lc3,lc4,lc5" data-game="lostcamp"></div></div>
       <div class="lc-gallery">
-        <div class="lc-gallery-img" style="background-image:url(assets/lc4.jpg)"></div>
-        <div class="lc-gallery-img" style="background-image:url(assets/lc5.jpg)"></div>
+        <div class="lc-gallery-img" style="background-image:url(lc4.jpg)"></div>
+        <div class="lc-gallery-img" style="background-image:url(lc5.jpg)"></div>
       </div>
     </article>
 
@@ -500,7 +500,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
 </section>
 
 <script>
-const IMG={logo:"assets/logo.png",hero:"assets/hero.jpg",lc1:"assets/lc1.jpg",lc2:"assets/lc2.jpg",lc3:"assets/lc3.jpg",lc4:"assets/lc4.jpg",lc5:"assets/lc5.jpg",ob1:"assets/ob1.jpg",ob2:"assets/ob2.jpg",ob3:"assets/ob3.jpg",ni1:"assets/ni1.jpg",ni2:"assets/ni2.jpg",ni3:"assets/ni3.jpg",jt1:"assets/jt1.jpg",jt2:"assets/jt2.jpg",jt3:"assets/jt3.jpg",enzo:"assets/enzo.jpg"};
+const IMG={logo:"logo (1).png",hero:"hero.jpg",lc1:"lc1.jpg",lc2:"lc2.jpg",lc3:"lc2.jpg",lc4:"lc4.jpg",lc5:"lc5.jpg",ob1:"ob1.jpg",ob2:"ob2.jpg",ob3:"ob2.jpg",ni1:"ni1.jpg",ni2:"ni2.jpg",ni3:"ni2.jpg",jt1:"jt1.jpg",jt2:"jt2.jpg",jt3:"jt2.jpg",enzo:"enzo.jpg"};
 document.querySelectorAll('[data-img]').forEach(el=>{const k=el.dataset.img;if(el.tagName==='IMG')el.src=IMG[k];else el.style.backgroundImage=`url(${IMG[k]})`;});
 
 /* per-game theme: background colour + faint background image */
