@@ -67,7 +67,7 @@ nav.scrolled{background:rgba(7,7,8,.78);backdrop-filter:blur(16px);border-color:
 /* HERO */
 #hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
 .hero-bg{position:absolute;inset:-8% -2%;z-index:0;overflow:hidden;opacity:.42;transform:scale(1.18);will-change:transform}
-.hero-bg video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;background:var(--void)}
+.hero-bg video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center;background:var(--void);pointer-events:none}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,7,8,.55) 0%, rgba(7,7,8,.35) 35%, rgba(7,7,8,.8) 80%, var(--void) 100%)}
 #embers{position:absolute;inset:0;z-index:1}
 #torch{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle 340px at var(--mx,50%) var(--my,42%), rgba(255,140,40,.12), rgba(255,106,0,.04) 46%, transparent 70%);transition:background .1s linear}
@@ -307,8 +307,9 @@ section.block{position:relative;z-index:2;padding:130px 0}
 <!-- HERO -->
 <header id="hero">
   <div class="hero-bg" data-parallax="0.10" data-pscale="1.18">
-    <video autoplay muted loop playsinline preload="auto" poster="FOLDER/hero.jpg">
+    <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="FOLDER/hero.jpg" aria-hidden="true">
       <source src="hero-bg (1).mp4" type="video/mp4">
+      Tu navegador no puede reproducir este vídeo.
     </video>
   </div>
   <canvas id="embers"></canvas>
@@ -1049,8 +1050,17 @@ function buildCarousels(){
   });
 }
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-const heroVideo=document.querySelector('.hero-bg video');
-if(heroVideo&&reduce){heroVideo.pause();heroVideo.removeAttribute('autoplay');}
+const heroVideo=document.getElementById('heroVideo');
+if(heroVideo){
+  heroVideo.muted=true;
+  heroVideo.defaultMuted=true;
+  const startHeroVideo=()=>heroVideo.play().catch(()=>{});
+  if(heroVideo.readyState>=2) startHeroVideo();
+  else heroVideo.addEventListener('canplay',startHeroVideo,{once:true});
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden) startHeroVideo();
+  });
+}
 /* nav + progress + menu */
 const nav=document.getElementById('nav'),prog=document.getElementById('progress');
 addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40);
