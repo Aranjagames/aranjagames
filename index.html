@@ -1151,6 +1151,11 @@ html.aranja-xp-running body>*:not(#aranja-xp-screen){display:none!important}
     desktop.src = desktop.src;
   });
   launch.addEventListener('click', () => {
+    if (location.hash !== '#aranja-xp') {
+      const url = new URL(location.href);
+      url.hash = 'aranja-xp';
+      history.replaceState(history.state, '', url.href);
+    }
     const binary = atob(document.getElementById('aranja-xp-original').textContent.trim());
     const bytes = Uint8Array.from(binary, character => character.charCodeAt(0));
     const desktop = document.createElement('iframe');
@@ -1165,6 +1170,11 @@ html.aranja-xp-running body>*:not(#aranja-xp-screen){display:none!important}
     document.title = 'Aranja XP';
     desktop.addEventListener('load', () => desktop.focus());
   }, {once: true});
+  const openXPFromLink = () => {
+    if (location.hash === '#aranja-xp' && !document.getElementById('aranja-xp-screen')) launch.click();
+  };
+  window.addEventListener('hashchange', openXPFromLink);
+  openXPFromLink();
 })();
 </script>
 <!-- End Aranja XP integration. -->
