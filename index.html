@@ -280,6 +280,70 @@ section.block{position:relative;z-index:2;padding:130px 0}
 }
 </style>
 <noscript><style>.reveal{opacity:1!important;transform:none!important}.hero-logo-row,.eyebrow,.hero-countdown,.hero-actions{opacity:1!important}</style></noscript>
+<style id="aranja-cinematic-design">
+/* ARANJA — cinematic edition. All original media paths are retained. */
+:root{--void:#08090b;--surface:#121316;--surface-2:#191a1d;--ash:#f5f3ef;--ash-dim:#aaa9a5;--ash-dimmer:#727570;--ember:#ff8047;--ember-hot:#ff9e68;--ember-glow:#ffc398;--line:#ffffff14;--line-2:#ffffff25;--maxw:1440px;--r:24px;--ease:cubic-bezier(.22,1,.36,1)}
+html{scroll-padding-top:100px}body{overflow-x:clip}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ember);outline-offset:6px}button:disabled{cursor:default}::selection{background:var(--ember);color:var(--void)}
+.wrap{padding:0 clamp(24px,5vw,90px)}#stageImg{filter:saturate(.6);background-size:cover}#veil{background:linear-gradient(90deg,#08090b40,transparent 30%,transparent 70%,#08090b40)}#progress{height:2px;box-shadow:none;background:var(--ember);z-index:101;transform-origin:left}
+/* A compact, floating masthead */
+nav,nav.scrolled{inset:18px 26px auto;padding:13px 19px;border:1px solid #ffffff1a;border-radius:16px;background:#0d0e11b3;backdrop-filter:blur(22px) saturate(1.25);box-shadow:0 8px 40px #0002;max-width:1540px;margin:auto}
+nav.scrolled{background:#0d0e11e0}.brand{font-family:Inter,system-ui,sans-serif;font-size:15px;font-weight:800;letter-spacing:-.03em;gap:9px}.brand img{width:27px;height:27px;filter:none}.nav-mid{gap:27px}.nav-mid a{font-size:11px;letter-spacing:.04em;color:#c2c1be;text-transform:none}.nav-mid a[aria-current]{color:var(--ember-glow)}.nav-mid a::after{bottom:-20px}.langbtn{border:0;font-size:11px;padding:9px;min-height:38px}.langmenu{background:#15161bf5;border-radius:14px;min-width:165px;box-shadow:0 16px 50px #0008}.nav-right{gap:10px}.nav-cta{font-size:10px;padding:9px 15px;border-radius:30px;border-color:#ffffff30;color:var(--ash)!important}.nav-cta:hover{background:var(--ash);color:#08090b!important;box-shadow:none}.menu-toggle{display:none;width:38px;height:38px;align-items:center;justify-content:center;border:1px solid var(--line-2);border-radius:50%;background:none;color:var(--ash);font-size:20px}
+/* Act 01 — a living opening frame */
+#hero{height:180svh;min-height:0;display:block;overflow:visible;text-align:center;z-index:2;background:var(--void)}
+.hero-screen{position:sticky;top:0;height:100svh;min-height:580px;overflow:hidden;isolation:isolate;--hero-p:0}
+.hero-bg{inset:0;opacity:1;transform:none;will-change:clip-path,transform;clip-path:inset(12% 4% 8% round 30px);background:radial-gradient(ellipse at 50% 80%,#705443,#292b2c 35%,#101519 75%)}
+.hero-bg video{opacity:.68}.hero-bg::after{background:linear-gradient(180deg,#08090b85,transparent 35%,#08090b6b 66%,#08090bf2),linear-gradient(90deg,#08090b40,transparent,#08090b40)}
+#embers,#torch{inset:0;position:absolute;width:100%;height:100%;pointer-events:none}#embers{opacity:.5}#torch{opacity:.5}
+.hero-inner{position:absolute;inset:0;max-width:none;width:100%;padding:125px 24px 115px;display:flex;align-items:center;justify-content:center;flex-direction:column;will-change:transform,opacity}
+.hero-logo-row{margin-bottom:18px;gap:8px;animation:none}.hero-logo-small{display:none}.hero-brand-small{font:500 10px "JetBrains Mono",monospace;letter-spacing:.3em;text-transform:uppercase;color:#c9c9c5}
+.hero-title{font:700 clamp(75px,12vw,180px)/.86 Inter,system-ui,sans-serif;letter-spacing:-.075em;margin:6px 0 28px;position:relative}.hero-title>span{display:block;overflow:hidden;padding:.08em .1em .12em;margin:-.06em -.1em}.hero-title i{font-style:normal;display:block;animation:cinemaTitle 1.5s var(--ease) both}.hero-title>span:nth-child(2) i{animation-delay:.12s}.hero-title em{font-style:normal;color:var(--ember-glow)}
+@keyframes cinemaTitle{from{transform:translateY(115%) rotate(3deg);opacity:0}to{transform:none;opacity:1}}
+.hero-inner>.eyebrow{font-size:10px;letter-spacing:.14em;margin:0 0 14px;color:#d5d0c8;animation:fadeUp 1.1s var(--ease) .4s both}.hero-inner>.eyebrow::before,.hero-inner>.eyebrow::after{display:none}
+.hero-countdown{display:grid;grid-template-columns:auto auto;align-items:center;column-gap:20px;row-gap:8px;animation:fadeUp 1.2s var(--ease) .5s both}.hero-days-row{gap:7px;line-height:1}.hero-days-num{font:500 34px/1 Inter,sans-serif;letter-spacing:-.04em;color:var(--ash);text-shadow:none;font-variant-numeric:tabular-nums}.hero-days-unit{font:400 11px "JetBrains Mono",monospace;color:var(--ash-dim);-webkit-text-stroke:0}.hero-hms-row{margin:0;padding-left:20px;border-left:1px solid #ffffff30;font-size:12px;font-variant-numeric:tabular-nums}.hero-countdown-sub{grid-column:1/-1;font-size:10px;letter-spacing:.04em;margin:0;color:#bbb9b3}.hero-countdown-sub .real{animation:none;filter:none;background:none;color:var(--ember-glow)}
+.hero-actions{gap:12px;margin-top:27px;animation:fadeUp 1.2s var(--ease) .65s both}.btn{border-radius:40px;padding:14px 22px;font:500 11px Inter,system-ui,sans-serif;letter-spacing:0;text-transform:none;min-height:46px;transition:background .3s,color .3s,box-shadow .4s,transform .4s var(--ease),border-color .3s}.btn-primary{background:var(--ash);color:#141417}.btn-primary::after{animation:none;background:none}.btn-primary:hover{background:var(--ember-glow);box-shadow:0 8px 35px #0003;transform:translateY(-3px)}.btn-ghost{border-color:#ffffff38;background:#ffffff06;backdrop-filter:blur(12px)}.btn-ghost:hover{border-color:#ffffff80;color:#fff;background:#ffffff10;transform:translateY(-3px)}
+.hero-bottom{position:absolute;left:6%;right:6%;bottom:38px;display:flex;justify-content:space-between;align-items:center;gap:18px;z-index:3;font:10px "JetBrains Mono",monospace;letter-spacing:.13em;color:#c5c4bd}.hero-bottom .hero-stamp{display:flex;align-items:center;gap:10px}.status-dot{width:5px;height:5px;border-radius:50%;background:var(--ember-glow);box-shadow:0 0 14px #ffc39860}.scroll-hint{display:flex;align-items:center;gap:18px;color:var(--ash)}.scroll-hint b{display:inline-flex;align-items:center;justify-content:center;border:1px solid #ffffff35;width:34px;height:34px;border-radius:50%;font-size:15px;font-weight:400;animation:hintFloat 2.4s ease-in-out infinite}@keyframes hintFloat{50%{transform:translateY(5px)}}
+.ticker{background:var(--void);border-color:var(--line);backdrop-filter:none}.ticker-seq{font-size:14px;padding:21px 0;letter-spacing:.1em}.ticker-seq span{margin:0 32px}.ticker-mask{animation-duration:45s}
+/* Act 02 — pinned, scroll-driven Lost Camp story */
+.camp-story{position:relative;z-index:2;height:320svh;background:var(--void)}.camp-screen{position:sticky;top:0;height:100svh;min-height:500px;overflow:hidden;background:#182321;isolation:isolate}.camp-shots,.camp-shot{position:absolute;inset:0}.camp-shot{background-position:center;background-size:cover;opacity:0;will-change:opacity,transform;background-color:#182321}.camp-shot:first-child{opacity:1}.camp-screen::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,#08090b8a,transparent 35%,#08090bd9),linear-gradient(90deg,#08090b65,transparent 75%)}
+.camp-meta{position:absolute;left:clamp(24px,6vw,96px);right:clamp(24px,6vw,96px);top:120px;display:flex;justify-content:space-between;gap:20px;z-index:3;font:10px "JetBrains Mono",monospace;letter-spacing:.17em;text-transform:uppercase;color:#eee9dc}.camp-meta b{font-weight:400;color:var(--ember-glow)}
+.camp-narrative{position:absolute;inset:0;z-index:2;display:grid;align-items:center;padding:150px clamp(24px,10vw,160px);pointer-events:none}.camp-panel{grid-area:1/1;opacity:0;transform:translateY(40px);max-width:1000px;will-change:transform,opacity}.camp-panel:first-child{opacity:1;transform:none}.camp-panel h2{font:600 clamp(46px,7vw,104px)/1.02 Inter,system-ui,sans-serif;letter-spacing:-.06em;text-wrap:balance;color:var(--ash);margin:20px 0 25px}.camp-panel h2 em{font-style:normal;color:var(--ember-glow)}.camp-panel p{font-size:clamp(14px,1.35vw,18px);line-height:1.7;color:#dfdfd7;max-width:460px;text-wrap:pretty}.camp-panel .sec-kicker{font-size:10px;color:var(--ember-glow);margin:0}.camp-panel .btn{margin-top:25px;pointer-events:auto}
+.camp-bottom{position:absolute;left:clamp(24px,6vw,96px);right:clamp(24px,6vw,96px);bottom:40px;z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:30px}.camp-track{display:flex;gap:7px;width:160px}.camp-track i{height:2px;background:#ffffff30;flex:1;overflow:hidden}.camp-track i::after{content:"";display:block;width:100%;height:100%;background:var(--ember-glow);transform:scaleX(var(--fill,0));transform-origin:left}.camp-next{font:10px "JetBrains Mono",monospace;display:flex;align-items:center;gap:12px;color:#eae7df}.camp-next span:last-child{font-size:18px}
+/* Portfolio — spacious editorial frames */
+section.block{padding:140px 0;scroll-margin-top:20px}#juegos{position:relative;z-index:2;padding:140px 0 0;background:linear-gradient(var(--void),#08090b30 45%)}.sec-head{margin-bottom:70px;align-items:end}.sec-kicker{font-size:10px;letter-spacing:.2em;margin-bottom:20px;color:var(--ember-glow)}.sec-title{font:600 clamp(48px,6.7vw,96px)/1.01 Inter,system-ui,sans-serif;letter-spacing:-.065em;text-transform:none;text-wrap:balance}.sec-note{font-size:14px;line-height:1.7;color:var(--ash-dim);max-width:290px}.reveal{transform:translateY(50px);transition:opacity 1.15s var(--ease),transform 1.15s var(--ease)}.reveal.in{transform:none}
+.game,.game.featured{position:relative;grid-template-columns:1fr 1.12fr;gap:clamp(35px,6vw,90px);min-height:100svh;padding:110px 0;border-color:#ffffff20;align-items:center}.game-body{min-width:0}.game-meta-idx{font-size:10px;margin-bottom:22px;color:var(--ash-dim);letter-spacing:.12em}.game-title,.game.featured .game-title{font-family:Anton,sans-serif;font-size:clamp(52px,6.5vw,98px);font-weight:400;line-height:1;letter-spacing:-.025em;text-shadow:none;margin-bottom:24px}.game.featured .game-title{font-size:clamp(70px,9vw,132px)}.flagship-kicker{font-size:10px;letter-spacing:.13em;margin-bottom:20px}.flagship-kicker::before{content:"";width:5px;height:5px;background:var(--ember-glow);border-radius:50%}.badge{font-size:9px;border-radius:30px;letter-spacing:.03em;padding:6px 11px}.badge.soon{background:#ffc39812;border-color:#ffc39830}.tag{border-radius:5px;border-color:#ffffff14;font-size:9px;letter-spacing:.03em;text-transform:none;color:#aaa9a5}.tags{gap:7px;margin-bottom:28px}.game-desc,.game.featured .game-desc{font-size:15px;line-height:1.85;color:#b7b8b5}.game-desc p,.game.featured .game-desc p{margin-bottom:14px}.game-actions{gap:9px}.game-actions .btn{padding:13px 19px;font-size:11px}.game-actions .btn:last-child{border-color:transparent;background:none;backdrop-filter:none}.game-actions .btn:last-child:hover{border-color:#ffffff30}.dlc-note{color:#868983;font-size:11px;line-height:1.8}
+.release-row{gap:12px;margin-bottom:24px}.release-date-big{font:500 clamp(12px,1.25vw,17px)/1.5 "JetBrains Mono",monospace;text-shadow:none;color:var(--ember-glow);white-space:normal;letter-spacing:-.03em}.countdown,.game.featured .countdown{border:0;background:none;padding:0;font-size:10px;color:var(--ash-dim);font-variant-numeric:tabular-nums}.countdown b{color:#eee6da}.game-media{position:relative;min-width:0;perspective:1400px}.carousel{border-radius:20px;border-color:#ffffff20;box-shadow:0 40px 100px -40px #000;aspect-ratio:4/3;background:radial-gradient(ellipse at 30% 20%,#3c4640,#12191d 80%)}.carousel .slide{transition:opacity 1.2s ease;transform:scale(1.04);animation:none!important}.carousel .slide.active{transform:scale(1.04)}.carousel::after{box-shadow:inset 0 0 80px #0002;background:linear-gradient(transparent 70%,#0006)}.cdots{bottom:22px;gap:6px;background:#1115;border:1px solid #fff2;border-radius:20px;padding:10px 12px;backdrop-filter:blur(16px)}.cdots button{width:6px;height:6px;padding:0;border:0;border-radius:10px;background:#fff6;cursor:pointer;transition:width .4s var(--ease),background .4s}.cdots button.active{width:24px;background:var(--ash)}.media-expand{position:absolute;right:18px;top:18px;z-index:5;width:35px;height:35px;border-radius:50%;background:#08090b55;border:1px solid #fff4;color:#fff;font-size:19px;cursor:pointer;backdrop-filter:blur(10px);transition:background .3s,transform .3s}.media-expand:hover{background:#08090bba;transform:scale(1.08)}
+.game-index{font:400 11px "JetBrains Mono",monospace;color:var(--ash-dimmer);letter-spacing:.05em;position:absolute;top:34px;left:0;display:flex;gap:15px;align-items:center}.game-index::after{content:"";height:1px;width:40px;background:#fff2}
+.lc-gallery{margin:45px 0 10px;gap:24px;grid-template-columns:1.3fr 1fr;align-items:center}.lc-gallery-img{height:clamp(250px,35vw,470px);aspect-ratio:auto;border-radius:20px;border-color:#ffffff20;position:relative;overflow:hidden;cursor:zoom-in;background-color:#1b2424;will-change:transform;box-shadow:none}.lc-gallery-img:nth-child(2){height:clamp(220px,27vw,380px);margin-top:80px}.lc-gallery-img::after{content:"↗";position:absolute;right:18px;bottom:18px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:1px solid #fff4;background:#0003;color:#fff;backdrop-filter:blur(10px);transition:transform .4s}.lc-gallery-img:hover::after{transform:rotate(45deg)}
+/* Timeline draws itself as its milestones enter */
+#roadmap{background:linear-gradient(#08090b00,#111215bb);border-top:1px solid var(--line)}.roadmap{max-width:none;margin:0;padding-left:0;--line-fill:0}.roadmap::before{left:11px;background:#ffffff18;width:1px;top:35px;bottom:35px}.roadmap::after{content:"";position:absolute;left:11px;width:1px;top:35px;bottom:35px;transform:scaleY(var(--line-fill));transform-origin:top;background:var(--ember-glow)}.rm-year{padding:40px 0 12px 55px;font:500 56px/1.2 Inter,sans-serif;letter-spacing:-.06em;color:var(--ash);opacity:.5}.rm-item{padding:28px 0 28px 55px;border-bottom:1px solid #ffffff0d;max-width:100%;transition:opacity .8s var(--ease),transform .8s var(--ease)}.rm-item::before{width:7px;height:7px;left:8px;top:38px;border:1px solid #acaca9;background:var(--void);z-index:2}.rm-item.up::before{border-color:var(--ember-glow);background:var(--ember-glow);animation:none}.rm-item h3{font-size:22px;letter-spacing:-.035em;font-weight:500}.rm-item p{max-width:760px;color:var(--ash-dim);font-size:14px;line-height:1.8}.rm-date{font-size:10px;color:var(--ember-glow)}.rm-pill{font-size:8px;padding:3px 9px;letter-spacing:0;border-color:#ffc39835}
+/* Journal */
+#noticias{background:#111215bb}.news-wrap{gap:20px;flex-direction:column}.news-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.news-card{min-height:280px;padding:34px;border-radius:20px;background:#16171ab3;border-color:#ffffff14;position:relative;overflow:hidden;transition:border-color .4s,background .4s,transform .6s var(--ease)}.news-card:first-child{grid-column:1/-1;min-height:335px;padding:45px clamp(26px,4vw,60px);background:radial-gradient(ellipse at 100% 100%,#7f4a2a35,transparent 65%),#191a1d;border-color:#ffffff28}.news-card:first-child::after{content:"01";font:500 clamp(130px,22vw,290px)/1 Inter,sans-serif;letter-spacing:-.1em;position:absolute;right:25px;bottom:-25px;color:#ffffff04;pointer-events:none}.news-card:first-child h3{font-size:clamp(25px,3.4vw,47px);max-width:800px;letter-spacing:-.045em;line-height:1.15}.news-card:first-child p{max-width:640px}.news-card:hover{transform:translateY(-6px);background-color:#202124;border-color:#ffc39850;box-shadow:none}.news-card .news-date{font-size:10px;color:var(--ash-dim);margin-bottom:23px}.news-card h3{font:500 23px/1.25 Inter,sans-serif;letter-spacing:-.035em;margin-bottom:17px;color:var(--ash)}.news-card p{font-size:13px;line-height:1.8;color:var(--ash-dim);margin-bottom:26px}.news-read{font-size:11px;color:var(--ember-glow);margin-top:auto}.news-read .arr{margin-left:12px}.news-more{border-radius:50%;width:48px;height:48px;min-height:48px;align-self:center;border-color:#fff3;background:#ffffff05}.news-more .arr{display:inline-block;transform:rotate(90deg)}.news-more.spin .arr{transform:rotate(-90deg)}.hidden-news{display:none!important}.news-modal{z-index:130}.news-modal-card{border-radius:24px;background:#17181c;max-width:760px;max-height:85svh;padding:50px 48px;box-shadow:0 50px 150px #0008}.news-modal-backdrop{backdrop-filter:blur(18px);background:#050507b5}.news-modal-title{font:600 clamp(26px,4vw,40px)/1.1 Inter,sans-serif;text-transform:none;letter-spacing:-.04em}.news-modal-body{font-size:15px;color:#c3c3be;line-height:1.85}.news-modal-close{border-radius:50%;background:#ffffff08}.news-modal-date{font-size:10px}
+/* The studio and closing frame */
+#estudio{background:var(--void);border-top:1px solid var(--line)}.studio-grid{grid-template-columns:1fr;gap:60px}.studio-grid>[data-i18n]{max-width:920px}.studio-grid p{font-size:clamp(20px,2.45vw,33px);line-height:1.55;letter-spacing:-.03em;color:#959893}.studio-grid p b{color:var(--ash);font-weight:500}.stats{width:100%;grid-template-columns:repeat(3,minmax(0,1fr));border:0;border-radius:0;background:none;gap:0}.stat{padding:36px 0;text-align:left;background:none;border-top:1px solid #fff3}.stat+.stat{padding-left:40px}.stat .n{font:500 clamp(60px,8vw,112px)/1 Inter,sans-serif;letter-spacing:-.07em;color:var(--ash);font-variant-numeric:tabular-nums}.stat:last-child .n{color:var(--ember-glow)}.stat .l{font-size:10px;letter-spacing:0;text-transform:none;color:var(--ash-dim);margin-top:16px}
+#contacto{padding:130px 0 30px;background:radial-gradient(ellipse at 50% 100%,#60412730,transparent 65%),var(--void);overflow:hidden}.contact-logo{width:46px;filter:none;animation:none;margin-bottom:25px}.contact-big{font:600 clamp(75px,13.7vw,200px)/.85 Inter,sans-serif;letter-spacing:-.085em;text-transform:none;margin:40px 0}.contact-big .accent{color:var(--ember-glow);text-shadow:none}.founder-card{background:none;border:0;padding:0;gap:14px;margin-top:55px}.founder-card img{width:46px;height:46px;border-radius:50%;filter:none}.founder-card .role{font-size:9px;letter-spacing:0;color:var(--ash-dim)}.founder-card h3{font:500 16px Inter,sans-serif;letter-spacing:-.02em;text-transform:none}.socials{margin:55px 0 65px;gap:12px}.social{border-radius:30px;font:400 11px Inter,sans-serif;padding:12px 20px}.social:hover{background:#ffffff0c;box-shadow:none;border-color:#ffffff70;color:var(--ash)}.foot-row{font-size:9px;letter-spacing:.08em;padding-top:25px}.foot-row a{color:var(--ash-dim);margin-left:auto}#aranja-xp-entry{padding:16px 24px 35px!important;border:0!important;background:var(--void)!important}#aranja-xp-launch{font-size:10px!important;letter-spacing:.06em!important;border:1px solid #fff2!important;color:var(--ash-dim)!important;border-radius:40px!important;padding:10px 18px!important}#aranja-xp-launch:hover{background:#ffffff0c!important;box-shadow:none!important;color:var(--ash)!important}
+/* Image viewer */
+.image-viewer{position:fixed;inset:0;z-index:140;background:#08090bed;backdrop-filter:blur(25px);display:grid;grid-template-rows:auto 1fr auto;padding:25px;gap:20px}.image-viewer[hidden]{display:none}.viewer-top{display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--ash);font:11px "JetBrains Mono",monospace}.viewer-close,.viewer-controls button{width:44px;height:44px;border-radius:50%;border:1px solid #fff4;background:#fff1;color:#fff;cursor:pointer;font-size:18px}.viewer-image{width:100%;height:100%;min-height:0;object-fit:contain;animation:viewerIn .65s var(--ease) both}.viewer-controls{display:flex;justify-content:center;align-items:center;gap:25px;color:var(--ash-dim);font:11px "JetBrains Mono",monospace}@keyframes viewerIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
+/* Mobile is composed for touch rather than a shrunk desktop. */
+@media(min-width:961px){.game:not(.featured) .game-media{position:sticky;top:22vh}.game:not(.featured){align-items:start;padding-top:150px;padding-bottom:150px}.game:not(.featured) .game-body{padding:28px 0}.game.flip .game-media{order:-1}.studio-grid .stats{margin-top:10px}}
+@media(max-width:960px){
+nav,nav.scrolled{inset:12px 14px auto;padding:9px 12px;border-radius:14px}.brand{font-size:13px}.brand img{width:24px;height:24px}.nav-right{gap:4px}.nav-mid{display:flex;position:absolute;left:0;right:0;top:calc(100% + 9px);padding:22px;border:1px solid #fff2;border-radius:16px;background:#111216fa;backdrop-filter:blur(24px);flex-direction:column;align-items:stretch;gap:0;visibility:hidden;opacity:0;transform:translateY(-9px);transition:opacity .25s,transform .4s var(--ease),visibility .25s}.nav-mid a{padding:12px 6px;font-size:16px}.nav-mid a::after{display:none}nav.menu-open .nav-mid{visibility:visible;opacity:1;transform:none}.menu-toggle{display:flex}.langbtn .lang-label{display:inline}.langbtn{font-size:10px;padding:7px}.langmenu{right:-44px}.nav-right .nav-cta{display:none}
+#hero{height:155svh}.hero-screen{min-height:550px}.hero-inner{padding:115px 22px 120px}.hero-title{font-size:clamp(72px,14vw,130px)}.hero-bg{clip-path:inset(12% 3% 8% round 22px)}.hero-bottom{left:7%;right:7%;font-size:8px;bottom:33px;letter-spacing:.05em}.hero-stamp{max-width:170px}.hero-actions .btn{font-size:10px;padding:13px 17px}.hero-countdown-sub{font-size:9px}.hero-countdown{column-gap:15px}.hero-days-num{font-size:30px}
+.camp-story{height:285svh}.camp-meta{top:100px;font-size:8px}.camp-narrative{padding:140px 7vw}.camp-panel h2{font-size:clamp(42px,8vw,75px)}.camp-panel p{max-width:400px;font-size:14px}.camp-bottom{bottom:32px}.camp-next{font-size:9px}.camp-track{width:110px}
+section.block,#juegos{padding-top:90px;padding-bottom:90px}.sec-head{gap:24px;margin-bottom:45px}.sec-title{font-size:clamp(45px,9vw,76px)}.sec-note{font-size:13px;max-width:370px}.game,.game.featured{grid-template-columns:1fr;gap:30px;padding:75px 0;min-height:0}.game-media{order:0!important;margin:0}.game.featured .game-media{order:0!important}.game-index{top:24px}.game-title{font-size:60px}.game.featured .game-title{font-size:90px}.game-body{max-width:100%}.game-desc,.game.featured .game-desc{max-width:100%;font-size:14px}.carousel{aspect-ratio:16/11;border-radius:16px}.lc-gallery{gap:14px;margin:10px 0 0;grid-template-columns:1.1fr 1fr}.lc-gallery-img{height:35vw;border-radius:13px}.lc-gallery-img:nth-child(2){height:30vw;margin-top:35px}.release-date-big{font-size:13px;line-height:1.7}.news-card:first-child{padding:30px;min-height:310px}.news-card{padding:27px;min-height:290px}.news-card h3{font-size:23px}.news-card:first-child h3{font-size:31px}.studio-grid p{font-size:23px}.stat .n{font-size:clamp(43px,10vw,80px)}.stat+.stat{padding-left:15px}.stat .l{font-size:9px;max-width:90px}.contact-big{font-size:clamp(74px,15vw,140px)}.news-modal{padding:14px}.news-modal-card{padding:45px 25px;max-height:86svh}.news-modal-body{font-size:14px}#contacto{padding-top:85px}.image-viewer{padding:16px}.foot-row{justify-content:space-between}.foot-row a{margin-left:0}
+}
+@media(max-width:600px){.wrap{padding:0 24px}.hero-title{font-size:clamp(65px,16.5vw,96px)}.hero-logo-row{margin-bottom:23px}.hero-brand-small{font-size:8px;letter-spacing:.2em}.hero-inner>.eyebrow{font-size:9px}.hero-bottom .hero-stamp{font-size:7px;letter-spacing:.025em;max-width:150px}.hero-actions{gap:8px}.hero-actions .btn{padding:12px 15px;min-height:43px}.hero-days-num{font-size:27px}.hero-days-unit{font-size:10px}.hero-hms-row{font-size:11px;gap:4px;padding-left:15px}.hero-bottom .scroll-hint{gap:9px;font-size:8px}.news-grid{grid-template-columns:1fr}.news-card:first-child{grid-column:auto;min-height:335px}.news-card:first-child h3{font-size:29px}.news-card{min-height:280px}.game.featured .game-title{font-size:75px}.game-actions .btn{font-size:10px;padding:12px 16px}.game-actions{gap:7px}.lc-gallery{grid-template-columns:1fr}.lc-gallery-img,.lc-gallery-img:nth-child(2){height:auto;aspect-ratio:16/10;margin-top:0}.rm-year{font-size:45px;padding-left:35px}.rm-item{padding-left:35px}.rm-item h3{font-size:19px}.rm-item p{font-size:13px}.rm-pill{margin-left:6px}.stats{gap:10px}.stat{padding:24px 0}.stat+.stat{padding-left:0}.stat .n{font-size:45px}.stat .l{line-height:1.5}.socials{gap:8px}.social{font-size:10px;padding:10px 15px}.camp-meta{font-size:8px;letter-spacing:.06em}.camp-meta span:last-child{max-width:110px;text-align:right}.camp-panel h2{font-size:45px}.camp-panel .sec-kicker{font-size:9px}.camp-panel p{font-size:13px;max-width:300px}.camp-bottom{gap:20px}.camp-next{max-width:160px;line-height:1.5}.camp-track{width:90px;flex-shrink:0}.contact-big{margin:36px 0}.hero-screen{min-height:520px}}
+@media(max-height:650px) and (min-width:700px){.hero-title{font-size:90px}.hero-inner{padding-top:85px;padding-bottom:55px}.hero-logo-row{margin-bottom:8px}.hero-title{margin-bottom:16px}.hero-actions{margin-top:15px}.hero-bottom{bottom:20px}.camp-panel h2{font-size:55px}.camp-meta{top:95px}.camp-narrative{padding-top:110px;padding-bottom:90px}}
+/* Progressive enhancement: reduced motion keeps every section and action usable. */
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}.hero-screen{position:relative}.hero-bg{clip-path:none!important;transform:none!important}#hero{height:100svh;min-height:600px}.hero-inner{opacity:1!important;transform:none!important}.camp-story{height:auto}.camp-screen{position:relative;height:auto;min-height:0}.camp-narrative{position:relative;display:block;padding:110px 7vw 100px}.camp-panel{opacity:1!important;transform:none!important;max-width:900px;margin-bottom:100px}.camp-panel:last-child{margin-bottom:0}.camp-shots{position:absolute}.camp-shot{transform:none!important}.camp-shot:first-child{opacity:.25!important}.camp-shot:not(:first-child){display:none}.camp-meta{top:35px}.camp-bottom{bottom:35px}.reveal,.rm-item{opacity:1!important;transform:none!important}.game-media,.lc-gallery-img{transform:none!important}.hero-title i{opacity:1!important;transform:none!important}}
+
+/* Final optical and reading details. */
+.news-card h3{text-transform:none}.camp-shots{will-change:clip-path}.camp-screen{background:var(--void)}
+.studio-word{color:#60645f;transition:color .35s ease}.studio-word.lit{color:#eae9e4}.studio-grid b .studio-word.lit{color:var(--ember-glow)}
+@media(prefers-reduced-motion:reduce){.camp-shots{clip-path:none!important}.studio-word{color:inherit!important}}
+/* Dropdown controls are interactive immediately while their surface fades in. */
+.langmenu{transform:none;transition:opacity .2s var(--ease);pointer-events:none}.langdd.open .langmenu{transform:none;visibility:visible;pointer-events:auto}
+
+</style>
 </head>
 <body>
 <div id="stage"><div id="stageImg"></div></div>
@@ -291,6 +355,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
   <a href="#hero" class="brand"><img data-img="logo" alt="Aranja Games logo">ARANJA&nbsp;GAMES</a>
   <div class="nav-mid" id="navmid">
     <a href="#juegos" data-i18n="nav.games">Games</a>
+    <a href="#noticias" data-i18n="news.title">News</a>
     <a href="#roadmap" data-i18n="nav.roadmap">Roadmap</a>
     <a href="#estudio" data-i18n="nav.studio">Studio</a>
     <a href="#contacto" data-i18n="nav.contact">Contact</a>
@@ -300,25 +365,28 @@ section.block{position:relative;z-index:2;padding:130px 0}
       <button class="langbtn" id="langbtn" aria-haspopup="true" aria-expanded="false">🌐 <span id="langcur" class="lang-label">English</span> <span class="caret">▾</span></button>
       <div class="langmenu" id="langmenu"></div>
     </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navmid"><span aria-hidden="true">☰</span></button>
     <a class="nav-cta" href="https://store.steampowered.com/developer/ARANJA/" target="_blank" rel="noopener">▶ STEAM</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <header id="hero">
-  <div class="hero-bg" data-parallax="0.10" data-pscale="1.18">
-    <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="FOLDER/hero.jpg" aria-hidden="true">
+<div class="hero-screen">
+  <div class="hero-bg">
+    <video id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="FOLDER/hero.jpg" aria-hidden="true">
       <source src="hero-bg (1).mp4" type="video/mp4">
       Tu navegador no puede reproducir este vídeo.
     </video>
   </div>
   <canvas id="embers"></canvas>
   <div id="torch"></div>
-  <div class="hero-inner" data-parallax="0.06">
+  <div class="hero-inner">
     <div class="hero-logo-row">
       <img class="hero-logo-small" data-img="logo" alt="Aranja Games">
       <span class="hero-brand-small">Aranja Games</span>
     </div>
+    <h1 class="hero-title"><span><i>Making</i></span><span><i>it <em>real.</em></i></span></h1>
     <div class="eyebrow" data-i18n="hero.eyebrow2">Lost Camp launches in</div>
     <div class="hero-countdown">
       <div class="hero-days-row">
@@ -333,10 +401,31 @@ section.block{position:relative;z-index:2;padding:130px 0}
       <a class="btn btn-ghost" href="#juegos" data-i18n="hero.cta2">Explore all games</a>
     </div>
   </div>
+<div class="hero-bottom"><span class="hero-stamp"><i class="status-dot" aria-hidden="true"></i>LOST CAMP · 27.11.2026 · 20:00 CET</span><a class="scroll-hint" href="#camp-story"><span data-i18n="xp.scroll">Scroll to discover</span><b aria-hidden="true">↓</b></a></div>
+</div>
 </header>
 
 <!-- TICKER -->
 <div class="ticker"><div class="ticker-mask" id="ticker"></div></div>
+
+
+<!-- A scroll-driven journey through the original Lost Camp photography. -->
+<section class="camp-story" id="camp-story" aria-label="Lost Camp">
+  <div class="camp-screen">
+    <div class="camp-shots" aria-hidden="true">
+      <div class="camp-shot" style="background-image:url('FOLDER/lc1.jpg')"></div>
+      <div class="camp-shot" style="background-image:url('FOLDER/lc4.jpg')"></div>
+      <div class="camp-shot" style="background-image:url('FOLDER/lc5.jpg')"></div>
+    </div>
+    <div class="camp-meta"><span>LOST CAMP <b>— <span id="sceneNumber">01</span> / 03</b></span><span data-i18n="xp.storyLabel">Our next world</span></div>
+    <div class="camp-narrative">
+      <div class="camp-panel"><div class="sec-kicker" data-i18n="xp.chapter1">01 / The arrival</div><h2 data-i18n="xp.title1">A new job.<br>A world apart.</h2><p data-i18n="xp.body1">A closed campsite. A mountain retreat. And a new beginning, far from everything you know.</p></div>
+      <div class="camp-panel"><div class="sec-kicker" data-i18n="xp.chapter2">02 / The silence</div><h2 data-i18n="xp.title2">Some places<br><em>keep secrets.</em></h2><p data-i18n="xp.body2">Walk the trails. Watch the seasons change. Look a little closer at what the mountains leave behind.</p></div>
+      <div class="camp-panel"><div class="sec-kicker" data-i18n="xp.chapter3">03 / Your story</div><h2 data-i18n="xp.title3">Get lost.<br><em>Find your story.</em></h2><p data-i18n="xp.body3">Lost Camp. Available November 27, 2026 at 20:00 CET.</p><a class="btn btn-primary" href="https://store.steampowered.com/app/4476390/Lost_Camp/" target="_blank" rel="noopener"><span data-i18n="hero.cta1">Wishlist Lost Camp</span><span class="arr">↗</span></a></div>
+    </div>
+    <div class="camp-bottom"><div class="camp-track" aria-hidden="true"><i></i><i></i><i></i></div><a class="camp-next" href="#juegos"><span data-i18n="hero.cta2">Explore all games</span><span aria-hidden="true">↓</span></a></div>
+  </div>
+</section>
 
 <!-- GAMES -->
 <section id="juegos">
@@ -347,6 +436,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
     </div>
 
     <article class="game featured reveal" data-theme="lostcamp">
+      <div class="game-index" aria-hidden="true">01 / 04</div>
       <div class="game-body">
         <div class="flagship-kicker" data-i18n="g1.flagship">Our next release</div>
         <div class="game-meta-idx" data-i18n="g1.idx">Adventure</div>
@@ -374,6 +464,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
     </article>
 
     <article class="game flip reveal" data-theme="obscuria">
+      <div class="game-index" aria-hidden="true">02 / 04</div>
       <div class="game-body">
         <div class="game-meta-idx" data-i18n="g2.idx">Horror / Exploration</div>
         <h3 class="game-title">Obscuria</h3>
@@ -391,6 +482,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
     </article>
 
     <article class="game reveal" data-theme="nocturne">
+      <div class="game-index" aria-hidden="true">03 / 04</div>
       <div class="game-body">
         <div class="game-meta-idx" data-i18n="g3.idx">Obscuria 2 · Action horror</div>
         <h3 class="game-title">Nocturne Island</h3>
@@ -407,6 +499,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
     </article>
 
     <article class="game flip reveal" data-theme="jump">
+      <div class="game-index" aria-hidden="true">04 / 04</div>
       <div class="game-body">
         <div class="game-meta-idx" data-i18n="g4.idx">Sandbox multiplayer</div>
         <h3 class="game-title">Jump to Survive 2</h3>
@@ -454,7 +547,7 @@ section.block{position:relative;z-index:2;padding:130px 0}
 <!-- NEWS MODAL -->
 <div class="news-modal" id="newsModal" aria-hidden="true">
   <div class="news-modal-backdrop" id="newsModalBackdrop"></div>
-  <div class="news-modal-card" role="dialog" aria-modal="true">
+  <div class="news-modal-card" role="dialog" aria-modal="true" aria-labelledby="newsModalTitle">
     <button class="news-modal-close" id="newsModalClose" aria-label="Close">✕</button>
     <div class="news-modal-date" id="newsModalDate"></div>
     <h3 class="news-modal-title" id="newsModalTitle"></h3>
@@ -499,6 +592,13 @@ section.block{position:relative;z-index:2;padding:130px 0}
     <footer><div class="foot-row"><span>© 2026 ARANJA GAMES</span></div></footer>
   </div>
 </section>
+
+
+<div class="image-viewer" id="imageViewer" role="dialog" aria-modal="true" aria-labelledby="viewerName" hidden>
+ <div class="viewer-top"><span id="viewerName">Lost Camp</span><button class="viewer-close" type="button" aria-label="Close">✕</button></div>
+ <img class="viewer-image" id="viewerImage" alt="">
+ <div class="viewer-controls"><button id="viewerPrevious" type="button" aria-label="Previous image">←</button><span id="viewerCount">01 / 01</span><button id="viewerNext" type="button" aria-label="Next image">→</button></div>
+</div>
 
 <script>
 const IMG={logo:"FOLDER/logo (1).png",hero:"FOLDER/hero.jpg",lc1:"FOLDER/lc1.jpg",lc2:"FOLDER/lc2.jpg",lc3:"FOLDER/lc2.jpg",lc4:"FOLDER/lc4.jpg",lc5:"FOLDER/lc5.jpg",ob1:"FOLDER/ob1.jpg",ob2:"FOLDER/ob2.jpg",ob3:"FOLDER/ob2.jpg",ni1:"FOLDER/ni1.jpg",ni2:"FOLDER/ni2.jpg",ni3:"FOLDER/ni2.jpg",jt1:"FOLDER/jt1.jpg",jt2:"FOLDER/jt2.jpg",jt3:"FOLDER/jt2.jpg",enzo:"FOLDER/enzo.jpg"};
@@ -700,6 +800,10 @@ const I18N={
   "price.base":"4.99€","price.sale":"特惠","price.endsIn":"优惠剩余"
  }
 };
+
+
+const EXPERIENCE_I18N={"en": {"xp.scroll": "Scroll to discover", "xp.storyLabel": "Our next world", "xp.chapter1": "01 / The arrival", "xp.title1": "A new job.<br>A world apart.", "xp.body1": "A closed campsite. A mountain retreat. And a new beginning, far from everything you know.", "xp.chapter2": "02 / The silence", "xp.title2": "Some places<br><em>keep secrets.</em>", "xp.body2": "Walk the trails. Watch the seasons change. Look a little closer at what the mountains leave behind.", "xp.chapter3": "03 / Your story", "xp.title3": "Get lost.<br><em>Find your story.</em>", "xp.body3": "Lost Camp. Available November 27, 2026 at 20:00 CET.", "xp.expand": "Open image full screen", "xp.close": "Close", "xp.previous": "Previous image", "xp.next": "Next image", "xp.menu": "Navigation menu"}, "es": {"xp.scroll": "Desliza para descubrir", "xp.storyLabel": "Nuestro próximo mundo", "xp.chapter1": "01 / La llegada", "xp.title1": "Un nuevo trabajo.<br>Un mundo aparte.", "xp.body1": "Un camping cerrado. Un refugio en la montaña. Y un nuevo comienzo, lejos de todo lo que conoces.", "xp.chapter2": "02 / El silencio", "xp.title2": "Hay lugares que<br><em>guardan secretos.</em>", "xp.body2": "Recorre los senderos. Observa cómo cambian las estaciones. Mira más de cerca lo que esconden las montañas.", "xp.chapter3": "03 / Tu historia", "xp.title3": "Piérdete.<br><em>Encuentra tu historia.</em>", "xp.body3": "Lost Camp. Disponible el 27 de noviembre de 2026 a las 20:00, hora peninsular española.", "xp.expand": "Abrir imagen a pantalla completa", "xp.close": "Cerrar", "xp.previous": "Imagen anterior", "xp.next": "Imagen siguiente", "xp.menu": "Menú de navegación"}, "ca": {"xp.scroll": "Llisca per descobrir", "xp.storyLabel": "El nostre proper món", "xp.chapter1": "01 / L’arribada", "xp.title1": "Una nova feina.<br>Un món a part.", "xp.body1": "Un càmping tancat. Un refugi a la muntanya. I un nou començament, lluny de tot el que coneixes.", "xp.chapter2": "02 / El silenci", "xp.title2": "Hi ha llocs que<br><em>guarden secrets.</em>", "xp.body2": "Recorre els camins. Observa com canvien les estacions. Mira de més a prop el que amaguen les muntanyes.", "xp.chapter3": "03 / La teva història", "xp.title3": "Perd-te.<br><em>Troba la teva història.</em>", "xp.body3": "Lost Camp. Disponible el 27 de novembre de 2026 a les 20:00, hora peninsular espanyola.", "xp.expand": "Obre la imatge a pantalla completa", "xp.close": "Tanca", "xp.previous": "Imatge anterior", "xp.next": "Imatge següent", "xp.menu": "Menú de navegació"}, "fr": {"xp.scroll": "Faites défiler pour découvrir", "xp.storyLabel": "Notre prochain univers", "xp.chapter1": "01 / L’arrivée", "xp.title1": "Un nouvel emploi.<br>Un monde à part.", "xp.body1": "Un camping fermé. Un refuge en montagne. Et un nouveau départ, loin de tout ce que vous connaissez.", "xp.chapter2": "02 / Le silence", "xp.title2": "Certains lieux<br><em>gardent leurs secrets.</em>", "xp.body2": "Parcourez les sentiers. Observez les saisons changer. Regardez de plus près ce que cachent les montagnes.", "xp.chapter3": "03 / Votre histoire", "xp.title3": "Perdez-vous.<br><em>Trouvez votre histoire.</em>", "xp.body3": "Lost Camp. Disponible le 27 novembre 2026 à 20 h CET.", "xp.expand": "Ouvrir l’image en plein écran", "xp.close": "Fermer", "xp.previous": "Image précédente", "xp.next": "Image suivante", "xp.menu": "Menu de navigation"}, "pl": {"xp.scroll": "Przewiń, by odkryć", "xp.storyLabel": "Nasz kolejny świat", "xp.chapter1": "01 / Przybycie", "xp.title1": "Nowa praca.<br>Zupełnie inny świat.", "xp.body1": "Zamknięty kemping. Górskie schronienie. I nowy początek, z dala od wszystkiego, co znasz.", "xp.chapter2": "02 / Cisza", "xp.title2": "Niektóre miejsca<br><em>skrywają sekrety.</em>", "xp.body2": "Przemierzaj szlaki. Obserwuj zmieniające się pory roku. Przyjrzyj się bliżej temu, co kryją góry.", "xp.chapter3": "03 / Twoja historia", "xp.title3": "Zgub się.<br><em>Znajdź swoją historię.</em>", "xp.body3": "Lost Camp. Premiera 27 listopada 2026 o 20:00 CET.", "xp.expand": "Otwórz obraz na pełnym ekranie", "xp.close": "Zamknij", "xp.previous": "Poprzedni obraz", "xp.next": "Następny obraz", "xp.menu": "Menu nawigacji"}, "it": {"xp.scroll": "Scorri per scoprire", "xp.storyLabel": "Il nostro prossimo mondo", "xp.chapter1": "01 / L’arrivo", "xp.title1": "Un nuovo lavoro.<br>Un mondo a parte.", "xp.body1": "Un campeggio chiuso. Un rifugio in montagna. E un nuovo inizio, lontano da tutto ciò che conosci.", "xp.chapter2": "02 / Il silenzio", "xp.title2": "Certi luoghi<br><em>custodiscono segreti.</em>", "xp.body2": "Percorri i sentieri. Osserva il mutare delle stagioni. Guarda più da vicino ciò che nascondono le montagne.", "xp.chapter3": "03 / La tua storia", "xp.title3": "Perditi.<br><em>Trova la tua storia.</em>", "xp.body3": "Lost Camp. Disponibile il 27 novembre 2026 alle 20:00 CET.", "xp.expand": "Apri l’immagine a schermo intero", "xp.close": "Chiudi", "xp.previous": "Immagine precedente", "xp.next": "Immagine successiva", "xp.menu": "Menu di navigazione"}, "de": {"xp.scroll": "Scrollen und entdecken", "xp.storyLabel": "Unsere nächste Welt", "xp.chapter1": "01 / Die Ankunft", "xp.title1": "Ein neuer Job.<br>Eine andere Welt.", "xp.body1": "Ein geschlossener Campingplatz. Ein Rückzugsort in den Bergen. Und ein Neuanfang, weit weg von allem, was du kennst.", "xp.chapter2": "02 / Die Stille", "xp.title2": "Manche Orte<br><em>bewahren Geheimnisse.</em>", "xp.body2": "Erkunde die Pfade. Erlebe den Wandel der Jahreszeiten. Sieh genauer hin, was die Berge verbergen.", "xp.chapter3": "03 / Deine Geschichte", "xp.title3": "Verlier dich.<br><em>Finde deine Geschichte.</em>", "xp.body3": "Lost Camp. Ab dem 27. November 2026 um 20:00 Uhr MEZ.", "xp.expand": "Bild im Vollbild öffnen", "xp.close": "Schließen", "xp.previous": "Vorheriges Bild", "xp.next": "Nächstes Bild", "xp.menu": "Navigationsmenü"}, "zh": {"xp.scroll": "向下滚动，开启探索", "xp.storyLabel": "我们的下一个世界", "xp.chapter1": "01 / 抵达", "xp.title1": "一份新工作。<br>一个不同的世界。", "xp.body1": "一座关闭的营地，一处山间的避风港。一段全新的开始，远离你所熟悉的一切。", "xp.chapter2": "02 / 寂静", "xp.title2": "有些地方<br><em>藏着秘密。</em>", "xp.body2": "沿小径前行，看四季更替。走近一些，探寻群山深处的秘密。", "xp.chapter3": "03 / 你的故事", "xp.title3": "走进未知。<br><em>找到你的故事。</em>", "xp.body3": "《Lost Camp》将于2026年11月27日20:00 CET（西班牙本土时间）发售。", "xp.expand": "全屏查看图片", "xp.close": "关闭", "xp.previous": "上一张图片", "xp.next": "下一张图片", "xp.menu": "导航菜单"}};
+Object.entries(EXPERIENCE_I18N).forEach(([l,values])=>Object.assign(I18N[l],values));
 
 const ROADMAP=[
  {year:2026,items:[{date:"2026",status:"up",
@@ -936,9 +1040,9 @@ let LANG="en";
 /* language dropdown */
 const dd=document.getElementById('langdd'),menu=document.getElementById('langmenu'),cur=document.getElementById('langcur');
 menu.innerHTML=LANGS.map(([c,n])=>`<button data-l="${c}">${n}<span class="tick">✓</span></button>`).join('');
-document.getElementById('langbtn').addEventListener('click',e=>{e.stopPropagation();dd.classList.toggle('open');});
-menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{applyLang(b.dataset.l);dd.classList.remove('open');}));
-document.addEventListener('click',e=>{if(!dd.contains(e.target))dd.classList.remove('open');});
+document.getElementById('langbtn').addEventListener('click',e=>{e.stopPropagation();dd.classList.toggle('open');document.getElementById('langbtn').setAttribute('aria-expanded',String(dd.classList.contains('open')));});
+menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{applyLang(b.dataset.l);dd.classList.remove('open');document.getElementById('langbtn').setAttribute('aria-expanded','false');}));
+document.addEventListener('click',e=>{if(!dd.contains(e.target)){dd.classList.remove('open');document.getElementById('langbtn').setAttribute('aria-expanded','false');}});
 
 function renderRoadmap(){
   document.getElementById('roadmapList').innerHTML=ROADMAP.map(y=>{
@@ -973,20 +1077,26 @@ function renderNews(){
   if(NEWS.length<=3){moreBtn.style.display='none';}
   else{moreBtn.style.display='';moreBtn.classList.toggle('spin',newsExpanded);}
 }
-function toggleNews(){newsExpanded=!newsExpanded;renderNews();}
+function toggleNews(){newsExpanded=!newsExpanded;renderNews();observeExperience();}
 function openNewsModal(i){
   const n=NEWS[i];if(!n)return;
+  modalReturnFocus=document.activeElement;
   document.getElementById('newsModalDate').textContent=fmtNewsDate(n.date);
   document.getElementById('newsModalTitle').textContent=n[LANG].t;
   document.getElementById('newsModalBody').textContent=n[LANG].b;
   document.getElementById('newsModal').classList.add('open');
   document.getElementById('newsModal').setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';
+  [...document.body.children].forEach(el=>{if(el.id!=='newsModal'&&!el.inert){el.dataset.newsInert='';el.inert=true;}});
+  requestAnimationFrame(()=>document.getElementById('newsModalClose').focus());
 }
 function closeNewsModal(){
+  if(!document.getElementById('newsModal').classList.contains('open'))return;
   document.getElementById('newsModal').classList.remove('open');
   document.getElementById('newsModal').setAttribute('aria-hidden','true');
   document.body.style.overflow='';
+  document.querySelectorAll('[data-news-inert]').forEach(el=>{el.inert=false;delete el.dataset.newsInert;});
+  modalReturnFocus?.focus({preventScroll:true});
 }
 function renderTicker(){
   const names=["LOST CAMP","OBSCURIA","NOCTURNE ISLAND","JUMP TO SURVIVE"];
@@ -1078,96 +1188,276 @@ function applyLang(l){
   renderRoadmap();
   renderNews();
   renderPrice();
+  try{localStorage.setItem('aranja.siteLanguage',l);}catch(_){}
+  observeExperience();
 }
 
-/* carousels */
+/* Photos stay on their original paths. Autoplay only runs in visible galleries. */
 function buildCarousels(){
   document.querySelectorAll('.carousel').forEach(c=>{
-    const keys=c.dataset.imgs.split(',');
-    c.innerHTML=keys.map((k,i)=>`<div class="slide${i===0?' active':''}" style="background-image:url(${IMG[k]})"></div>`).join('')
-      +`<div class="cdots">${keys.map((_,i)=>`<i class="${i===0?'active':''}" data-i="${i}"></i>`).join('')}</div>`;
-    let idx=0;const slides=c.querySelectorAll('.slide'),dots=c.querySelectorAll('.cdots i');
-    const go=i=>{slides.forEach((s,j)=>s.classList.toggle('active',j===i));dots.forEach((d,j)=>d.classList.toggle('active',j===i));idx=i;};
-    dots.forEach(d=>d.addEventListener('click',e=>{e.stopPropagation();go(+d.dataset.i);reset();}));
-    let timer=setInterval(()=>go((idx+1)%slides.length),4500);
-    function reset(){clearInterval(timer);timer=setInterval(()=>go((idx+1)%slides.length),4500);}
+    const keys=c.dataset.imgs.split(','),title=c.closest('.game').querySelector('.game-title').textContent;
+    c.setAttribute('role','region');c.setAttribute('aria-label',title);c.tabIndex=0;
+    c.innerHTML=keys.map((k,i)=>`<div class="slide${i===0?' active':''}" style="background-image:url('${IMG[k]}')" role="img" aria-label="${title} — ${i+1}" aria-hidden="${i!==0}"></div>`).join('')
+      +`<div class="cdots">${keys.map((_,i)=>`<button type="button" class="${i===0?'active':''}" data-i="${i}" aria-label="${title} — ${i+1}" aria-pressed="${i===0}"></button>`).join('')}</div><button type="button" class="media-expand" aria-label="Open image">⤢</button>`;
+    let idx=0,visible=false,hover=false,focused=false,timer=0,touchX=null;
+    const slides=c.querySelectorAll('.slide'),dots=c.querySelectorAll('.cdots button');
+    const go=i=>{idx=(i+keys.length)%keys.length;slides.forEach((s,j)=>{s.classList.toggle('active',j===idx);s.setAttribute('aria-hidden',j===idx?'false':'true');});dots.forEach((d,j)=>{d.classList.toggle('active',j===idx);d.setAttribute('aria-pressed',j===idx?'true':'false');});};
+    const schedule=()=>{clearInterval(timer);timer=0;if(visible&&!hover&&!focused&&!document.hidden&&!matchMedia('(prefers-reduced-motion:reduce)').matches)timer=setInterval(()=>go(idx+1),6000);};
+    dots.forEach(d=>d.addEventListener('click',()=>{go(+d.dataset.i);schedule();}));
+    c.querySelector('.media-expand').addEventListener('click',e=>openViewer(keys,idx,title,e.currentTarget));
+    c.addEventListener('mouseenter',()=>{hover=true;schedule();});c.addEventListener('mouseleave',()=>{hover=false;schedule();});
+    c.addEventListener('focusin',()=>{focused=true;schedule();});c.addEventListener('focusout',e=>{focused=c.contains(e.relatedTarget);schedule();});
+    c.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();go(idx+(e.key==='ArrowRight'?1:-1));schedule();}});
+    c.addEventListener('touchstart',e=>{touchX=e.touches[0].clientX;},{passive:true});
+    c.addEventListener('touchend',e=>{if(touchX!==null){const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45){go(idx+(dx<0?1:-1));schedule();}touchX=null;}},{passive:true});
+    if('IntersectionObserver' in window)new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;schedule();},{threshold:.1}).observe(c);
+    document.addEventListener('visibilitychange',schedule);matchMedia('(prefers-reduced-motion:reduce)').addEventListener('change',schedule);
   });
 }
+
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const heroVideo=document.getElementById('heroVideo');
-if(heroVideo){
-  heroVideo.muted=true;
-  heroVideo.defaultMuted=true;
-  const startHeroVideo=()=>heroVideo.play().catch(()=>{});
-  if(heroVideo.readyState>=2) startHeroVideo();
-  else heroVideo.addEventListener('canplay',startHeroVideo,{once:true});
-  document.addEventListener('visibilitychange',()=>{
-    if(!document.hidden) startHeroVideo();
-  });
-}
-/* nav + progress + menu */
+if(heroVideo){heroVideo.muted=true;heroVideo.defaultMuted=true;}
 const nav=document.getElementById('nav'),prog=document.getElementById('progress');
-addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40);
-  const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
-
-/* reveal */
-const revealAll=()=>document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
-if('IntersectionObserver' in window){
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));setTimeout(revealAll,4500);
-}else revealAll();
-
-/* count-up stats */
-function countUp(el){const target=+el.dataset.count,pad=+(el.dataset.pad||0);let s=null;
-  const step=t=>{if(!s)s=t;const p=Math.min((t-s)/1100,1);const v=Math.floor(p*target);
-    el.textContent=pad?String(v).padStart(pad,'0'):v;if(p<1)requestAnimationFrame(step);};
-  requestAnimationFrame(step);}
-const statsEl=document.getElementById('stats');
-if(statsEl){new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){
-  statsEl.querySelectorAll('[data-count]').forEach(countUp);o.disconnect();}}),{threshold:.4}).observe(statsEl);}
-
-/* theme-shifting stage */
+/* Animation follows native scrolling; wheel/touch input is never intercepted. */
+const motionPreference=matchMedia('(prefers-reduced-motion:reduce)');
+const experience={frame:0,currentY:scrollY,ready:false,videoVisible:true};
+const clamp=(v,min=0,max=1)=>Math.min(max,Math.max(min,v));
+const smoothstep=v=>{v=clamp(v);return v*v*(3-2*v);};
+const heroEl=document.getElementById('hero');
+const heroScreen=document.querySelector('.hero-screen');
+const heroContent=document.querySelector('.hero-inner');
+const heroBackdrop=document.querySelector('.hero-bg');
+const campStory=document.querySelector('.camp-story');
+const campPanels=[...document.querySelectorAll('.camp-panel')];
+const campShots=[...document.querySelectorAll('.camp-shot')];
+const campTracks=[...document.querySelectorAll('.camp-track i')];
+const portfolioMedia=[...document.querySelectorAll('.game-media')];
+const galleryImages=[...document.querySelectorAll('.lc-gallery-img')];
+const sectionLinks=[...document.querySelectorAll('#navmid a')];
+const chapterSections=[...document.querySelectorAll('#juegos,#roadmap,#noticias,#estudio,#contacto')];
 const stage=document.getElementById('stage'),stageImg=document.getElementById('stageImg');
-const gamesSection=document.getElementById('juegos');let curTheme=null;
-function setTheme(t){if(t===curTheme)return;curTheme=t;const th=THEME[t];if(!th)return;
-  stage.style.backgroundColor=th.c;stageImg.style.opacity=0;
-  setTimeout(()=>{stageImg.style.backgroundImage=`url(${IMG[th.img]})`;stageImg.style.opacity=.12;},220);}
-const themeIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setTheme(e.target.dataset.theme);}),{rootMargin:"-45% 0px -45% 0px"});
-document.querySelectorAll('.game').forEach(g=>themeIO.observe(g));
-new IntersectionObserver(es=>es.forEach(e=>stage.classList.toggle('on',e.isIntersecting)),{threshold:.02}).observe(gamesSection);
-
-const fine=matchMedia('(pointer:fine)').matches;
-if(fine){const hero=document.getElementById('hero'),torch=document.getElementById('torch');
-  hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();
-    torch.style.setProperty('--mx',(e.clientX-r.left)+'px');torch.style.setProperty('--my',(e.clientY-r.top)+'px');});}
-
-/* parallax */
-const plx=[...document.querySelectorAll('[data-parallax]')];
-if(!reduce&&plx.length){let ticking=false;
-  const upd=()=>{const vh=innerHeight;plx.forEach(el=>{const r=el.getBoundingClientRect();
-    const center=r.top+r.height/2-vh/2;const sp=parseFloat(el.dataset.parallax)||.1;
-    el.style.setProperty('--py',(-center*sp)+'px');
-    const sc=el.dataset.pscale?` scale(${el.dataset.pscale})`:'';
-    el.style.transform=`translateY(var(--py,0))${sc}`;});ticking=false;};
-  addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(upd);ticking=true;}},{passive:true});upd();}
-
-/* embers */
-const cv=document.getElementById('embers'),cx=cv.getContext('2d'),heroEl=document.getElementById('hero');
-let W,H,parts;
-function seed(rand){return{x:Math.random()*W,y:rand?Math.random()*H:H+10,r:Math.random()*1.8+.4,s:Math.random()*.5+.18,d:Math.random()*.6-.3,a:Math.random()*.5+.25,t:Math.random()*6.28};}
-function rsz(){W=cv.width=heroEl.offsetWidth;H=cv.height=heroEl.offsetHeight;parts=Array.from({length:reduce?0:Math.min(70,Math.floor(W/24))},()=>seed(true));}
-function tick(){cx.clearRect(0,0,W,H);for(const p of parts){p.y-=p.s;p.t+=.02;p.x+=Math.sin(p.t)*.3+p.d*.2;
-  if(p.y<-10)Object.assign(p,seed(false));const fl=.6+Math.sin(p.t*3)*.4;
-  cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fillStyle=`rgba(255,${120+Math.floor(60*fl)},40,${p.a*fl})`;
-  cx.shadowBlur=8;cx.shadowColor='rgba(255,106,0,.8)';cx.fill();}requestAnimationFrame(tick);}
-rsz();addEventListener('resize',rsz);if(!reduce)tick();
+let currentStage='';
+function setStage(theme){
+  if(theme===currentStage)return;currentStage=theme;
+  if(!THEME[theme]){stage.classList.remove('on');return;}
+  stage.style.backgroundColor=THEME[theme].c;
+  stageImg.style.backgroundImage=`url("${IMG[THEME[theme].img]}")`;
+  stageImg.style.opacity='.13';stage.classList.add('on');
+}
+let revealObserver;
+let studioWords=[],lastLit=-1;
+if('IntersectionObserver' in window){
+  revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add('in');revealObserver.unobserve(entry.target);}
+  }),{threshold:.06,rootMargin:'0px 0px -25px 0px'});
+}
+function observeExperience(){
+  const bio=document.querySelector('.studio-grid>[data-i18n]');
+  if(bio&&!bio.querySelector('.studio-word')){
+    const walker=document.createTreeWalker(bio,NodeFilter.SHOW_TEXT),nodes=[];
+    while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(node=>{
+      const frag=document.createDocumentFragment();
+      node.textContent.split(/(\s+)/).forEach(word=>{
+        if(!word)return;
+        if(/^\s+$/.test(word))frag.append(document.createTextNode(word));
+        else{const span=document.createElement('span');span.className='studio-word';span.textContent=word;frag.append(span);}
+      });node.replaceWith(frag);
+    });
+  }
+  studioWords=[...document.querySelectorAll('.studio-word')];lastLit=-1;
+  document.querySelectorAll('.reveal:not(.in),.rm-item:not(.in)').forEach(el=>{
+    if(el.classList.contains('rm-item'))el.classList.add('reveal');
+    if(revealObserver&&!motionPreference.matches)revealObserver.observe(el);else el.classList.add('in');
+  });
+  document.querySelectorAll('.news-card').forEach((el,i)=>{
+    el.style.transitionDelay=(i%2)*50+'ms';
+    el.setAttribute('tabindex','0');el.setAttribute('role','button');
+    el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}};
+  });
+  document.querySelectorAll('.media-expand').forEach(b=>b.setAttribute('aria-label',I18N[LANG]['xp.expand']));
+  document.getElementById('newsModalClose').setAttribute('aria-label',I18N[LANG]['xp.close']);
+  document.querySelector('.viewer-close').setAttribute('aria-label',I18N[LANG]['xp.close']);
+  document.getElementById('viewerPrevious').setAttribute('aria-label',I18N[LANG]['xp.previous']);
+  document.getElementById('viewerNext').setAttribute('aria-label',I18N[LANG]['xp.next']);
+  const menuButton=document.getElementById('menuToggle');menuButton.setAttribute('aria-label',I18N[LANG]['xp.menu']);
+  requestExperienceFrame();
+}
+function paintExperience(){
+  experience.frame=0;
+  const reduced=motionPreference.matches,actualY=scrollY,vh=innerHeight;
+  const delta=actualY-experience.currentY;
+  experience.currentY=reduced?actualY:experience.currentY+delta*.17;
+  if(Math.abs(delta)<.15)experience.currentY=actualY;
+  const y=experience.currentY,root=document.documentElement;
+  const scrollRange=root.scrollHeight-vh;
+  prog.style.width=(scrollRange>0?clamp(actualY/scrollRange)*100:0)+'%';
+  nav.classList.toggle('scrolled',actualY>35);
+  if(!reduced){
+    const heroProgress=clamp(y/Math.max(1,heroEl.offsetHeight-vh));
+    const expansion=smoothstep(heroProgress/.72),exit=smoothstep((heroProgress-.7)/.3);
+    heroBackdrop.style.clipPath=`inset(${12*(1-expansion)}% ${4*(1-expansion)}% ${8*(1-expansion)}% round ${30*(1-expansion)}px)`;
+    heroBackdrop.style.transform=`scale(${1+heroProgress*.055})`;
+    heroContent.style.transform=`translate3d(0,${-heroProgress*95}px,0) scale(${1-heroProgress*.07})`;
+    heroContent.style.opacity=1-exit;
+    heroContent.inert=exit>.95;
+    document.querySelector('.hero-bottom').style.opacity=1-exit;
+    const cr=campStory.getBoundingClientRect(),cp=clamp((y-actualY-cr.top)/Math.max(1,campStory.offsetHeight-vh));
+    const frameOpen=smoothstep(cp/.18);
+    document.querySelector('.camp-shots').style.clipPath=`inset(${7*(1-frameOpen)}% ${6*(1-frameOpen)}% ${7*(1-frameOpen)}% round ${30*(1-frameOpen)}px)`;
+    const t1=smoothstep((cp-.24)/.18),t2=smoothstep((cp-.59)/.18),weights=[1-t1,t1*(1-t2),t2];
+    campShots.forEach((shot,i)=>{shot.style.opacity=i===0?'1':String(i===1?t1:t2);shot.style.transform=`scale(${1.1-cp*.07+i*.015}) translate3d(0,${(cp-.5)*-26}px,0)`;});
+    campPanels.forEach((panel,i)=>{
+      const exitP=i===0?t1:i===1?t2:0;
+      panel.style.opacity=String(weights[i]);
+      panel.style.transform=`translate3d(0,${(1-weights[i])*45-exitP*85}px,0)`;
+      panel.inert=weights[i]<.6;
+      panel.setAttribute('aria-hidden',weights[i]<.6?'true':'false');
+    });
+    const scene=t2>.5?2:t1>.5?1:0;
+    document.getElementById('sceneNumber').textContent=String(scene+1).padStart(2,'0');
+    campTracks.forEach((track,i)=>track.style.setProperty('--fill',clamp(cp*3-i)));
+    portfolioMedia.forEach(el=>{
+      const r=el.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;
+      const p=clamp((r.top+r.height/2-vh/2)/vh,-1,1);
+      el.style.transform=`translate3d(0,${p*-18}px,0) rotateX(${p*2.5}deg) scale(${1-Math.abs(p)*.022})`;
+    });
+    galleryImages.forEach((el,i)=>{
+      const r=el.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;
+      const p=clamp((r.top+r.height/2-vh/2)/vh,-1,1);
+      el.style.transform=`translate3d(0,${p*(i?-28:20)}px,0)`;
+    });
+  }else{
+    heroContent.inert=false;heroContent.style.opacity='';heroContent.style.transform='';heroBackdrop.style.transform='';heroBackdrop.style.clipPath='';
+    document.querySelector('.hero-bottom').style.opacity='';
+    campPanels.forEach(panel=>{panel.inert=false;panel.removeAttribute('aria-hidden');});
+  }
+  const bio=document.querySelector('.studio-grid>[data-i18n]');
+  if(bio){
+    const r=bio.getBoundingClientRect(),progress=reduced?1:clamp((vh*.88-r.top)/Math.max(r.height+vh*.25,1)),lit=Math.ceil(progress*studioWords.length);
+    if(lit!==lastLit){studioWords.forEach((word,i)=>word.classList.toggle('lit',i<lit));lastLit=lit;}
+  }
+  const rm=document.getElementById('roadmapList');
+  const rr=rm.getBoundingClientRect();
+  rm.style.setProperty('--line-fill',clamp((vh*.8-rr.top)/Math.max(rr.height,1)));
+  const games=[...document.querySelectorAll('.game')];
+  const activeGame=games.find(el=>{const r=el.getBoundingClientRect();return r.top<vh*.65&&r.bottom>vh*.35;});
+  setStage(activeGame?.dataset.theme||'');
+  let activeChapter='';
+  chapterSections.forEach(s=>{if(s.getBoundingClientRect().top<=vh*.45)activeChapter=s.id;});
+  sectionLinks.forEach(a=>{if(a.hash==='#'+activeChapter)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
+  if(Math.abs(actualY-experience.currentY)>.15)requestExperienceFrame();
+}
+function requestExperienceFrame(){if(!experience.frame)experience.frame=requestAnimationFrame(paintExperience);}
+addEventListener('scroll',requestExperienceFrame,{passive:true});
+addEventListener('resize',()=>{experience.currentY=scrollY;requestExperienceFrame();},{passive:true});
+motionPreference.addEventListener('change',()=>{
+  observeExperience();syncHeroVideo();requestExperienceFrame();
+});
+if(document.fonts)document.fonts.ready.then(requestExperienceFrame);
+/* An actual touch/keyboard navigation menu, with no hidden focus targets. */
+const menuToggle=document.getElementById('menuToggle');
+function closeMobileMenu(){nav.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false');syncMobileMenu();}
+function syncMobileMenu(){document.getElementById('navmid').inert=innerWidth<=960&&!nav.classList.contains('menu-open');}
+menuToggle.addEventListener('click',()=>{
+  const open=nav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open));syncMobileMenu();
+});
+sectionLinks.forEach(a=>a.addEventListener('click',closeMobileMenu));
+document.addEventListener('click',e=>{if(!nav.contains(e.target))closeMobileMenu();});
+addEventListener('resize',syncMobileMenu,{passive:true});syncMobileMenu();
+/* Accessible full-screen viewer. It uses the exact original image paths. */
+const viewer=document.getElementById('imageViewer'),viewerImg=document.getElementById('viewerImage');
+let viewerKeys=[],viewerIndex=0,viewerReturnFocus=null,viewerTitle='';
+function paintViewer(){
+  viewerImg.src=IMG[viewerKeys[viewerIndex]]||viewerKeys[viewerIndex];
+  viewerImg.alt=viewerTitle+' — '+(viewerIndex+1);
+  document.getElementById('viewerName').textContent=viewerTitle;
+  document.getElementById('viewerCount').textContent=String(viewerIndex+1).padStart(2,'0')+' / '+String(viewerKeys.length).padStart(2,'0');
+  document.getElementById('viewerPrevious').disabled=viewerKeys.length<2;
+  document.getElementById('viewerNext').disabled=viewerKeys.length<2;
+}
+function openViewer(keys,index,title,trigger){
+  viewerKeys=keys;viewerIndex=index;viewerTitle=title;viewerReturnFocus=trigger;paintViewer();viewer.hidden=false;
+  document.body.style.overflow='hidden';
+  [...document.body.children].forEach(el=>{if(el!==viewer&&!el.inert){el.dataset.viewerInert='';el.inert=true;}});
+  viewer.querySelector('.viewer-close').focus();
+}
+function closeViewer(){
+  if(viewer.hidden)return;viewer.hidden=true;viewerImg.removeAttribute('src');document.body.style.overflow='';
+  document.querySelectorAll('[data-viewer-inert]').forEach(el=>{el.inert=false;delete el.dataset.viewerInert;});
+  viewerReturnFocus?.focus({preventScroll:true});
+}
+function moveViewer(delta){viewerIndex=(viewerIndex+delta+viewerKeys.length)%viewerKeys.length;paintViewer();}
+viewer.querySelector('.viewer-close').addEventListener('click',closeViewer);
+document.getElementById('viewerPrevious').addEventListener('click',()=>moveViewer(-1));
+document.getElementById('viewerNext').addEventListener('click',()=>moveViewer(1));
+galleryImages.forEach((el,i)=>{
+  el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-label','Lost Camp — '+(i+1));
+  el.addEventListener('click',()=>openViewer(['lc4','lc5'],i,'Lost Camp',el));
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}});
+});
+let modalReturnFocus=null;
+function trapDialogFocus(event,container){
+  if(event.key!=='Tab')return;
+  const focusable=[...container.querySelectorAll('button:not([disabled]),a[href],[tabindex="0"]')];
+  const first=focusable[0],last=focusable.at(-1);
+  if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+  else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+}
+addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeViewer();closeMobileMenu();dd.classList.remove('open');document.getElementById('langbtn').setAttribute('aria-expanded','false');}
+  if(!viewer.hidden){
+    if(e.key==='ArrowRight'){e.preventDefault();moveViewer(1);}
+    if(e.key==='ArrowLeft'){e.preventDefault();moveViewer(-1);}
+    trapDialogFocus(e,viewer);
+  }else if(document.getElementById('newsModal').classList.contains('open'))trapDialogFocus(e,document.getElementById('newsModal'));
+});
+/* Sparse embers stop rendering off-screen, on hidden tabs and in reduced motion. */
+const cv=document.getElementById('embers'),cx=cv.getContext('2d');
+let emberFrame=0,embers=[],lastEmberTime=0;
+function resizeEmbers(){
+  const dpr=Math.min(devicePixelRatio||1,1.5),w=heroScreen.clientWidth,h=heroScreen.clientHeight;
+  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cx?.setTransform(dpr,0,0,dpr,0,0);
+  embers=Array.from({length:Math.min(30,Math.round(w/45))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.2+.4,s:Math.random()*.22+.12,a:Math.random()*.35+.1}));
+}
+function animateEmbers(t){
+  emberFrame=0;if(!cx||motionPreference.matches||!experience.videoVisible||document.hidden)return;
+  const dt=Math.min((t-lastEmberTime)||16,40)/16;lastEmberTime=t;
+  const w=heroScreen.clientWidth,h=heroScreen.clientHeight;cx.clearRect(0,0,w,h);
+  embers.forEach(p=>{p.y-=p.s*dt;p.x+=Math.sin(t*.0004+p.y)*.12*dt;if(p.y<0){p.y=h;p.x=Math.random()*w;}cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fillStyle=`rgba(255,190,130,${p.a})`;cx.fill();});
+  emberFrame=requestAnimationFrame(animateEmbers);
+}
+function syncHeroVideo(){
+  if(heroVideo){
+    if(document.hidden||!experience.videoVisible||motionPreference.matches)heroVideo.pause();
+    else heroVideo.play().catch(()=>{});
+  }
+  if(!emberFrame&&!document.hidden&&experience.videoVisible&&!motionPreference.matches)emberFrame=requestAnimationFrame(animateEmbers);
+}
+if('IntersectionObserver' in window)new IntersectionObserver(entries=>{experience.videoVisible=entries[0].isIntersecting;syncHeroVideo();},{threshold:0}).observe(heroEl);
+addEventListener('resize',resizeEmbers,{passive:true});
+document.addEventListener('visibilitychange',syncHeroVideo);resizeEmbers();syncHeroVideo();
+/* Stats count only when actually visible. */
+function countUp(el){
+  const target=+el.dataset.count,pad=+(el.dataset.pad||0);
+  if(motionPreference.matches){el.textContent=pad?String(target).padStart(pad,'0'):target;return;}
+  const start=performance.now();
+  const step=t=>{const p=clamp((t-start)/1500),eased=1-Math.pow(1-p,3),v=Math.round(eased*target);el.textContent=pad?String(v).padStart(pad,'0'):v;if(p<1)requestAnimationFrame(step);};requestAnimationFrame(step);
+}
+const statsEl=document.getElementById('stats');
+if('IntersectionObserver' in window)new IntersectionObserver((entries,observer)=>{if(entries.some(e=>e.isIntersecting)){statsEl.querySelectorAll('[data-count]').forEach(countUp);observer.disconnect();}},{threshold:.3}).observe(statsEl);
+experience.ready=true;observeExperience();
 
 /* init */
 document.getElementById('newsMoreBtn').addEventListener('click',toggleNews);
 document.getElementById('newsModalClose').addEventListener('click',closeNewsModal);
 document.getElementById('newsModalBackdrop').addEventListener('click',closeNewsModal);
 addEventListener('keydown',e=>{if(e.key==='Escape')closeNewsModal();});
-renderTicker();buildCarousels();applyLang('en');startCountdowns();startSaleCountdown();
+renderTicker();buildCarousels();
+let savedLanguage='en';try{savedLanguage=localStorage.getItem('aranja.siteLanguage')||'en';}catch(_){}
+applyLang(I18N[savedLanguage]?savedLanguage:'en');startCountdowns();startSaleCountdown();
+requestExperienceFrame();
 </script>
 
 <!-- Aranja XP: embedded original HTML, without changes. -->
